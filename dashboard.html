@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SAPA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css"> </head>
+<body>
+
+    <nav class="dash-nav">
+        <div class="container nav-flex">
+            <div class="brand">
+                <a href="index.html" class="logo">SAPA<span class="dot">.</span></a>
+                <span class="divider">/</span>
+                <span class="username-display" id="navUsername">@username</span>
+            </div>
+            <div class="actions">
+                <a href="#" target="_blank" id="previewBtn" class="btn btn-outline btn-sm">
+                    <i class="fa-solid fa-eye"></i> Lihat Halaman
+                </a>
+                <button id="logoutBtn" class="btn btn-danger btn-sm">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <div class="dash-grid">
+            
+            <aside class="profile-editor">
+                <div class="card p-30">
+                    <h3>Profil Kamu</h3>
+                    
+                    <div class="avatar-upload">
+                        <div class="avatar-preview" id="avatarPreview" style="background-image: url('assets/img/default-avatar.png');"></div>
+                        <label for="avatarInput" class="btn-icon">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" id="avatarInput" accept="image/*" hidden>
+                    </div>
+
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="fullName" placeholder="Nama Kamu">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Bio Singkat</label>
+                            <textarea id="bio" rows="3" placeholder="Ceritain dikit tentang kamu..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Warna Background</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="bgColor" value="#ffffff">
+                                <span id="colorValue">#ffffff</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Simpan Profil</button>
+                    </form>
+                </div>
+            </aside>
+
+            <main class="links-manager">
+                <div class="card p-30">
+                    <div class="section-header">
+                        <h3>Link Kamu</h3>
+                        <button id="addLinkBtn" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-plus"></i> Tambah Baru
+                        </button>
+                    </div>
+
+                    <div id="linksList" class="links-list">
+                        <div class="link-item">
+                            <div class="drag-handle"><i class="fa-solid fa-grip-lines"></i></div>
+                            <div class="link-info">
+                                <strong>Instagram</strong>
+                                <a href="#">instagram.com/feri</a>
+                            </div>
+                            <div class="link-actions">
+                                <button class="btn-icon-sm"><i class="fa-solid fa-pencil"></i></button>
+                                <button class="btn-icon-sm text-red"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                         </div>
+
+                    <div id="emptyState" class="empty-state hidden">
+                        <i class="fa-solid fa-link-slash"></i>
+                        <p>Belum ada link. Tambahin yuk!</p>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <div id="linkModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Tambah Link</h3>
+            <form id="linkForm">
+                <input type="hidden" id="linkId"> <div class="form-group">
+                    <label>Judul Link</label>
+                    <input type="text" id="linkTitle" placeholder="Misal: Instagram Saya" required>
+                </div>
+                <div class="form-group">
+                    <label>URL</label>
+                    <input type="url" id="linkUrl" placeholder="https://" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

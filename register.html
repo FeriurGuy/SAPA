@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar SAPA - Buat Link Kamu</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css"> <link rel="stylesheet" href="css/auth.css">  </head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="index.html" class="logo">SAPA<span class="dot">.</span></a>
+                <h2>Mulai Buat Halamanmu</h2>
+                <p>Gratis, cepat, dan gampang.</p>
+            </div>
+
+            <div id="alert-box" class="alert hidden"></div>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>Username (untuk URL)</label>
+                    <div class="input-prefix">
+                        <span>sapa.com/</span>
+                        <input type="text" id="username" placeholder="feri" required pattern="[a-zA-Z0-9_]{4,}" title="Minimal 4 huruf/angka, tanpa spasi">
+                    </div>
+                    <small class="hint">Hanya huruf, angka, dan underscore.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="nama@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Minimal 6 karakter" required minlength="6">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Daftar Sekarang</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Sudah punya akun? <a href="login.html">Masuk di sini</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>

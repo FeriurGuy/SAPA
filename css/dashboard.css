@@ -1,0 +1,177 @@
+/* --- DASHBOARD STYLES --- */
+.dash-nav {
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 15px 0;
+    margin-bottom: 40px;
+}
+
+.nav-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.divider { margin: 0 10px; color: #cbd5e1; }
+.username-display { font-weight: 600; color: var(--gray); }
+
+.btn-danger {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+.btn-danger:hover { background-color: #fecaca; }
+
+/* Grid Layout */
+.dash-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr; /* Kiri fix, kanan sisa */
+    gap: 30px;
+    align-items: start;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    border: 1px solid #f1f5f9;
+}
+
+.p-30 { padding: 30px; }
+
+/* Profile Editor */
+.avatar-upload {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+}
+
+.avatar-preview {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid #e2e8f0;
+}
+
+.btn-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--primary);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.8rem;
+    border: 2px solid white;
+}
+
+.color-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #e2e8f0;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+input[type="color"] {
+    border: none;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background: none;
+}
+
+/* Link Manager */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.link-item {
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+}
+
+.link-item:hover { border-color: var(--primary); }
+
+.drag-handle {
+    color: #cbd5e1;
+    cursor: grab;
+    padding-right: 15px;
+}
+
+.link-info { flex: 1; }
+.link-info strong { display: block; font-size: 0.95rem; }
+.link-info a { font-size: 0.85rem; color: var(--gray); }
+
+.link-actions { display: flex; gap: 8px; }
+
+.btn-icon-sm {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--gray);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+.btn-icon-sm:hover { color: var(--primary); }
+.text-red:hover { color: #ef4444; }
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.hidden { display: none; }
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    animation: slideDown 0.3s ease;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .dash-grid { grid-template-columns: 1fr; }
+}
