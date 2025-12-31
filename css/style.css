@@ -162,6 +162,13 @@ ul { list-style: none; }
     box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
     overflow: hidden;
     position: relative;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); } /* Naik 20px */
+    100% { transform: translateY(0px); }
 }
 
 .mockup-header {
@@ -258,7 +265,6 @@ footer {
     .hero .btn { width: 100%; text-align: center; }
 
     /* 3. FIX NAVBAR (PENTING!) */
-    /* Pastikan container navbar punya padding biar gak nempel layar */
     .navbar .container {
         padding: 0 20px;
     }
@@ -266,19 +272,57 @@ footer {
     .nav-links {
         display: flex;
         align-items: center;
-        gap: 15px; /* Jarak antara 'Masuk' dan Tombol */
+        gap: 15px;
     }
 
-    /* Tombol Navbar JANGAN Full Width, kembalikan ke ukuran auto */
     .navbar .btn { 
         width: auto; 
-        padding: 8px 16px; /* Lebih kecil dikit biar muat */
+        padding: 8px 16px; 
         font-size: 0.9rem;
     }
 
-    /* Text 'Masuk' margin-nya dikurangi biar gak makan tempat */
     .btn-text {
         margin-right: 0; 
         font-size: 0.9rem;
     }
 }
+
+/* --- SKELETON LOADING ANIMATION --- */
+.skeleton {
+    background: #f1f5f9; /* Base lebih terang */
+    background: linear-gradient(90deg, #f1f5f9 25%, #ffffff 50%, #f1f5f9 75%); /* Kilau putih */
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+    color: transparent !important; /* Sembunyikan teks loading */
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Scrollbar Custom (Biar ganteng di Chrome/Edge) */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* --- ANIMASI CASCADE LINK --- */
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Class ini nanti ditempel via JS */
+.animate-enter {
+    opacity: 0; /* Sembunyi dulu */
+    animation: slideUpFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+

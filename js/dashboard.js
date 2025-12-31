@@ -300,3 +300,23 @@ logoutBtn.addEventListener('click', async () => {
     await supabase.auth.signOut();
     window.location.href = 'index.html';
 });
+
+// ... (Taruh di paling bawah atau dekat logic previewBtn) ...
+
+const shareBtn = document.getElementById('shareBtn');
+
+shareBtn.addEventListener('click', () => {
+    // Ambil username dari tampilan
+    const username = navUsername.textContent.replace('@', '');
+    
+    // Deteksi URL saat ini (biar support localhost atau vercel)
+    const baseUrl = window.location.origin;
+    const shareUrl = `${baseUrl}/profile.html?u=${username}`; // Atau `${baseUrl}/${username}` kalau udah rewrite
+
+    // Copy ke clipboard
+    navigator.clipboard.writeText(shareUrl).then(() => {
+        showToast('Link Disalin! 📋', 'Siap dipaste di Bio Instagram/TikTok kamu.', 'success');
+    }).catch(err => {
+        showToast('Gagal', 'Gagal menyalin link.', 'error');
+    });
+});

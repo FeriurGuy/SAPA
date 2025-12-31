@@ -317,3 +317,20 @@ input[type="color"] {
         flex-shrink: 0; /* Jangan sampai tombol kegencet */
     }
 }
+
+/* --- EFEK KLIK (TACTILE FEEL) --- */
+.btn:active, 
+.link-item:active, 
+.preset:active {
+    transform: scale(0.96) !important; /* Mengecil dikit pas dipencet */
+    transition: transform 0.1s;
+}
+
+/* Hover efek halus buat Link Item di Dashboard */
+.link-item {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.link-item:hover {
+    transform: translateY(-3px); /* Naik dikit pas kursor lewat */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}

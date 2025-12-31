@@ -29,6 +29,11 @@ async function renderProfile() {
         if (profileError || !profile) throw new Error('User not found');
 
         // 3. Render Data Profil
+        pAvatar.classList.remove('skeleton');
+        pName.classList.remove('skeleton');
+        pBio.classList.remove('skeleton');
+        pName.style.width = 'auto'; // Reset width
+        pBio.style.width = 'auto';
         document.title = `${profile.full_name} | SAPA`;
         pName.textContent = profile.full_name || `@${profile.username}`;
         pBio.textContent = profile.bio || '';
@@ -75,19 +80,21 @@ async function renderProfile() {
             .order('position', { ascending: true }) // Urutkan sesuai drag & drop
             .order('created_at', { ascending: true });
 
-        // 5. Render Links dengan Smart Icons
+        // 5. Render Links dengan Smart Icons + ANIMASI
         pLinks.innerHTML = '';
         if (links) {
-            links.forEach(link => {
+            links.forEach((link, index) => { // <--- Tambah parameter 'index'
                 const a = document.createElement('a');
                 a.href = link.url;
                 a.target = '_blank';
-                a.className = 'link-card';
+                a.className = 'link-card animate-enter'; // <--- Tambah class animasi
                 
-                // --- LOGIKA ICON SOSMED OTOMATIS ---
-                let iconClass = 'fa-solid fa-link'; // Icon default (rantai)
-                const urlLower = link.url.toLowerCase();
+                // Bikin delay berurutan: Link 1 (0.1s), Link 2 (0.2s), dst.
+                a.style.animationDelay = `${index * 0.1}s`; 
 
+                // --- LOGIKA ICON (SAMA SEPERTI SEBELUMNYA) ---
+                let iconClass = 'fa-solid fa-link';
+                const urlLower = link.url.toLowerCase();
                 if (urlLower.includes('instagram.com')) iconClass = 'fa-brands fa-instagram';
                 else if (urlLower.includes('tiktok.com')) iconClass = 'fa-brands fa-tiktok';
                 else if (urlLower.includes('linkedin.com')) iconClass = 'fa-brands fa-linkedin';
@@ -97,7 +104,6 @@ async function renderProfile() {
                 else if (urlLower.includes('wa.me') || urlLower.includes('whatsapp.com')) iconClass = 'fa-brands fa-whatsapp';
                 else if (urlLower.includes('facebook.com')) iconClass = 'fa-brands fa-facebook';
                 else if (urlLower.includes('spotify.com')) iconClass = 'fa-brands fa-spotify';
-                // ---------------------------
 
                 a.innerHTML = `<i class="${iconClass}" style="margin-right:10px; font-size: 1.1em;"></i> ${sanitize(link.title)}`;
                 pLinks.appendChild(a);
