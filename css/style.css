@@ -248,9 +248,37 @@ footer {
     border-top: 1px solid #e2e8f0;
 }
 
-/* --- RESPONSIVE --- */
+/* --- RESPONSIVE (MOBILE FIX) --- */
 @media (max-width: 768px) {
+    /* 1. Judul Hero dikecilin dikit biar gak terlalu raksasa */
     .hero h1 { font-size: 2.5rem; }
-    .cta-group { flex-direction: column; }
-    .btn { width: 100%; text-align: center; }
+    
+    /* 2. Tombol di HERO (Tengah) tetap Full Width biar enak dipencet */
+    .cta-group { flex-direction: column; gap: 15px; }
+    .hero .btn { width: 100%; text-align: center; }
+
+    /* 3. FIX NAVBAR (PENTING!) */
+    /* Pastikan container navbar punya padding biar gak nempel layar */
+    .navbar .container {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* Jarak antara 'Masuk' dan Tombol */
+    }
+
+    /* Tombol Navbar JANGAN Full Width, kembalikan ke ukuran auto */
+    .navbar .btn { 
+        width: auto; 
+        padding: 8px 16px; /* Lebih kecil dikit biar muat */
+        font-size: 0.9rem;
+    }
+
+    /* Text 'Masuk' margin-nya dikurangi biar gak makan tempat */
+    .btn-text {
+        margin-right: 0; 
+        font-size: 0.9rem;
+    }
 }

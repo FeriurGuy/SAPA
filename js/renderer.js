@@ -33,11 +33,32 @@ async function renderProfile() {
         pName.textContent = profile.full_name || `@${profile.username}`;
         pBio.textContent = profile.bio || '';
         
-        // Set Warna Background
+        // --- LOGIKA TEMA PINTAR (THEME SYSTEM) ---
+        // Reset dulu semua class dan style bawaan
+        document.body.className = ''; 
+        document.body.style.backgroundColor = '';
+        document.body.style.color = '';
+
         if (profile.bg_color) {
-            themeBody.style.backgroundColor = profile.bg_color;
-            themeBody.style.color = getContrastColor(profile.bg_color); // Hitung warna teks (Putih/Hitam) biar kontras
+            const color = profile.bg_color.toLowerCase();
+            
+            // A. Cek apakah warnanya cocok dengan Preset Tema?
+            if (color === '#0f172a') {
+                document.body.classList.add('theme-dark');
+            } 
+            else if (color === '#f43f5e' || color === '#fff1f2' || color === '#fecdd3') {
+                document.body.classList.add('theme-pastel');
+            }
+            else if (color === '#10b981') { 
+                 document.body.classList.add('theme-cyber');
+            }
+            else {
+                // B. Kalau warnanya custom, pakai style manual + hitung kontras
+                document.body.style.backgroundColor = profile.bg_color;
+                document.body.style.color = getContrastColor(profile.bg_color);
+            }
         }
+        // ---------------------------------------------
 
         // Set Avatar
         if (profile.avatar_url) {
@@ -51,9 +72,10 @@ async function renderProfile() {
             .from('links')
             .select('*')
             .eq('user_id', profile.id)
-            .order('created_at', { ascending: true }); // Nanti ganti 'position'
+            .order('position', { ascending: true }) // Urutkan sesuai drag & drop
+            .order('created_at', { ascending: true });
 
-        // 5. Render Links
+        // 5. Render Links dengan Smart Icons
         pLinks.innerHTML = '';
         if (links) {
             links.forEach(link => {
@@ -62,7 +84,7 @@ async function renderProfile() {
                 a.target = '_blank';
                 a.className = 'link-card';
                 
-                // --- LOGIKA ICON PINTAR ---
+                // --- LOGIKA ICON SOSMED OTOMATIS ---
                 let iconClass = 'fa-solid fa-link'; // Icon default (rantai)
                 const urlLower = link.url.toLowerCase();
 
@@ -71,8 +93,10 @@ async function renderProfile() {
                 else if (urlLower.includes('linkedin.com')) iconClass = 'fa-brands fa-linkedin';
                 else if (urlLower.includes('github.com')) iconClass = 'fa-brands fa-github';
                 else if (urlLower.includes('twitter.com') || urlLower.includes('x.com')) iconClass = 'fa-brands fa-x-twitter';
-                else if (urlLower.includes('youtube.com')) iconClass = 'fa-brands fa-youtube';
+                else if (urlLower.includes('youtube.com') || urlLower.includes('youtu.be')) iconClass = 'fa-brands fa-youtube';
                 else if (urlLower.includes('wa.me') || urlLower.includes('whatsapp.com')) iconClass = 'fa-brands fa-whatsapp';
+                else if (urlLower.includes('facebook.com')) iconClass = 'fa-brands fa-facebook';
+                else if (urlLower.includes('spotify.com')) iconClass = 'fa-brands fa-spotify';
                 // ---------------------------
 
                 a.innerHTML = `<i class="${iconClass}" style="margin-right:10px; font-size: 1.1em;"></i> ${sanitize(link.title)}`;
@@ -88,6 +112,9 @@ async function renderProfile() {
 
 // Utility: Tentukan warna teks (Hitam/Putih) berdasarkan warna background
 function getContrastColor(hexColor) {
+    // Jaga-jaga kalau hex code gak lengkap
+    if (hexColor.length < 7) return '#000000';
+
     // Ubah hex ke RGB
     const r = parseInt(hexColor.substr(1, 2), 16);
     const g = parseInt(hexColor.substr(3, 2), 16);

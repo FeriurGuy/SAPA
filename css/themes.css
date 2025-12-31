@@ -1,0 +1,83 @@
+/* --- THEME SYSTEM --- */
+
+/* 1. TEMA DARK (Elegan & Misterius) */
+body.theme-dark {
+    background-color: #0f172a !important; /* Paksa hitam kebiruan */
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+}
+
+body.theme-dark .profile-avatar {
+    border-color: #334155;
+    box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+}
+
+body.theme-dark .link-card {
+    background: rgba(30, 41, 59, 0.8); /* Kartu gelap transparan */
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    border-radius: 12px; /* Kotak sedikit membulat (bukan pill) */
+}
+
+body.theme-dark .link-card:hover {
+    background: #1e293b;
+    border-color: #4f46e5;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* 2. TEMA PASTEL (Ceria & Soft) */
+body.theme-pastel {
+    background-color: #fff1f2 !important; /* Pink lembut */
+    color: #881337;
+    font-family: 'Outfit', sans-serif; /* Font lebih bulat */
+}
+
+body.theme-pastel .profile-avatar {
+    border: 4px dashed #fda4af;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; /* Bentuk organik */
+}
+
+body.theme-pastel .link-card {
+    background: #fff;
+    border: 2px solid #fecdd3;
+    color: #be123c;
+    border-radius: 20px;
+    box-shadow: 4px 4px 0px #fda4af; /* Shadow kasar ala komik */
+    transition: all 0.2s;
+}
+
+body.theme-pastel .link-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #fb7185;
+}
+
+/* 3. TEMA CYBER (Futuristik) */
+body.theme-cyber {
+    background-color: #000000 !important;
+    color: #00ff41;
+    font-family: 'Courier New', monospace; /* Font koding */
+    background-image: radial-gradient(#112211 15%, transparent 16%), radial-gradient(#112211 15%, transparent 16%);
+    background-size: 20px 20px;
+}
+
+body.theme-cyber .profile-avatar {
+    border: 2px solid #00ff41;
+    border-radius: 0; /* Kotak tajam */
+    filter: grayscale(100%) contrast(1.2);
+}
+
+body.theme-cyber .link-card {
+    background: #000;
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    border-radius: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+body.theme-cyber .link-card:hover {
+    background: #00ff41;
+    color: #000;
+    box-shadow: 0 0 15px #00ff41;
+}

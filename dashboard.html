@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dashboard.css"> </head>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
 <body>
 
     <nav class="dash-nav">
@@ -20,10 +21,7 @@
                 <span class="username-display" id="navUsername">@username</span>
             </div>
             <div class="actions">
-                <a href="#" target="_blank" id="previewBtn" class="btn btn-outline btn-sm">
-                    <i class="fa-solid fa-eye"></i> Lihat Halaman
-                </a>
-                <button id="logoutBtn" class="btn btn-danger btn-sm">
+                <button id="logoutBtn" class="btn btn-danger btn-sm btn-icon-only" title="Keluar">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
             </div>
@@ -57,10 +55,23 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Warna Background</label>
+                            <label>Tema Warna</label>
+                            
+                            <div class="preset-container">
+                                <div class="preset" style="background: #ffffff;" data-color="#ffffff" title="Putih Bersih"></div>
+                                <div class="preset" style="background: #f8fafc;" data-color="#f8fafc" title="Abu Modern"></div>
+                                <div class="preset" style="background: #0f172a;" data-color="#0f172a" title="Dark Mode"></div>
+                                <div class="preset" style="background: #4f46e5;" data-color="#4f46e5" title="SAPA Indigo"></div>
+                                <div class="preset" style="background: #10b981;" data-color="#10b981" title="Emerald"></div>
+                                <div class="preset" style="background: #f43f5e;" data-color="#f43f5e" title="Rose"></div>
+                            </div>
+
                             <div class="color-picker-wrapper">
-                                <input type="color" id="bgColor" value="#ffffff">
-                                <span id="colorValue">#ffffff</span>
+                                <span class="small-label">Atau pilih manual:</span>
+                                <div class="picker-row">
+                                    <input type="color" id="bgColor" value="#ffffff">
+                                    <span id="colorValue">#ffffff</span>
+                                </div>
                             </div>
                         </div>
 
@@ -74,27 +85,22 @@
                     <div class="section-header">
                         <h3>Link Kamu</h3>
                         <button id="addLinkBtn" class="btn btn-primary btn-sm">
-                            <i class="fa-solid fa-plus"></i> Tambah Baru
+                            <i class="fa-solid fa-plus"></i> Tambah
                         </button>
                     </div>
 
-                    <div id="linksList" class="links-list">
-                        <div class="link-item">
-                            <div class="drag-handle"><i class="fa-solid fa-grip-lines"></i></div>
-                            <div class="link-info">
-                                <strong>Instagram</strong>
-                                <a href="#">instagram.com/feri</a>
-                            </div>
-                            <div class="link-actions">
-                                <button class="btn-icon-sm"><i class="fa-solid fa-pencil"></i></button>
-                                <button class="btn-icon-sm text-red"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-                         </div>
+                    <div id="linksList" class="links-list"></div>
 
                     <div id="emptyState" class="empty-state hidden">
                         <i class="fa-solid fa-link-slash"></i>
                         <p>Belum ada link. Tambahin yuk!</p>
+                    </div>
+
+                    <div class="preview-section-bottom">
+                        <hr class="divider-line">
+                        <a href="#" target="_blank" id="previewBtn" class="btn btn-outline btn-block">
+                            <i class="fa-solid fa-eye"></i> Lihat Hasil Halaman
+                        </a>
                     </div>
                 </div>
             </main>
@@ -107,7 +113,8 @@
             <span class="close-modal">&times;</span>
             <h3>Tambah Link</h3>
             <form id="linkForm">
-                <input type="hidden" id="linkId"> <div class="form-group">
+                <input type="hidden" id="linkId">
+                <div class="form-group">
                     <label>Judul Link</label>
                     <input type="text" id="linkTitle" placeholder="Misal: Instagram Saya" required>
                 </div>
@@ -119,7 +126,16 @@
             </form>
         </div>
     </div>
+    
+    <footer class="dash-footer">
+        <div class="container text-center">
+            <p>&copy; 2026 SAPA Project. Created by <strong>Feri Ramadhan Azhari</strong>.</p>
+        </div>
+    </footer>
 
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>
