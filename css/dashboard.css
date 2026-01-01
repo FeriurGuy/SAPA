@@ -7,7 +7,11 @@
     --gray: #64748b;
 }
 
-body {
+/* FIX UTAMA: Mencegah scroll ke samping di HP */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
     background-color: #f8fafc;
     min-height: 100vh;
     display: flex;
@@ -46,18 +50,11 @@ body {
     font-size: 0.9rem;
 }
 
-.divider {
-    margin: 0 10px;
-    color: #cbd5e1;
-}
+.divider { margin: 0 10px; color: #cbd5e1; }
 
 .btn-icon-only {
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 40px; height: 40px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
     border-radius: 8px;
 }
 
@@ -84,7 +81,6 @@ body {
 }
 
 .p-30 { padding: 30px; }
-
 h3 { margin-bottom: 20px; color: var(--dark); font-size: 1.25rem; }
 
 /* --- FORM & INPUT --- */
@@ -100,6 +96,7 @@ h3 { margin-bottom: 20px; color: var(--dark); font-size: 1.25rem; }
     border: 1px solid #cbd5e1; border-radius: 10px;
     font-size: 1rem; font-family: inherit; background-color: #fff;
     display: block;
+    box-sizing: border-box; /* Penting biar gak lewat batas */
 }
 
 .form-group textarea { resize: vertical; min-height: 100px; }
@@ -109,34 +106,91 @@ h3 { margin-bottom: 20px; color: var(--dark); font-size: 1.25rem; }
     outline: 4px solid rgba(79, 70, 229, 0.1);
 }
 
-/* --- NEW: COLOR PRESETS --- */
-.preset-container {
-    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;
+/* --- GRID TEMA (KOTAK RAPI - ANTI PEYOT) --- */
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 10px;
+    margin-bottom: 30px;
+    width: 100%;
 }
 
-.preset {
-    width: 40px; height: 40px; border-radius: 50%;
-    border: 2px solid #e2e8f0; cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+.theme-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
 }
 
-.preset:hover { transform: scale(1.1); }
+.theme-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0; /* Anti Peyot */
+}
 
-.preset.active {
+.theme-name {
+    margin-top: 8px;
+    font-size: 0.7rem;
+    color: #64748b;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.theme-box:hover .theme-icon {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.theme-box.active .theme-icon {
     border-color: var(--primary);
-    transform: scale(1.1);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); /* Efek Ring */
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    transform: scale(1.05);
 }
 
+.theme-box.active .theme-name { color: var(--primary); font-weight: 700; }
+
+.bg-white { background: #ffffff; border: 1px solid #cbd5e1; color: #cbd5e1; }
+.bg-grey { background: #f1f5f9; color: #94a3b8; border: 1px solid #cbd5e1; }
+.bg-midnight { background: #0f172a; color: #f8fafc; }
+.bg-royal { background: linear-gradient(135deg, #4f46e5, #818cf8); }
+.bg-cyber { background: linear-gradient(135deg, #10b981, #34d399); }
+.bg-love { background: linear-gradient(135deg, #f43f5e, #fb7185); }
+
+.theme-box.locked-feature { opacity: 1; }
+.theme-box.locked-feature .theme-icon { filter: grayscale(0.6); }
+.theme-box.locked-feature .theme-icon::after {
+    content: '\f023';
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+/* --- MANUAL COLOR PICKER --- */
 .color-picker-wrapper {
     background: #f8fafc; padding: 10px;
     border-radius: 8px; border: 1px solid #e2e8f0;
     display: flex; align-items: center; justify-content: space-between;
+    margin-top: 10px;
 }
-
 .picker-row { display: flex; align-items: center; gap: 10px; }
 .small-label { font-size: 0.8rem; color: var(--gray); }
-
 input[type="color"] {
     width: 30px; height: 30px; padding: 0; border: none;
     border-radius: 50%; overflow: hidden; cursor: pointer;
@@ -146,13 +200,11 @@ input[type="color"] {
 .avatar-upload {
     position: relative; width: 110px; height: 110px; margin: 0 auto 25px;
 }
-
 .avatar-preview {
     width: 100%; height: 100%; border-radius: 50%;
     background-size: cover; background-position: center;
     border: 4px solid white; box-shadow: 0 0 0 2px var(--border-color);
 }
-
 .btn-icon {
     position: absolute; bottom: 0; right: 0;
     width: 36px; height: 36px;
@@ -168,266 +220,194 @@ input[type="color"] {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid #f1f5f9;
 }
-
 .link-item {
     background: #fff; border: 1px solid var(--border-color);
     padding: 15px; border-radius: 12px; margin-bottom: 12px;
     display: flex; align-items: center; gap: 15px;
     cursor: grab; transition: transform 0.2s, box-shadow 0.2s;
 }
-
-.link-item:hover { border-color: var(--primary); }
+.link-item:hover { border-color: var(--primary); transform: translateY(-3px); }
 .link-item:active { cursor: grabbing; }
-.sortable-ghost { opacity: 0.4; background: #e0e7ff; border: 2px dashed var(--primary); }
-
-.drag-handle { color: #cbd5e1; cursor: grab; padding: 5px; }
-.link-info { 
-    flex: 1; 
-    overflow: hidden;
-    min-width: 0;
-}
+.link-info { flex: 1; overflow: hidden; min-width: 0; }
 .link-info strong { display: block; font-size: 0.95rem; }
 .link-info a { 
-    font-size: 0.85rem; color: var(--gray); 
-    display: block; white-space: nowrap; 
-    overflow: hidden; text-overflow: ellipsis; 
+    font-size: 0.85rem; color: var(--gray); display: block; 
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
 }
-
+.link-stats {
+    background: #e0e7ff; color: var(--primary);
+    padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;
+    display: flex; align-items: center; gap: 5px;
+}
+.drag-handle { color: #cbd5e1; cursor: grab; padding: 5px; }
 .hidden { display: none !important; }
 
-/* --- FOOTER & PREVIEW --- */
+/* --- FOOTER & MISC --- */
 .preview-section-bottom { margin-top: 30px; text-align: center; }
 .divider-line { border: 0; border-top: 1px dashed #cbd5e1; margin-bottom: 20px; }
 .btn-block { display: block; width: 100%; padding: 12px; }
-
 .dash-footer {
     text-align: center; padding: 30px 0;
     color: #94a3b8; font-size: 0.85rem; margin-top: auto;
 }
 
-/* --- MODAL --- */
+/* --- TOAST & MODAL --- */
+.toast-container { position: fixed; top: 20px; right: 10px; z-index: 10000; }
+.toast {
+    background: white; padding: 12px 15px; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 15px;
+    animation: slideInRight 0.3s ease; border-left: 5px solid #64748b;
+}
+@keyframes slideInRight { from { transform: translateX(120%); } to { transform: translateX(0); } }
+.toast.success { border-left-color: #10b981; } .toast.success i { color: #10b981; }
+.toast.error { border-left-color: #ef4444; } .toast.error i { color: #ef4444; }
+.toast.warning { border-left-color: #f59e0b; } .toast.warning i { color: #f59e0b; }
+
 .modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 999;
+    display: flex; justify-content: center; align-items: center; z-index: 999;
 }
-.modal.hidden { display: none !important; }
-.modal-content {
-    background: white; padding: 30px; border-radius: 20px;
-    width: 90%; max-width: 400px;
-}
+.modal-content { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; }
 .close-modal { float: right; font-size: 1.5rem; cursor: pointer; }
 
+/* --- BUTTON UPGRADE --- */
+.upgrade-banner {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    border-radius: 16px; padding: 20px 25px; margin-bottom: 30px;
+    color: white; display: flex; justify-content: space-between; align-items: center;
+    position: relative; overflow: hidden;
+}
+.upgrade-banner::before {
+    content: ''; position: absolute; top: -50%; left: -10%; width: 200px; height: 200px;
+    background: rgba(255, 255, 255, 0.1); border-radius: 50%; pointer-events: none;
+}
+.banner-content { display: flex; align-items: center; gap: 15px; z-index: 1; }
+.banner-icon {
+    font-size: 1.5rem; background: rgba(255, 255, 255, 0.2);
+    width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+    border-radius: 10px;
+}
+.btn-upgrade {
+    background: white; color: #7c3aed; padding: 10px 20px;
+    border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 0.9rem;
+    white-space: nowrap; z-index: 1;
+}
+
+/* --- TOMBOL TRAKTIR --- */
+.btn-coffee {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: linear-gradient(45deg, #F59E0B, #D97706); color: white !important;
+    padding: 12px 28px; border-radius: 50px; font-weight: 700;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); text-decoration: none;
+}
+.btn-coffee:hover { transform: translateY(-3px); }
+.btn-coffee i { animation: wiggle 2s infinite ease-in-out; }
+@keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
+
+/* --- PRO FEATURES SECTION --- */
+.pro-features-section {
+    background: #f8fafc; padding: 15px; border-radius: 12px;
+    margin-bottom: 20px; border: 1px dashed #cbd5e1;
+}
+.input-group { display: flex; align-items: center; }
+.input-group .input-icon {
+    background: #eee; padding: 10px 15px; border-radius: 8px 0 0 8px;
+    border: 1px solid #ccc; border-right: none; color: #666;
+}
+.input-group input { border-radius: 0 8px 8px 0 !important; }
+.bg-upload-wrapper { display: flex; align-items: center; gap: 10px; }
+.bg-preview-box {
+    width: 60px; height: 60px; border-radius: 8px; background-color: #eee;
+    background-size: cover; background-position: center;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; color: #999; text-align: center; border: 1px solid #ddd;
+}
+
+
+/* --- 🔥 MOBILE FIX V3 (INI YG KEMARIN HILANG) 🔥 --- */
 @media (max-width: 768px) {
-    .dash-grid { grid-template-columns: 1fr; gap: 20px; }
-    .p-30 { padding: 20px; }
-    .nav-flex { flex-direction: row; }
-    .username-display { max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
-    .section-header {
-        flex-direction: row; /* Tetap sebaris */
-        align-items: center;
-        gap: 10px; /* Kasih jarak antar Judul dan Tombol */
-    }
-    .section-header h3 {
-        font-size: 1.1rem; /* Kecilin font judul dikit biar muat */
-        margin-bottom: 0;
-    }
-    .preview-section-bottom div {
-        gap: 10px; 
-    }
-}
-
-/* --- TOAST NOTIFICATION (PENGGANTI ALERT) --- */
-.toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 10000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.toast {
-    background: white;
-    min-width: 300px;
-    padding: 16px 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    animation: slideInRight 0.3s ease forwards;
-    border-left: 5px solid var(--gray);
-    overflow: hidden;
-    transform: translateX(120%); /* Mulai dari luar layar */
-}
-
-/* Animasi Masuk */
-@keyframes slideInRight {
-    from { transform: translateX(120%); }
-    to { transform: translateX(0); }
-}
-
-/* Animasi Keluar (Dipanggil via JS) */
-.toast.hide {
-    animation: slideOutRight 0.3s ease forwards;
-}
-
-@keyframes slideOutRight {
-    from { transform: translateX(0); }
-    to { transform: translateX(120%); }
-}
-
-/* Warna-warni Toast */
-.toast.success { border-left-color: #10b981; }
-.toast.success i { color: #10b981; }
-
-.toast.error { border-left-color: #ef4444; }
-.toast.error i { color: #ef4444; }
-
-.toast.warning { border-left-color: #f59e0b; }
-.toast.warning i { color: #f59e0b; }
-
-.toast.info { border-left-color: var(--primary); }
-.toast.info i { color: var(--primary); }
-
-.toast-content { flex: 1; }
-.toast-title { display: block; font-weight: 700; font-size: 0.95rem; color: var(--dark); margin-bottom: 2px; }
-.toast-message { display: block; font-size: 0.85rem; color: var(--gray); }
-
-.toast i { font-size: 1.2rem; }
-
-/* --- MOBILE RESPONSIVE (HP) --- */
-@media (max-width: 768px) {
-    /* 1. Reset Grid jadi 1 kolom */
-    .dash-grid { 
-        grid-template-columns: 1fr; 
-        gap: 20px; 
-    }
-    
-    /* 2. Padding Card (Kotak Putih Konten) */
-    .p-30 { padding: 20px; }
-    
-    /* 3. FIX NAVBAR: Container dipaksa mepet kanan-kiri (Cuma sisa 5px) */
-    .dash-nav .container {
-        padding-left: 10px;  /* Sisa dikit biar gak nempel bezel */
-        padding-right: 10px; /* Logout jadi lebih ke kanan */
-        width: 100%;
-        max-width: 100%;
-    }
-
-    /* 4. Flex Navbar */
-    .nav-flex { 
-        flex-direction: row; 
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-    }
-
-    /* 5. Brand & User Display */
-    .brand {
-        flex: 1; /* Biar dia ambil sisa ruang di kiri */
-        overflow: hidden; /* Jaga-jaga nama panjang */
-    }
-
-    .username-display { 
-        max-width: 140px; /* Sedikit lebih lebar */
-        overflow: hidden; 
-        text-overflow: ellipsis; 
-        white-space: nowrap;
-        font-size: 0.85rem;
-    }
-
-    /* 6. Tombol Logout */
-    .actions {
-        margin-left: 10px; /* Kasih jarak dikit dari nama user */
-        flex-shrink: 0; /* Jangan sampai tombol kegencet */
-    }
-}
-
-/* --- EFEK KLIK (TACTILE FEEL) --- */
-.btn:active, 
-.link-item:active, 
-.preset:active {
-    transform: scale(0.96) !important; /* Mengecil dikit pas dipencet */
-    transition: transform 0.1s;
-}
-
-/* Hover efek halus buat Link Item di Dashboard */
-.link-item {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.link-item:hover {
-    transform: translateY(-3px); /* Naik dikit pas kursor lewat */
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-/* --- FIX TAMPILAN MOBILE (Tambahkan di paling bawah dashboard.css) --- */
-
-/* --- FIX TAMPILAN MOBILE (Replace bagian paling bawah dashboard.css) --- */
-
-html, body {
-    overflow-x: hidden; /* Anti geser kanan-kiri */
-    max-width: 100vw;
-}
-
-@media (max-width: 768px) {
-    /* 1. Reset Layout Utama */
+    /* 1. Paksa Grid jadi Kolom Tunggal */
     .dash-grid {
-        display: flex;
-        flex-direction: column;
+        display: flex !important;
+        flex-direction: column !important;
         width: 100%;
-        gap: 20px;
+        gap: 30px !important;
     }
 
-    .p-30 { padding: 15px !important; }
+    .main-content {
+        padding: 0 15px; 
+    }
 
-    /* 2. Fix Navbar & Container */
-    .dash-nav, .container {
+    /* 2. FIX ALIGNMENT (Biar Profil & Link Selebar Layar) */
+    .profile-editor, 
+    .links-manager {
+        width: 100% !important;
+        max-width: 100%;
+        display: block;
+    }
+
+    /* 3. CARD & FORM Biar Gak Tumpah */
+    .card {
         width: 100%;
-        max-width: 100vw;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    
+    .p-30 { padding: 20px 15px !important; }
+
+    .form-group input, .form-group textarea, .input-prefix {
+        width: 100% !important;
+        max-width: 100%;
         box-sizing: border-box;
     }
+
+    /* 4. NAVBAR FIX */
+    .dash-nav .container {
+        padding-left: 15px; padding-right: 15px;
+        width: 100%; max-width: 100%;
+    }
+    .nav-flex { flex-direction: row; justify-content: space-between; width: 100%; }
+    .brand { flex: 1; overflow: hidden; }
+    .username-display { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem; }
     
-    /* 3. --- RAJA TERAKHIR: FIX LINK ITEM MELEBAR --- */
+    .upgrade-banner { flex-direction: column; text-align: center; gap: 15px; padding: 20px; }
+    .btn-upgrade { width: 100%; text-align: center; display: block; }
+
+    /* 5. FIX LINK ITEM (Biar gak maksa melebar) */
     .link-item {
-        padding: 10px 10px !important; /* Padding lebih tipis */
-        gap: 8px !important;           /* Jarak icon-teks lebih rapat */
-        width: 100%;                   /* Pastikan gak lebih dari container */
-    }
-
-    /* Ini kuncinya: Izinkan area teks mengecil sampai 0 kalau perlu */
-    .link-info {
-        min-width: 0 !important; 
-        flex: 1; /* Ambil sisa ruang yang ada */
-    }
-
-    /* Paksa teks URL panjang buat terpotong (...) */
-    .link-info a {
-        display: block;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 0.8rem; /* Font URL dikecilin dikit biar muat */
-        max-width: 100%;
-    }
-    
-    /* Tombol Hapus (Sampah) gak perlu gede-gede */
-    .link-actions button {
-        width: 30px;
-        height: 30px;
-    }
-
-    /* 4. Fix Tombol Bottom (Copy Link & Lihat) */
-    .preview-section-bottom div {
         display: flex;
-        gap: 10px;
+        flex-wrap: nowrap;
+        align-items: center;
+        width: 100%;
+        padding: 12px 10px !important;
+        gap: 10px !important;
+        box-sizing: border-box;
     }
+
+    .link-info { flex: 1; width: 0; min-width: 0; }
+    .link-info strong { font-size: 0.9rem; }
     
-    .preview-section-bottom .btn {
-        padding: 10px 5px; /* Kurangi padding kiri-kanan */
-        font-size: 0.9rem;
+    /* Paksa URL turun baris kalau kepanjangan */
+    .link-info a {
+        font-size: 0.8rem;
+        color: var(--gray);
+        white-space: normal;      
+        word-break: break-all;    
+        display: block;
+        width: 100%;
+        line-height: 1.3;
+    }
+
+    .drag-handle, .link-actions { flex-shrink: 0; }
+    
+    /* 6. GRID TEMA DI HP */
+    .theme-grid {
+        gap: 15px 10px; /* Jarak aman */
+    }
+    .theme-icon {
+        width: 45px; height: 45px; /* Kecilin dikit buat HP */
+        font-size: 1rem;
     }
 }

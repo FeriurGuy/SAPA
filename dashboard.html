@@ -7,8 +7,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="icon" href="assets/Icons/favicon.png" type="image/png" sizes="96x96">
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
@@ -31,6 +29,23 @@
     </nav>
 
     <div class="container main-content">
+        
+        <div id="upgradeBanner" class="upgrade-banner hidden">
+            <div class="banner-content">
+                <div class="banner-icon">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <div class="banner-text">
+                    <h4>Upgrade ke SAPA Pro</h4>
+                    <p>Dapetin Centang Biru, Analytics Canggih, dan Fitur Sultan lainnya!</p>
+                </div>
+            </div>
+            <a href="https://wa.me/6281234567890?text=Halo%20min,%20saya%20mau%20upgrade%20SAPA%20Pro!" 
+               target="_blank" class="btn-upgrade">
+               Beli Premium (20k)
+            </a>
+        </div>
+
         <div class="dash-grid">
             
             <aside class="profile-editor">
@@ -56,16 +71,83 @@
                             <textarea id="bio" rows="3" placeholder="Ceritain dikit tentang kamu..."></textarea>
                         </div>
 
+                        <div class="pro-features-section">
+                            <h4 style="margin: 20px 0 10px; font-size: 0.9rem; color: #64748b; display: flex; align-items: center; gap: 5px;">
+                                <i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Fitur Pro
+                            </h4>
+
+                            <div class="form-group">
+                                <label>Lagu Latar (Spotify/YouTube)</label>
+                                <div class="input-group">
+                                    <span class="input-icon"><i class="fa-brands fa-spotify"></i></span>
+                                    <input type="url" id="musicUrl" placeholder="Link lagu..." class="pro-input">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Custom Background Image</label>
+                                <div class="bg-upload-wrapper">
+                                    <div id="bgPreview" class="bg-preview-box">
+                                        <span>Tidak ada gambar</span>
+                                    </div>
+                                    <label for="bgInput" class="btn-upload pro-input-btn">
+                                        <i class="fa-solid fa-image"></i> Upload
+                                    </label>
+                                    <input type="file" id="bgInput" accept="image/*" hidden>
+                                    <button type="button" id="deleteBgBtn" class="btn-icon-sm text-red hidden" title="Hapus Background">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label>Tema Warna</label>
                             
-                            <div class="preset-container">
-                                <div class="preset" style="background: #ffffff;" data-color="#ffffff" title="Putih Bersih"></div>
-                                <div class="preset" style="background: #f8fafc;" data-color="#f8fafc" title="Abu Modern"></div>
-                                <div class="preset" style="background: #0f172a;" data-color="#0f172a" title="Dark Mode"></div>
-                                <div class="preset" style="background: #4f46e5;" data-color="#4f46e5" title="SAPA Indigo"></div>
-                                <div class="preset" style="background: #10b981;" data-color="#10b981" title="Emerald"></div>
-                                <div class="preset" style="background: #f43f5e;" data-color="#f43f5e" title="Rose"></div>
+                            <div class="theme-grid">
+                                
+                                <div class="theme-box preset active" data-color="#ffffff">
+                                    <div class="theme-icon bg-white">
+                                        <i class="fa-regular fa-circle"></i>
+                                    </div>
+                                    <span class="theme-name">Clean</span>
+                                </div>
+
+                                <div class="theme-box preset" data-color="#f8fafc">
+                                    <div class="theme-icon bg-grey">
+                                        <i class="fa-solid fa-layer-group"></i>
+                                    </div>
+                                    <span class="theme-name">Soft</span>
+                                </div>
+
+                                <div class="theme-box preset" data-color="#0f172a">
+                                    <div class="theme-icon bg-midnight">
+                                        <i class="fa-solid fa-moon"></i>
+                                    </div>
+                                    <span class="theme-name">Night</span>
+                                </div>
+
+                                <div class="theme-box preset locked-feature" data-color="#4f46e5">
+                                    <div class="theme-icon bg-royal">
+                                        <i class="fa-solid fa-gem"></i>
+                                    </div>
+                                    <span class="theme-name">Royal</span>
+                                </div>
+
+                                <div class="theme-box preset locked-feature" data-color="#10b981">
+                                    <div class="theme-icon bg-cyber">
+                                        <i class="fa-solid fa-terminal"></i>
+                                    </div>
+                                    <span class="theme-name">Hacker</span>
+                                </div>
+
+                                <div class="theme-box preset locked-feature" data-color="#f43f5e">
+                                    <div class="theme-icon bg-love">
+                                        <i class="fa-solid fa-heart"></i>
+                                    </div>
+                                    <span class="theme-name">Love</span>
+                                </div>
+
                             </div>
 
                             <div class="color-picker-wrapper">
@@ -113,6 +195,15 @@
                 </div>
             </main>
         </div>
+    </div>
+
+    <div class="container text-center" style="margin-top: 40px; margin-bottom: 20px;">
+        <a href="https://saweria.co/feri" target="_blank" class="btn-coffee">
+            <i class="fa-solid fa-mug-hot"></i> Traktir Developer Ngopi
+        </a>
+        <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 10px;">
+            Dukung pengembangan SAPA project biar makin keren! 🚀
+        </p>
     </div>
 
     <div id="linkModal" class="modal hidden">
