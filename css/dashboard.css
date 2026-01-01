@@ -32,7 +32,10 @@ body {
     align-items: center;
 }
 
-.brand { display: flex; align-items: center; }
+.brand {
+    display: flex;
+    align-items: center;
+}
 
 .username-display { 
     font-weight: 700; 
@@ -43,16 +46,26 @@ body {
     font-size: 0.9rem;
 }
 
-.divider { margin: 0 10px; color: #cbd5e1; }
+.divider {
+    margin: 0 10px;
+    color: #cbd5e1;
+}
 
 .btn-icon-only {
-    width: 40px; height: 40px; padding: 0;
-    display: flex; align-items: center; justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 8px;
 }
 
 /* --- LAYOUT UTAMA --- */
-.main-content { flex: 1; padding-bottom: 40px; }
+.main-content {
+    flex: 1;
+    padding-bottom: 40px;
+}
 
 .dash-grid {
     display: grid;
@@ -211,6 +224,18 @@ input[type="color"] {
     .p-30 { padding: 20px; }
     .nav-flex { flex-direction: row; }
     .username-display { max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+    .section-header {
+        flex-direction: row; /* Tetap sebaris */
+        align-items: center;
+        gap: 10px; /* Kasih jarak antar Judul dan Tombol */
+    }
+    .section-header h3 {
+        font-size: 1.1rem; /* Kecilin font judul dikit biar muat */
+        margin-bottom: 0;
+    }
+    .preview-section-bottom div {
+        gap: 10px; 
+    }
 }
 
 /* --- TOAST NOTIFICATION (PENGGANTI ALERT) --- */
@@ -341,21 +366,15 @@ input[type="color"] {
 
 /* --- FIX TAMPILAN MOBILE (Tambahkan di paling bawah dashboard.css) --- */
 
-/* 1. Kunci Body biar gak bisa geser kanan-kiri (Horizontal Scroll) */
+/* --- FIX TAMPILAN MOBILE (Replace bagian paling bawah dashboard.css) --- */
+
 html, body {
-    overflow-x: hidden; /* Sembunyikan apapun yang keluar jalur */
-    max-width: 100vw;   /* Lebar maksimal mentok di lebar layar */
+    overflow-x: hidden; /* Anti geser kanan-kiri */
+    max-width: 100vw;
 }
 
 @media (max-width: 768px) {
-    /* 2. Kecilin Padding Card */
-    /* Padding 30px itu kegedean buat HP, makan tempat banget. Kita ubah jadi 15px. */
-    .p-30 {
-        padding: 15px !important;
-    }
-
-    /* 3. Reset Grid jadi Flex Column */
-    /* Kadang grid 1fr suka bandel. Kita paksa jadi Flex biar pasti tumpuk ke bawah. */
+    /* 1. Reset Layout Utama */
     .dash-grid {
         display: flex;
         flex-direction: column;
@@ -363,24 +382,52 @@ html, body {
         gap: 20px;
     }
 
-    /* 4. Amankan Navbar */
-    .dash-nav {
-        width: 100vw; /* Paksa selebar viewport device */
+    .p-30 { padding: 15px !important; }
+
+    /* 2. Fix Navbar & Container */
+    .dash-nav, .container {
+        width: 100%;
+        max-width: 100vw;
+        box-sizing: border-box;
     }
     
-    .dash-nav .container {
-        width: 100%;
-        padding: 0 15px; /* Sesuaikan padding kiri-kanan */
-        box-sizing: border-box; /* Pastikan padding gak nambah lebar total */
+    /* 3. --- RAJA TERAKHIR: FIX LINK ITEM MELEBAR --- */
+    .link-item {
+        padding: 10px 10px !important; /* Padding lebih tipis */
+        gap: 8px !important;           /* Jarak icon-teks lebih rapat */
+        width: 100%;                   /* Pastikan gak lebih dari container */
     }
 
-    /* 5. Amankan Input Form */
-    /* Biar input gak maksa melebar melebihi card */
-    .form-group input, 
-    .form-group textarea,
-    .btn-block {
-        width: 100%; 
+    /* Ini kuncinya: Izinkan area teks mengecil sampai 0 kalau perlu */
+    .link-info {
+        min-width: 0 !important; 
+        flex: 1; /* Ambil sisa ruang yang ada */
+    }
+
+    /* Paksa teks URL panjang buat terpotong (...) */
+    .link-info a {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.8rem; /* Font URL dikecilin dikit biar muat */
         max-width: 100%;
-        box-sizing: border-box;
+    }
+    
+    /* Tombol Hapus (Sampah) gak perlu gede-gede */
+    .link-actions button {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* 4. Fix Tombol Bottom (Copy Link & Lihat) */
+    .preview-section-bottom div {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .preview-section-bottom .btn {
+        padding: 10px 5px; /* Kurangi padding kiri-kanan */
+        font-size: 0.9rem;
     }
 }
