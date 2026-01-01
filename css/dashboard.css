@@ -96,7 +96,7 @@ h3 { margin-bottom: 20px; color: var(--dark); font-size: 1.25rem; }
     border: 1px solid #cbd5e1; border-radius: 10px;
     font-size: 1rem; font-family: inherit; background-color: #fff;
     display: block;
-    box-sizing: border-box; /* Penting biar gak lewat batas */
+    box-sizing: border-box; 
 }
 
 .form-group textarea { resize: vertical; min-height: 100px; }
@@ -111,7 +111,7 @@ h3 { margin-bottom: 20px; color: var(--dark); font-size: 1.25rem; }
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px 10px;
-    margin-bottom: 30px;
+    margin-bottom: 30px; 
     width: 100%;
 }
 
@@ -136,7 +136,7 @@ h3 { margin-bottom: 20px; color: var(--dark); font-size: 1.25rem; }
     border: 2px solid transparent;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    flex-shrink: 0; /* Anti Peyot */
+    flex-shrink: 0; 
 }
 
 .theme-name {
@@ -171,7 +171,7 @@ h3 { margin-bottom: 20px; color: var(--dark); font-size: 1.25rem; }
 .theme-box.locked-feature { opacity: 1; }
 .theme-box.locked-feature .theme-icon { filter: grayscale(0.6); }
 .theme-box.locked-feature .theme-icon::after {
-    content: '\f023';
+    content: '\f023'; 
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
     position: absolute;
@@ -259,7 +259,16 @@ input[type="color"] {
     display: flex; align-items: center; gap: 15px;
     animation: slideInRight 0.3s ease; border-left: 5px solid #64748b;
 }
+
+/* 👇 INI YANG KEMARIN HILANG: ANIMASI MASUK & KELUAR 👇 */
 @keyframes slideInRight { from { transform: translateX(120%); } to { transform: translateX(0); } }
+
+.toast.hide {
+    animation: slideOutRight 0.3s ease forwards;
+}
+@keyframes slideOutRight { from { transform: translateX(0); } to { transform: translateX(120%); } }
+
+/* Warna Toast */
 .toast.success { border-left-color: #10b981; } .toast.success i { color: #10b981; }
 .toast.error { border-left-color: #ef4444; } .toast.error i { color: #ef4444; }
 .toast.warning { border-left-color: #f59e0b; } .toast.warning i { color: #f59e0b; }
@@ -326,88 +335,26 @@ input[type="color"] {
 }
 
 
-/* --- 🔥 MOBILE FIX V3 (INI YG KEMARIN HILANG) 🔥 --- */
+/* --- MOBILE FIX V3 (JANGAN HAPUS!) --- */
 @media (max-width: 768px) {
-    /* 1. Paksa Grid jadi Kolom Tunggal */
-    .dash-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100%;
-        gap: 30px !important;
-    }
-
-    .main-content {
-        padding: 0 15px; 
-    }
-
-    /* 2. FIX ALIGNMENT (Biar Profil & Link Selebar Layar) */
-    .profile-editor, 
-    .links-manager {
-        width: 100% !important;
-        max-width: 100%;
-        display: block;
-    }
-
-    /* 3. CARD & FORM Biar Gak Tumpah */
-    .card {
-        width: 100%;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-    
+    .dash-grid { display: flex !important; flex-direction: column !important; width: 100%; gap: 30px !important; }
+    .main-content { padding: 0 15px; }
+    .profile-editor, .links-manager { width: 100% !important; max-width: 100%; display: block; }
+    .card { width: 100%; box-sizing: border-box; overflow: hidden; }
     .p-30 { padding: 20px 15px !important; }
-
-    .form-group input, .form-group textarea, .input-prefix {
-        width: 100% !important;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    /* 4. NAVBAR FIX */
-    .dash-nav .container {
-        padding-left: 15px; padding-right: 15px;
-        width: 100%; max-width: 100%;
-    }
+    .form-group input, .form-group textarea, .input-prefix { width: 100% !important; max-width: 100%; box-sizing: border-box; }
+    .dash-nav .container { padding-left: 15px; padding-right: 15px; width: 100%; max-width: 100%; }
     .nav-flex { flex-direction: row; justify-content: space-between; width: 100%; }
     .brand { flex: 1; overflow: hidden; }
     .username-display { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem; }
-    
     .upgrade-banner { flex-direction: column; text-align: center; gap: 15px; padding: 20px; }
     .btn-upgrade { width: 100%; text-align: center; display: block; }
-
-    /* 5. FIX LINK ITEM (Biar gak maksa melebar) */
-    .link-item {
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        width: 100%;
-        padding: 12px 10px !important;
-        gap: 10px !important;
-        box-sizing: border-box;
-    }
-
+    .link-item { display: flex; flex-wrap: nowrap; align-items: center; width: 100%; padding: 12px 10px !important; gap: 10px !important; box-sizing: border-box; }
     .link-info { flex: 1; width: 0; min-width: 0; }
     .link-info strong { font-size: 0.9rem; }
-    
-    /* Paksa URL turun baris kalau kepanjangan */
-    .link-info a {
-        font-size: 0.8rem;
-        color: var(--gray);
-        white-space: normal;      
-        word-break: break-all;    
-        display: block;
-        width: 100%;
-        line-height: 1.3;
-    }
-
+    .link-info a { font-size: 0.8rem; color: var(--gray); white-space: normal; word-break: break-all; display: block; width: 100%; line-height: 1.3; }
     .drag-handle, .link-actions { flex-shrink: 0; }
-    
-    /* 6. GRID TEMA DI HP */
-    .theme-grid {
-        gap: 15px 10px; /* Jarak aman */
-    }
-    .theme-icon {
-        width: 45px; height: 45px; /* Kecilin dikit buat HP */
-        font-size: 1rem;
-    }
+    .theme-grid { gap: 15px 10px; }
+    .theme-icon { width: 45px; height: 45px; font-size: 1rem; }
 }
+

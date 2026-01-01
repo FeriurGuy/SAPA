@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="pro-features-section">
-                            <h4 style="margin: 20px 0 10px; font-size: 0.9rem; color: #64748b; display: flex; align-items: center; gap: 5px;">
+                            <h4 style="margin: 0 0 15px; font-size: 0.9rem; color: #64748b; display: flex; align-items: center; gap: 5px;">
                                 <i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Fitur Pro
                             </h4>
 
@@ -94,7 +94,8 @@
                                         <i class="fa-solid fa-image"></i> Upload
                                     </label>
                                     <input type="file" id="bgInput" accept="image/*" hidden>
-                                    <button type="button" id="deleteBgBtn" class="btn-icon-sm text-red hidden" title="Hapus Background">
+                                    
+                                    <button type="button" id="deleteBgBtn" class="btn-trash hidden" title="Hapus Background">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
@@ -158,8 +159,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary btn-block">Simpan Profil</button>
                     </form>
                 </div>
             </aside>
@@ -214,7 +213,7 @@
                 <input type="hidden" id="linkId">
                 <div class="form-group">
                     <label>Judul Link</label>
-                    <input type="text" id="linkTitle" placeholder="Misal: Instagram Saya" required>
+                    <input type="text" id="linkTitle" placeholder="Misal: Instagram" required>
                 </div>
                 <div class="form-group">
                     <label>URL</label>
@@ -222,6 +221,19 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Simpan</button>
             </form>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal hidden">
+        <div class="modal-content text-center" style="max-width: 320px;">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🤔</div>
+            <h3 id="confirmTitle" style="margin-bottom: 10px;">Yakin nih?</h3>
+            <p id="confirmMessage" style="color: #64748b; margin-bottom: 25px;">Tindakan ini tidak bisa dibatalkan lho.</p>
+            
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button id="btnCancel" class="btn btn-outline" style="flex: 1;">Batal</button>
+                <button id="btnConfirm" class="btn btn-danger" style="flex: 1; background: #ef4444; color: white; border: none;">Ya, Hapus</button>
+            </div>
         </div>
     </div>
     

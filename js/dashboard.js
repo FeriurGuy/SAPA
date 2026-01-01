@@ -2,7 +2,7 @@ import { supabase } from './supabase.js';
 
 // --- STATE ---
 let user = null; 
-let userProfile = null; // Simpan data profil lengkap (termasuk is_pro)
+let userProfile = null; // Simpan data profil lengkap
 let isDirty = false;
 
 // --- DOM ELEMENTS ---
@@ -23,14 +23,14 @@ const colorValueDisplay = document.getElementById('colorValue');
 const donationInput = document.getElementById('donationUrl');
 const upgradeBanner = document.getElementById('upgradeBanner');
 
-// Elemen PRO BARU
+// Elemen PRO
 const musicInput = document.getElementById('musicUrl');
 const bgInput = document.getElementById('bgInput');
 const bgPreview = document.getElementById('bgPreview');
 const deleteBgBtn = document.getElementById('deleteBgBtn');
-const proInputs = document.querySelectorAll('.pro-input, .pro-input-btn'); // Class helper
+const proInputs = document.querySelectorAll('.pro-input, .pro-input-btn');
 
-// --- TOAST NOTIFICATION ---
+// --- TOAST NOTIFICATION (MODIFIKASI: 3 DETIK) ---
 function showToast(title, message, type = 'info') {
     const container = document.getElementById('toast-container');
     let iconClass = 'fa-circle-info';
@@ -42,7 +42,12 @@ function showToast(title, message, type = 'info') {
     toast.className = `toast ${type}`;
     toast.innerHTML = `<i class="fa-solid ${iconClass}"></i><div><span class="toast-title">${title}</span><span class="toast-message">${message}</span></div>`;
     container.appendChild(toast);
-    setTimeout(() => { toast.classList.add('hide'); toast.addEventListener('animationend', () => toast.remove()); }, 3500);
+
+    // 👇 INI DIA: Set timer jadi 3000ms (3 Detik) 👇
+    setTimeout(() => { 
+        toast.classList.add('hide'); 
+        toast.addEventListener('animationend', () => toast.remove()); 
+    }, 3000);
 }
 
 // --- 1. INISIALISASI ---
@@ -50,7 +55,7 @@ async function init() {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) { window.location.href = 'login.html'; return; }
     user = session.user;
-    await loadProfile(); // Load profil dulu buat tau status PRO
+    await loadProfile(); 
     await loadLinks();
 }
 init();
@@ -60,20 +65,27 @@ const inputs = [document.getElementById('fullName'), document.getElementById('bi
 inputs.forEach(input => { if(input) input.addEventListener('input', () => { isDirty = true; }); });
 
 // --- LOGIC PRESET WARNA (DIKUNCI BUAT FREE USER) ---
-const presets = document.querySelectorAll('.preset');
+// Note: Selektor diganti jadi .theme-box sesuai HTML baru
+const presets = document.querySelectorAll('.theme-box'); 
+
 presets.forEach(preset => {
     preset.addEventListener('click', () => {
         // CEK STATUS PRO
-        if (!userProfile.is_pro) {
+        const isLocked = preset.classList.contains('locked-feature');
+        
+        // Kalau Fitur Terkunci (User Free klik Pro)
+        if (isLocked) {
             showToast('Fitur Premium 🔒', 'Upgrade ke Pro untuk pakai tema instan ini!', 'warning');
             return;
         }
 
         const color = preset.getAttribute('data-color');
-        bgColorInput.value = color;
-        colorValueDisplay.textContent = color;
-        updateActivePreset(color);
-        isDirty = true;
+        if (color) {
+            bgColorInput.value = color;
+            colorValueDisplay.textContent = color;
+            updateActivePreset(color);
+            isDirty = true;
+        }
     });
 });
 
@@ -86,7 +98,7 @@ bgColorInput.addEventListener('input', (e) => {
 
 function updateActivePreset(color) {
     presets.forEach(p => p.classList.remove('active'));
-    const match = document.querySelector(`.preset[data-color="${color}"]`);
+    const match = document.querySelector(`.theme-box[data-color="${color}"]`);
     if (match) match.classList.add('active');
 }
 
@@ -103,7 +115,7 @@ async function loadProfile() {
         const { data: profile, error } = await supabase.from('profiles').select('*').eq('id', user.id).single();
         if (error) throw error;
         
-        userProfile = profile; // Simpan ke variabel global
+        userProfile = profile; 
 
         // Isi Form Dasar
         document.getElementById('fullName').value = profile.full_name || '';
@@ -146,19 +158,16 @@ async function loadProfile() {
             // ---> USER GRATISAN <---
             if (upgradeBanner) upgradeBanner.classList.remove('hidden');
             
-            // Kunci input Pro (tapi tetap kelihatan biar ngiler)
+            // Kunci input Pro
             proInputs.forEach(el => {
                 el.disabled = true;
                 el.title = "Upgrade ke Pro untuk buka fitur ini";
                 el.parentElement.style.opacity = "0.6";
             });
-            musicInput.value = ''; // Kosongkan visualnya
+            musicInput.value = '';
             
-            // Kunci Preset Warna
-            presets.forEach(p => {
-                p.classList.add('locked-feature');
-                p.title = "Upgrade ke Pro";
-            });
+            // Note: Kita biarkan class 'locked-feature' di HTML tetap ada
+            // JS cuma bertugas membuka kalau dia Pro.
         }
         // -------------------------
 
@@ -172,7 +181,6 @@ profileForm.addEventListener('submit', async (e) => {
     const btn = profileForm.querySelector('button');
     btn.textContent = 'Menyimpan...';
 
-    // Data dasar
     const updates = {
         id: user.id,
         full_name: document.getElementById('fullName').value,
@@ -182,7 +190,6 @@ profileForm.addEventListener('submit', async (e) => {
         updated_at: new Date()
     };
 
-    // Kalau PRO, simpan juga data Musik (Background disimpan pas upload)
     if (userProfile.is_pro) {
         updates.music_url = musicInput.value;
     }
@@ -202,7 +209,7 @@ profileForm.addEventListener('submit', async (e) => {
 
 // LOGIC UPLOAD BACKGROUND (Hanya Pro)
 bgInput.addEventListener('change', async (e) => {
-    if (!userProfile.is_pro) return; // Jaga-jaga
+    if (!userProfile.is_pro) return; 
 
     const file = e.target.files[0];
     if (!file) return;
@@ -212,20 +219,17 @@ bgInput.addEventListener('change', async (e) => {
         const fileExt = file.name.split('.').pop();
         const fileName = `${user.id}-bg-${Date.now()}.${fileExt}`;
         
-        // Upload ke bucket 'backgrounds'
         const { error: uploadError } = await supabase.storage.from('backgrounds').upload(fileName, file);
         if (uploadError) throw uploadError;
 
         const { data: { publicUrl } } = supabase.storage.from('backgrounds').getPublicUrl(fileName);
         
-        // Update Database Langsung
         await supabase.from('profiles').update({ bg_image_url: publicUrl }).eq('id', user.id);
         
-        // Update UI
         bgPreview.style.backgroundImage = `url('${publicUrl}')`;
         bgPreview.innerHTML = '';
         deleteBgBtn.classList.remove('hidden');
-        showToast('Background Terpasang!', 'Keren banget! 😎', 'success');
+        showToast('Background Terpasang!', 'Keren banget! 😎', 'success'); // Ini juga jadi 3 detik
 
     } catch (error) {
         showToast('Gagal Upload', error.message, 'error');
@@ -234,16 +238,61 @@ bgInput.addEventListener('change', async (e) => {
     }
 });
 
-// Hapus Background
-deleteBgBtn.addEventListener('click', async () => {
-    if (!confirm("Hapus background custom?")) return;
-    await supabase.from('profiles').update({ bg_image_url: null }).eq('id', user.id);
-    bgPreview.style.backgroundImage = '';
-    bgPreview.innerHTML = '<span>Tidak ada gambar</span>';
-    deleteBgBtn.classList.add('hidden');
+// --- CUSTOM CONFIRM MODAL LOGIC ---
+const confirmModal = document.getElementById('confirmModal');
+const btnCancel = document.getElementById('btnCancel');
+const btnConfirm = document.getElementById('btnConfirm');
+let confirmCallback = null; // Simpan fungsi yang akan dijalankan kalau user klik YES
+
+function showConfirm(title, message, callback) {
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMessage').textContent = message;
+    confirmCallback = callback;
+    confirmModal.classList.remove('hidden');
+}
+
+// Event Listener buat tombol di dalam modal
+btnCancel.addEventListener('click', () => {
+    confirmModal.classList.add('hidden');
+    confirmCallback = null;
 });
 
-// LOGIC UPLOAD AVATAR (Bisa Semua User)
+btnConfirm.addEventListener('click', () => {
+    if (confirmCallback) confirmCallback();
+    confirmModal.classList.add('hidden');
+});
+
+// Tutup modal kalau klik di luar area
+window.addEventListener('click', (e) => {
+    if (e.target === confirmModal) confirmModal.classList.add('hidden');
+});
+
+
+// --- HAPUS BACKGROUND (PAKE MODAL BARU) ---
+deleteBgBtn.addEventListener('click', () => {
+    // Panggil Modal Keren Kita
+    showConfirm(
+        "Hapus Background?", 
+        "Gambar background kamu bakal hilang dan balik ke warna polos.", 
+        async () => {
+            // Ini logika hapusnya (sama kayak yg lama, cuma dipindah kesini)
+            try {
+                const { error } = await supabase.from('profiles').update({ bg_image_url: null }).eq('id', user.id);
+                if (error) throw error;
+
+                bgPreview.style.backgroundImage = '';
+                bgPreview.innerHTML = '<span>Tidak ada gambar</span>';
+                deleteBgBtn.classList.add('hidden');
+                
+                showToast('Dihapus!', 'Background berhasil dihapus.', 'success');
+            } catch (error) {
+                showToast('Gagal', error.message, 'error');
+            }
+        }
+    );
+});
+
+// LOGIC UPLOAD AVATAR
 avatarInput.addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -260,7 +309,7 @@ avatarInput.addEventListener('change', async (e) => {
     } catch (error) { showToast('Error', error.message, 'error'); } finally { avatarPreview.style.opacity = '1'; }
 });
 
-// --- 3. LINK MANAGER (DENGAN LIMITASI) ---
+// --- 3. LINK MANAGER ---
 async function loadLinks() {
     linksList.innerHTML = '<p class="text-center">Loading...</p>';
     const { data: links, error } = await supabase.from('links').select('*').eq('user_id', user.id).order('position');
@@ -278,18 +327,15 @@ function renderLinks(links) {
         item.className = 'link-item';
         item.setAttribute('data-id', link.id); 
         
-        // --- LOGIC ANALYTICS (HANYA PRO) ---
         let analyticsHTML = '';
         if (userProfile.is_pro) {
-            // Tampilkan Statistik kalau PRO
             analyticsHTML = `
             <div class="link-stats" title="Total Klik">
                 <i class="fa-solid fa-chart-simple"></i>
                 <span>${link.clicks || 0}</span>
             </div>`;
         } else {
-            // Sembunyikan kalau GRATIS (atau kasih gembok kecil)
-            analyticsHTML = ``; // Kosongkan saja biar bersih
+            analyticsHTML = ``; 
         }
 
         item.innerHTML = `
@@ -313,25 +359,17 @@ function renderLinks(links) {
     });
 }
 
-// TAMBAH LINK (DIBATASI 3 UNTUK FREE)
+// TAMBAH LINK (LIMIT 3 UNTUK FREE)
 addLinkBtn.addEventListener('click', () => {
     const currentLinkCount = document.querySelectorAll('.link-item').length;
 
-    // CEK LIMIT
     if (!userProfile.is_pro && currentLinkCount >= 3) {
-        // Tampilkan Modal Rayuan Maut
         showToast('Limit Tercapai! 🔒', 'User Gratis cuma boleh 3 link. Upgrade ke Pro yuk!', 'warning');
-        // Bisa juga trigger buka Banner Upgrade disini
         return; 
     }
 
     linkModal.classList.remove('hidden');
 });
-
-// ... (Sisa fungsi updateLinkOrder, linkForm submit, deleteLink sama seperti sebelumnya) ...
-// Biar kode gak kepanjangan, fungsi-fungsi standar (sanitize, closeModal, linkForm listener) 
-// MASIH SAMA dengan versi sebelumnya. Perlu saya tulis ulang lengkap atau kamu copas bawahnya sendiri?
-// Biar aman saya tulis fungsi sisanya ringkas di bawah ini:
 
 async function updateLinkOrder() {
     const items = document.querySelectorAll('.link-item');
