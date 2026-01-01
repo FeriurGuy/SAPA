@@ -168,7 +168,11 @@ input[type="color"] {
 .sortable-ghost { opacity: 0.4; background: #e0e7ff; border: 2px dashed var(--primary); }
 
 .drag-handle { color: #cbd5e1; cursor: grab; padding: 5px; }
-.link-info { flex: 1; overflow: hidden; }
+.link-info { 
+    flex: 1; 
+    overflow: hidden;
+    min-width: 0;
+}
 .link-info strong { display: block; font-size: 0.95rem; }
 .link-info a { 
     font-size: 0.85rem; color: var(--gray); 
@@ -333,4 +337,50 @@ input[type="color"] {
 .link-item:hover {
     transform: translateY(-3px); /* Naik dikit pas kursor lewat */
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* --- FIX TAMPILAN MOBILE (Tambahkan di paling bawah dashboard.css) --- */
+
+/* 1. Kunci Body biar gak bisa geser kanan-kiri (Horizontal Scroll) */
+html, body {
+    overflow-x: hidden; /* Sembunyikan apapun yang keluar jalur */
+    max-width: 100vw;   /* Lebar maksimal mentok di lebar layar */
+}
+
+@media (max-width: 768px) {
+    /* 2. Kecilin Padding Card */
+    /* Padding 30px itu kegedean buat HP, makan tempat banget. Kita ubah jadi 15px. */
+    .p-30 {
+        padding: 15px !important;
+    }
+
+    /* 3. Reset Grid jadi Flex Column */
+    /* Kadang grid 1fr suka bandel. Kita paksa jadi Flex biar pasti tumpuk ke bawah. */
+    .dash-grid {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 20px;
+    }
+
+    /* 4. Amankan Navbar */
+    .dash-nav {
+        width: 100vw; /* Paksa selebar viewport device */
+    }
+    
+    .dash-nav .container {
+        width: 100%;
+        padding: 0 15px; /* Sesuaikan padding kiri-kanan */
+        box-sizing: border-box; /* Pastikan padding gak nambah lebar total */
+    }
+
+    /* 5. Amankan Input Form */
+    /* Biar input gak maksa melebar melebihi card */
+    .form-group input, 
+    .form-group textarea,
+    .btn-block {
+        width: 100%; 
+        max-width: 100%;
+        box-sizing: border-box;
+    }
 }
