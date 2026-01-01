@@ -1,12 +1,17 @@
 import { supabase } from './supabase.js';
 
+// --- KONFIGURASI KHUSUS ANALYTICS ---
+// Kita butuh ini buat fetch manual dengan fitur 'keepalive'
+const SUPABASE_URL = 'https://urrpvfcqnkosawceesui.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVycnB2ZmNxbmtvc2F3Y2Vlc3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxOTQyMjgsImV4cCI6MjA4Mjc3MDIyOH0.QVUJqeaoJJY3VU7dtm515kerVF6zBm0k9jJeW2zClqo';
+
 // --- ELEMENTS ---
 const pAvatar = document.getElementById('pAvatar');
 const pName = document.getElementById('pName');
 const pBio = document.getElementById('pBio');
 const pLinks = document.getElementById('pLinks');
 
-// --- FUNGSI TAMPILAN 404 (USER NOT FOUND) ---
+// --- FUNGSI TAMPILAN 404 ---
 function show404() {
     document.body.className = '';
     document.body.style.backgroundColor = '#f8fafc';
@@ -56,7 +61,7 @@ async function renderProfile() {
         
         document.title = `${profile.full_name} | SAPA`;
         
-        // NAMA & BADGE
+        // --- NAMA & BADGE ---
         pName.innerHTML = sanitize(profile.full_name || `@${profile.username}`);
         if (profile.is_pro) {
             const badge = document.createElement('i');
@@ -134,7 +139,11 @@ async function renderProfile() {
             links.forEach((link, index) => {
                 const a = document.createElement('a');
                 a.href = link.url;
-                // a.target = '_blank'; <--- KITA MATIKAN DULU BIAR KONTROL DI JS
+                
+                // 🔥 PENTING: Buka di tab baru (Best Practice & Lebih Aman buat Analytics)
+                a.target = '_blank'; 
+                a.rel = 'noopener noreferrer';
+                
                 a.className = 'link-card animate-enter';
                 a.style.animationDelay = `${index * 0.1}s`; 
 
@@ -145,20 +154,23 @@ async function renderProfile() {
                 }
 
                 // ===========================================
-                // 🔥 LOGIC KLIK SAKTI (PAKE DELAY) 🔥
+                // 🔥 ANALYTICS SUPER (Keep-Alive) 🔥
                 // ===========================================
-                a.addEventListener('click', (e) => {
-                    e.preventDefault(); // 1. TAHAN! Jangan pindah dulu.
+                a.addEventListener('click', () => {
+                    // Gunakan native Fetch dengan 'keepalive: true'
+                    // Ini memastikan request tetap dikirim walaupun tab ditutup/pindah
+                    fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_clicks`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        },
+                        body: JSON.stringify({ link_id: link.id }),
+                        keepalive: true // <--- JURUS KUNCI
+                    }).catch(err => console.error("Tracking Error:", err));
                     
-                    // 2. Kirim sinyal ke Supabase
-                    console.log('📡 Sending beacon for:', link.title);
-                    supabase.rpc('increment_clicks', { link_id: link.id });
-
-                    // 3. Pindah manual setelah 300ms (0.3 detik)
-                    // Waktu segini cukup buat sinyal keluar, tapi user gak ngerasa ngelag.
-                    setTimeout(() => {
-                        window.open(link.url, '_blank'); // Buka di tab baru
-                    }, 300);
+                    console.log('📡 Tracking Sent (Keep-Alive):', link.title);
                 });
                 // ===========================================
 
