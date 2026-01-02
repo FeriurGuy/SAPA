@@ -122,4 +122,33 @@ async function checkSession() {
     }
 }
 
+// ... kode checkSession() di atasnya ...
+
+// --- 4. LOGIC SOCIAL LOGIN (Google, GitHub, LinkedIn) ---
+// Fungsi ini dipanggil pas tombol sosmed di HTML diklik
+window.handleSocialLogin = async (provider) => {
+    try {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: provider,
+            options: {
+                // Setelah login sukses, user diarahkan ke dashboard
+                redirectTo: window.location.origin + '/dashboard.html'
+            }
+        });
+
+        if (error) throw error;
+        
+        // Supabase otomatis redirect ke LinkedIn/Google, jadi gak perlu alert.
+        
+    } catch (error) {
+        console.error("Social login error:", error);
+        // Pastikan fungsi showAlert sudah ada di bagian atas file
+        if (typeof showAlert === 'function') {
+            showAlert("Gagal login sosmed: " + error.message);
+        } else {
+            alert("Gagal login sosmed: " + error.message);
+        }
+    }
+};
+
 checkSession();
