@@ -66,7 +66,7 @@ async function renderProfile() {
         }
         pBio.textContent = profile.bio || '';
 
-        // --- LOGIKA TEMA & BACKGROUND (YANG BARU DISINI) ---
+        // --- LOGIKA TEMA & BACKGROUND ---
         document.body.className = ''; 
         document.body.style.backgroundColor = '';
         document.body.style.backgroundImage = ''; // Reset bg image
@@ -81,12 +81,12 @@ async function renderProfile() {
             document.body.style.backgroundImage = `url('${profile.bg_image_url}')`;
             document.body.style.backgroundSize = 'cover';
             document.body.style.backgroundPosition = 'center';
-            document.body.style.backgroundAttachment = 'fixed'; // Efek parallax keren
+            document.body.style.backgroundAttachment = 'fixed'; 
             
             // Kalau pakai gambar, kita paksa teks jadi putih & kartu jadi gelap transparan
             textColor = '#ffffff';
             document.body.style.color = textColor;
-            customCardBg = 'rgba(0, 0, 0, 0.5)'; // Hitam semi-transparan
+            customCardBg = 'rgba(0, 0, 0, 0.5)'; 
             customCardBorder = '1px solid rgba(255, 255, 255, 0.25)';
 
         } else if (profile.bg_color) {
@@ -100,7 +100,7 @@ async function renderProfile() {
                 document.body.style.backgroundColor = profile.bg_color;
                 textColor = getContrastColor(profile.bg_color);
                 document.body.style.color = textColor;
-                // Logika kontras kartu (seperti sebelumnya)
+                
                 if (textColor === '#ffffff') {
                     customCardBg = 'rgba(0, 0, 0, 0.4)';
                     customCardBorder = '1px solid rgba(255, 255, 255, 0.2)';
@@ -110,7 +110,6 @@ async function renderProfile() {
                 }
             }
         }
-        // --------------------------------------------------
 
         // Set Avatar
         pAvatar.src = profile.avatar_url || 'https://ui-avatars.com/api/?name=' + profile.username;
@@ -125,7 +124,7 @@ async function renderProfile() {
             links.forEach((link, index) => {
                 const a = document.createElement('a');
                 a.href = link.url;
-                a.target = '_blank';
+                a.target = '_blank'; // Default buka tab baru
                 a.className = 'link-card animate-enter';
                 a.style.animationDelay = `${index * 0.1}s`; 
 
@@ -133,13 +132,30 @@ async function renderProfile() {
                 if (customCardBg) {
                     a.style.background = customCardBg;
                     a.style.border = customCardBorder;
-                    a.style.color = textColor; // Ikut warna teks body
+                    a.style.color = textColor;
                 }
 
-                // Analytics Click Listener
-                a.addEventListener('click', () => {
-                     supabase.rpc('increment_clicks', { link_id: link.id });
+                // --- BAGIAN INI SUDAH DIPERBAIKI (HYBRID LOGIC) ---
+                a.addEventListener('click', (e) => {
+                    // 1. Kirim data klik ke Supabase (tetap jalan)
+                    supabase.rpc('increment_clicks', { link_id: link.id });
+
+                    // 2. Cek apakah ini buka Tab Baru?
+                    if (a.target === '_blank') {
+                        // KASUS LAPTOP (Tab Baru):
+                        // Biarkan browser jalan normal (return).
+                        // Jangan pakai delay/preventDefault biar gak kena blokir.
+                        return; 
+                    }
+
+                    // KASUS HP/TAB SAMA (Kalau suatu saat diedit jadi _self):
+                    // Tahan sebentar biar data sempat terkirim
+                    e.preventDefault();
+                    setTimeout(() => {
+                        window.location.href = link.url;
+                    }, 300);
                 });
+                // --------------------------------------------------
 
                 let iconClass = 'fa-solid fa-link';
                 const urlLower = link.url.toLowerCase();
@@ -159,7 +175,6 @@ async function renderProfile() {
         }
         
         // --- FITUR MUSIK LATAR (EMBED) ---
-        // Kalau ada link musik, kita selipkan player tersembunyi
         if (profile.music_url && (profile.music_url.includes('youtube') || profile.music_url.includes('youtu.be'))) {
             let videoId = '';
             if (profile.music_url.includes('youtu.be')) videoId = profile.music_url.split('/').pop();
@@ -167,12 +182,10 @@ async function renderProfile() {
             
             if (videoId) {
                 const playerDiv = document.createElement('div');
-                // Player kecil di pojok kiri bawah biar gak ganggu
                 playerDiv.style.cssText = 'position: fixed; bottom: 20px; left: 20px; z-index: 100; width: 80px; height: 80px; border-radius: 50%; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 3px solid white; animation: spin 10s linear infinite;';
                 playerDiv.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&loop=1&playlist=${videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="pointer-events: none; transform: scale(2);"></iframe>`;
                 document.body.appendChild(playerDiv);
                 
-                // Tambah animasi muter ala piringan hitam
                 if (!document.getElementById('animSpin')) {
                     const style = document.createElement('style');
                     style.id = 'animSpin';
@@ -181,7 +194,6 @@ async function renderProfile() {
                 }
             }
         }
-        // ----------------------------------
 
     } catch (error) {
         console.error("Error renderer:", error);

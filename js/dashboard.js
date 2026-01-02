@@ -198,7 +198,7 @@ profileForm.addEventListener('submit', async (e) => {
     
     if (error) showToast('Gagal', error.message, 'error');
     else {
-        showToast('Berhasil!', 'Profil disimpan.', 'success');
+        showToast('Berhasil!', ' Profil disimpan.', 'success');
         isDirty = false;
         // Reload data biar sinkron
         const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
@@ -390,10 +390,24 @@ linkForm.addEventListener('submit', async (e) => {
     if (error) showToast('Gagal', 'Error database', 'error');
     else { closeLinkModal(); linkForm.reset(); loadLinks(); showToast('Sukses', 'Link ditambah', 'success'); }
 });
-window.deleteLink = async (id) => {
-    if (!confirm('Hapus link?')) return;
-    const { error } = await supabase.from('links').delete().eq('id', id);
-    if (!error) { loadLinks(); showToast('Dihapus', 'Link hilang', 'info'); }
+// KODE BARU (PAKE CUSTOM MODAL)
+window.deleteLink = (id) => {
+    // Panggil modal konfirmasi custom kita
+    showConfirm(
+        "Hapus Link Ini?", // Judul Modal
+        "Yakin mau hapus? Link yang dihapus gak bisa balik lagi lho.", // Pesan
+        async () => {
+            // Callback: Ini jalan kalau user klik tombol "Ya, Hapus"
+            const { error } = await supabase.from('links').delete().eq('id', id);
+            
+            if (error) {
+                showToast('Gagal', 'Gagal menghapus link', 'error');
+            } else {
+                loadLinks(); // Refresh list link
+                showToast('Terhapus!', ' Link berhasil dihapus.', 'success');
+            }
+        }
+    );
 };
 closeModal.addEventListener('click', closeLinkModal);
 function closeLinkModal() { linkModal.classList.add('hidden'); }
