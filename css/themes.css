@@ -81,3 +81,81 @@ body.theme-cyber .link-card:hover {
     color: #000;
     box-shadow: 0 0 15px #00ff41;
 }
+
+/* --- TEMA PRO BARU --- */
+
+/* 4. TEMA SULTAN (Mewah / Gold) */
+body.theme-gold {
+    background-color: #000000 !important;
+    background-image: radial-gradient(circle at top right, #333 0%, #000 40%);
+    color: #FFD700; /* Warna Emas */
+    font-family: 'Outfit', sans-serif;
+}
+body.theme-gold .profile-avatar {
+    border: 3px solid #FFD700;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+}
+body.theme-gold .link-card {
+    background: linear-gradient(145deg, #1a1a1a, #000);
+    border: 1px solid #FFD700;
+    color: #FFD700;
+    border-radius: 8px;
+}
+body.theme-gold .link-card:hover {
+    background: #FFD700;
+    color: #000;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    transform: translateY(-3px);
+    font-weight: 800;
+}
+
+/* 5. TEMA OCEAN (Segar / Clean) */
+body.theme-ocean {
+    background: linear-gradient(180deg, #0f172a 0%, #0ea5e9 100%) !important;
+    color: #f0f9ff;
+    font-family: 'Inter', sans-serif;
+    background-attachment: fixed;
+}
+body.theme-ocean .profile-avatar {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+body.theme-ocean .link-card {
+    background: rgba(255, 255, 255, 0.15); /* Glassmorphism */
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: white;
+}
+body.theme-ocean .link-card:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+}
+
+/* 6. TEMA SUNSET (Aesthetic / Vaporwave) */
+body.theme-sunset {
+    background: linear-gradient(45deg, #4c1d95, #c2410c) !important;
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    background-attachment: fixed;
+}
+body.theme-sunset .profile-avatar {
+    border: 4px solid #fff;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+}
+body.theme-sunset .link-card {
+    background: rgba(255, 255, 255, 0.95);
+    color: #c2410c;
+    border-radius: 50px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-weight: 700;
+}
+body.theme-sunset .link-card:hover {
+    background: #fff;
+    color: #4c1d95; /* Berubah jadi ungu pas hover */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}

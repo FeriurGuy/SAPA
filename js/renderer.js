@@ -192,6 +192,9 @@ async function renderProfile() {
             if (color === '#0f172a') document.body.classList.add('theme-dark');
             else if (['#f43f5e', '#fff1f2', '#fecdd3'].includes(color)) document.body.classList.add('theme-pastel');
             else if (color === '#10b981') document.body.classList.add('theme-cyber');
+            else if (color === '#ffd700') document.body.classList.add('theme-gold');   // Sultan
+            else if (color === '#0ea5e9') document.body.classList.add('theme-ocean');  // Ocean
+            else if (color === '#f97316') document.body.classList.add('theme-sunset'); // Sunset
             else {
                 // Warna Custom Manual
                 document.body.style.backgroundColor = profile.bg_color;
