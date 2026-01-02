@@ -1,6 +1,8 @@
 import { supabase } from './supabase.js';
 
-// --- STATE ---
+// ==========================================
+// 1. STATE & VARIABLES
+// ==========================================
 let user = null; 
 let userProfile = null; // Simpan data profil lengkap
 let isDirty = false;
@@ -30,7 +32,7 @@ const bgPreview = document.getElementById('bgPreview');
 const deleteBgBtn = document.getElementById('deleteBgBtn');
 const proInputs = document.querySelectorAll('.pro-input, .pro-input-btn');
 
-// --- TOAST NOTIFICATION (MODIFIKASI: 3 DETIK) ---
+// --- TOAST NOTIFICATION (3 DETIK) ---
 function showToast(title, message, type = 'info') {
     const container = document.getElementById('toast-container');
     let iconClass = 'fa-circle-info';
@@ -43,14 +45,16 @@ function showToast(title, message, type = 'info') {
     toast.innerHTML = `<i class="fa-solid ${iconClass}"></i><div><span class="toast-title">${title}</span><span class="toast-message">${message}</span></div>`;
     container.appendChild(toast);
 
-    // 👇 INI DIA: Set timer jadi 3000ms (3 Detik) 👇
+    // Auto hilang dalam 3 detik
     setTimeout(() => { 
         toast.classList.add('hide'); 
         toast.addEventListener('animationend', () => toast.remove()); 
     }, 3000);
 }
 
-// --- 1. INISIALISASI ---
+// ==========================================
+// 2. INISIALISASI & LOAD DATA
+// ==========================================
 async function init() {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) { window.location.href = 'login.html'; return; }
@@ -60,22 +64,20 @@ async function init() {
 }
 init();
 
-// --- DETEKSI PERUBAHAN ---
+// --- DETEKSI PERUBAHAN INPUT (Buat warning kalau belum save) ---
 const inputs = [document.getElementById('fullName'), document.getElementById('bio'), bgColorInput, donationInput, musicInput];
 inputs.forEach(input => { if(input) input.addEventListener('input', () => { isDirty = true; }); });
 
-// --- LOGIC PRESET WARNA (DIKUNCI BUAT FREE USER) ---
-// Note: Selektor diganti jadi .theme-box sesuai HTML baru
+// --- LOGIC PRESET TEMA (WARNA) ---
 const presets = document.querySelectorAll('.theme-box'); 
 
 presets.forEach(preset => {
     preset.addEventListener('click', () => {
-        // CEK STATUS PRO
+        // Cek apakah fitur ini dikunci?
         const isLocked = preset.classList.contains('locked-feature');
         
-        // Kalau Fitur Terkunci (User Free klik Pro)
         if (isLocked) {
-            showToast('Fitur Premium 🔒', 'Upgrade ke Pro untuk pakai tema instan ini!', 'warning');
+            showToast('Fitur Premium 👑', 'Upgrade ke Pro untuk pakai tema instan ini!', 'warning');
             return;
         }
 
@@ -90,7 +92,7 @@ presets.forEach(preset => {
 });
 
 bgColorInput.addEventListener('input', (e) => {
-    // Manual color BOLEH buat user gratis
+    // Manual color picker BOLEH dipakai semua user
     const color = e.target.value;
     colorValueDisplay.textContent = color;
     updateActivePreset(color);
@@ -109,7 +111,9 @@ previewBtn.addEventListener('click', (e) => {
     }
 });
 
-// --- 2. LOAD PROFILE & PRO LOGIC ---
+// ==========================================
+// 3. LOGIC PROFIL & FITUR PRO
+// ==========================================
 async function loadProfile() {
     try {
         const { data: profile, error } = await supabase.from('profiles').select('*').eq('id', user.id).single();
@@ -129,12 +133,15 @@ async function loadProfile() {
 
         // Navbar & Avatar
         navUsername.textContent = '@' + profile.username;
-        previewBtn.href = `profile.html?u=${profile.username}`;
+        
+        // ---> [UPDATE] PREVIEW LINK JADI PENDEK <---
+        previewBtn.href = `${window.location.origin}/${profile.username}`;
+        
         if (profile.avatar_url) avatarPreview.style.backgroundImage = `url('${profile.avatar_url}')`;
 
-        // --- HANDLING FITUR PRO ---
+        // --- CEK STATUS PRO / FREE ---
         if (profile.is_pro) {
-            // ---> USER SULTAN (PRO) <---
+            // ---> USER PRO <---
             if (upgradeBanner) upgradeBanner.classList.add('hidden');
             if (!navUsername.innerHTML.includes('fa-circle-check')) {
                 navUsername.innerHTML += ` <i class="fa-solid fa-circle-check" style="color:#3b82f6; margin-left:5px;"></i>`;
@@ -151,11 +158,11 @@ async function loadProfile() {
                 deleteBgBtn.classList.remove('hidden');
             }
 
-            // Buka Gembok Preset
+            // Buka Gembok Preset Tema
             presets.forEach(p => p.classList.remove('locked-feature'));
 
         } else {
-            // ---> USER GRATISAN <---
+            // ---> USER GRATIS <---
             if (upgradeBanner) upgradeBanner.classList.remove('hidden');
             
             // Kunci input Pro
@@ -166,10 +173,8 @@ async function loadProfile() {
             });
             musicInput.value = '';
             
-            // Note: Kita biarkan class 'locked-feature' di HTML tetap ada
-            // JS cuma bertugas membuka kalau dia Pro.
+            // Note: Class 'locked-feature' di HTML biarkan saja, JS gak perlu nambahin manual
         }
-        // -------------------------
 
         isDirty = false;
     } catch (error) { console.error('Gagal load profile:', error); }
@@ -198,7 +203,7 @@ profileForm.addEventListener('submit', async (e) => {
     
     if (error) showToast('Gagal', error.message, 'error');
     else {
-        showToast('Berhasil!', ' Profil disimpan.', 'success');
+        showToast('Berhasil!', 'Profil disimpan.', 'success');
         isDirty = false;
         // Reload data biar sinkron
         const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
@@ -229,7 +234,7 @@ bgInput.addEventListener('change', async (e) => {
         bgPreview.style.backgroundImage = `url('${publicUrl}')`;
         bgPreview.innerHTML = '';
         deleteBgBtn.classList.remove('hidden');
-        showToast('Background Terpasang!', 'Keren banget! 😎', 'success'); // Ini juga jadi 3 detik
+        showToast('Background Terpasang!', 'Keren banget! 🤩', 'success');
 
     } catch (error) {
         showToast('Gagal Upload', error.message, 'error');
@@ -238,11 +243,13 @@ bgInput.addEventListener('change', async (e) => {
     }
 });
 
-// --- CUSTOM CONFIRM MODAL LOGIC ---
+// ==========================================
+// 4. CUSTOM CONFIRM MODAL (PENGGANTI ALERT)
+// ==========================================
 const confirmModal = document.getElementById('confirmModal');
 const btnCancel = document.getElementById('btnCancel');
 const btnConfirm = document.getElementById('btnConfirm');
-let confirmCallback = null; // Simpan fungsi yang akan dijalankan kalau user klik YES
+let confirmCallback = null; 
 
 function showConfirm(title, message, callback) {
     document.getElementById('confirmTitle').textContent = title;
@@ -251,7 +258,6 @@ function showConfirm(title, message, callback) {
     confirmModal.classList.remove('hidden');
 }
 
-// Event Listener buat tombol di dalam modal
 btnCancel.addEventListener('click', () => {
     confirmModal.classList.add('hidden');
     confirmCallback = null;
@@ -262,20 +268,17 @@ btnConfirm.addEventListener('click', () => {
     confirmModal.classList.add('hidden');
 });
 
-// Tutup modal kalau klik di luar area
 window.addEventListener('click', (e) => {
     if (e.target === confirmModal) confirmModal.classList.add('hidden');
 });
 
 
-// --- HAPUS BACKGROUND (PAKE MODAL BARU) ---
+// HAPUS BACKGROUND (PAKE MODAL BARU)
 deleteBgBtn.addEventListener('click', () => {
-    // Panggil Modal Keren Kita
     showConfirm(
         "Hapus Background?", 
         "Gambar background kamu bakal hilang dan balik ke warna polos.", 
         async () => {
-            // Ini logika hapusnya (sama kayak yg lama, cuma dipindah kesini)
             try {
                 const { error } = await supabase.from('profiles').update({ bg_image_url: null }).eq('id', user.id);
                 if (error) throw error;
@@ -309,7 +312,9 @@ avatarInput.addEventListener('change', async (e) => {
     } catch (error) { showToast('Error', error.message, 'error'); } finally { avatarPreview.style.opacity = '1'; }
 });
 
-// --- 3. LINK MANAGER ---
+// ==========================================
+// 5. LINK MANAGER (CRUD)
+// ==========================================
 async function loadLinks() {
     linksList.innerHTML = '<p class="text-center">Loading...</p>';
     const { data: links, error } = await supabase.from('links').select('*').eq('user_id', user.id).order('position');
@@ -334,8 +339,6 @@ function renderLinks(links) {
                 <i class="fa-solid fa-chart-simple"></i>
                 <span>${link.clicks || 0}</span>
             </div>`;
-        } else {
-            analyticsHTML = ``; 
         }
 
         item.innerHTML = `
@@ -364,10 +367,9 @@ addLinkBtn.addEventListener('click', () => {
     const currentLinkCount = document.querySelectorAll('.link-item').length;
 
     if (!userProfile.is_pro && currentLinkCount >= 3) {
-        showToast('Limit Tercapai! 🔒', 'User Gratis cuma boleh 3 link. Upgrade ke Pro yuk!', 'warning');
+        showToast('Limit Tercapai! 👑', 'User Gratis cuma boleh 3 link. Upgrade ke Pro yuk!', 'warning');
         return; 
     }
-
     linkModal.classList.remove('hidden');
 });
 
@@ -380,7 +382,9 @@ async function updateLinkOrder() {
     });
     await supabase.from('links').upsert(updates, { onConflict: 'id' });
 }
+
 function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
+
 linkForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = document.getElementById('linkTitle').value;
@@ -390,46 +394,51 @@ linkForm.addEventListener('submit', async (e) => {
     if (error) showToast('Gagal', 'Error database', 'error');
     else { closeLinkModal(); linkForm.reset(); loadLinks(); showToast('Sukses', 'Link ditambah', 'success'); }
 });
-// KODE BARU (PAKE CUSTOM MODAL)
+
+// HAPUS LINK (PAKE MODAL BARU)
 window.deleteLink = (id) => {
-    // Panggil modal konfirmasi custom kita
     showConfirm(
-        "Hapus Link Ini?", // Judul Modal
-        "Yakin mau hapus? Link yang dihapus gak bisa balik lagi lho.", // Pesan
+        "Hapus Link Ini?", 
+        "Yakin mau hapus? Link yang dihapus gak bisa balik lagi lho.", 
         async () => {
-            // Callback: Ini jalan kalau user klik tombol "Ya, Hapus"
             const { error } = await supabase.from('links').delete().eq('id', id);
             
             if (error) {
                 showToast('Gagal', 'Gagal menghapus link', 'error');
             } else {
-                loadLinks(); // Refresh list link
-                showToast('Terhapus!', ' Link berhasil dihapus.', 'success');
+                loadLinks(); 
+                showToast('Terhapus!', 'Link berhasil dihapus.', 'success');
             }
         }
     );
 };
+
 closeModal.addEventListener('click', closeLinkModal);
 function closeLinkModal() { linkModal.classList.add('hidden'); }
 window.addEventListener('click', (e) => { if (e.target == linkModal) closeLinkModal(); });
+
+// LOGOUT
 logoutBtn.addEventListener('click', async () => { await supabase.auth.signOut(); window.location.href = 'index.html'; });
+
+// ==========================================
+// 6. SHARE & COPY LINK (UPDATED LOGIC)
+// ==========================================
 const shareBtn = document.getElementById('shareBtn');
-// ... kode shareBtn yang lama diganti ini ...
 if (shareBtn) {
     shareBtn.addEventListener('click', () => {
         const username = navUsername.textContent.replace('@', '').trim();
-        const fullUrl = `${window.location.origin}/profile.html?u=${username}`;
+        
+        // ---> [UPDATE] COPY LINK PENDEK BIAR KEREN <---
+        const fullUrl = `${window.location.origin}/${username}`;
         
         navigator.clipboard.writeText(fullUrl).then(() => {
-            // 1. Munculin Toast
             showToast('Disalin!', 'Link profil siap dibagikan', 'success');
             
-            // 2. Efek Visual di Tombol (Feedback Langsung)
+            // Efek Visual Tombol
             const originalHTML = shareBtn.innerHTML;
             shareBtn.innerHTML = `<i class="fa-solid fa-check"></i> Tersalin!`;
-            shareBtn.classList.add('btn-success'); // Pastikan ada style ini atau biarkan default
+            shareBtn.classList.add('btn-success'); 
             
-            // Balikin tombol kayak semula setelah 2 detik
             setTimeout(() => {
                 shareBtn.innerHTML = originalHTML;
                 shareBtn.classList.remove('btn-success');
