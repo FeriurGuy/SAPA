@@ -414,10 +414,26 @@ function closeLinkModal() { linkModal.classList.add('hidden'); }
 window.addEventListener('click', (e) => { if (e.target == linkModal) closeLinkModal(); });
 logoutBtn.addEventListener('click', async () => { await supabase.auth.signOut(); window.location.href = 'index.html'; });
 const shareBtn = document.getElementById('shareBtn');
+// ... kode shareBtn yang lama diganti ini ...
 if (shareBtn) {
     shareBtn.addEventListener('click', () => {
         const username = navUsername.textContent.replace('@', '').trim();
-        navigator.clipboard.writeText(`${window.location.origin}/profile.html?u=${username}`)
-            .then(() => showToast('Disalin!', 'Link profil sudah di clipboard', 'success'));
+        const fullUrl = `${window.location.origin}/profile.html?u=${username}`;
+        
+        navigator.clipboard.writeText(fullUrl).then(() => {
+            // 1. Munculin Toast
+            showToast('Disalin!', 'Link profil siap dibagikan', 'success');
+            
+            // 2. Efek Visual di Tombol (Feedback Langsung)
+            const originalHTML = shareBtn.innerHTML;
+            shareBtn.innerHTML = `<i class="fa-solid fa-check"></i> Tersalin!`;
+            shareBtn.classList.add('btn-success'); // Pastikan ada style ini atau biarkan default
+            
+            // Balikin tombol kayak semula setelah 2 detik
+            setTimeout(() => {
+                shareBtn.innerHTML = originalHTML;
+                shareBtn.classList.remove('btn-success');
+            }, 2000);
+        });
     });
 }

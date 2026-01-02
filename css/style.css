@@ -289,12 +289,13 @@ footer {
 
 /* --- SKELETON LOADING ANIMATION --- */
 .skeleton {
-    background: #f1f5f9; /* Base lebih terang */
-    background: linear-gradient(90deg, #f1f5f9 25%, #ffffff 50%, #f1f5f9 75%); /* Kilau putih */
+    background: #f1f5f9;
+    /* Gradasi lebih lebar biar kilaunya halus */
+    background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%); 
     background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+    animation: shimmer 1.2s infinite linear; /* Percepat jadi 1.2s */
     border-radius: 8px;
-    color: transparent !important; /* Sembunyikan teks loading */
+    color: transparent !important;
 }
 
 @keyframes shimmer {
