@@ -41,15 +41,4 @@ Project ini dikembangkan sebagai *Mini SaaS* (Software as a Service) dengan sist
     * `SortableJS` (Drag & drop list).
     * `Vanilla-Tilt` (Efek 3D pada kartu).
     * `FontAwesome` (Ikon).
-* **Hosting:** Vercel / Netlify.
-
----
-
-## 🚀 Cara Install (Local Development)
-
-Ikuti langkah ini untuk menjalankan project di komputer kamu:
-
-### 1. Clone Repository
-```bash
-git clone [https://github.com/username/SAPA.git](https://github.com/username/SAPA.git)
-cd SAPA
+* **Hosting:** Vercel.
