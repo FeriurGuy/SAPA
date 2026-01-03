@@ -64,7 +64,7 @@
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
-/* Input Prefix (buat sapa.com/...) */
+/* Input Prefix*/
 .input-prefix {
     display: flex;
     align-items: center;
@@ -80,7 +80,7 @@
     font-size: 0.9rem;
     background-color: #f1f5f9;
     border-right: 1px solid #e2e8f0;
-    height: 46px; /* Samain tinggi input */
+    height: 46px;
     display: flex;
     align-items: center;
 }
@@ -151,7 +151,7 @@
 }
 
 .divider-text span {
-    background-color: #ffffff; /* Sesuaikan warna background kartu auth kamu */
+    background-color: #ffffff;
     padding: 0 15px;
     position: relative;
     z-index: 1;
@@ -191,7 +191,7 @@
     font-size: 1.2rem;
 }
 
-/* Efek Hover biar interaktif */
+/* Efek Hover */
 .btn-social:hover {
     background-color: #f8fafc;
     transform: translateY(-2px);
@@ -199,7 +199,7 @@
     border-color: #cbd5e1;
 }
 
-/* Warna spesifik ikon pas di-hover (Opsional, biar makin cakep) */
+/* Warna spesifik ikon pas di-hover */
 .btn-social.google:hover i { color: #DB4437; }
 .btn-social.github:hover i { color: #333; }
 .btn-social.linkedin:hover i { color: #0077b5; }

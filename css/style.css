@@ -1,12 +1,11 @@
 /* --- RESET & VARIABLES --- */
 :root {
-    --primary: #4f46e5; /* Indigo Keren */
+    --primary: #4f46e5;
     --primary-hover: #4338ca;
     --dark: #0f172a;
     --light: #f8fafc;
     --gray: #64748b;
-    --white: #ffffff;
-    
+    --white: #ffffff;   
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
 }
@@ -24,7 +23,12 @@ body {
     line-height: 1.6;
 }
 
-a { text-decoration: none; color: inherit; }
+a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
 ul { list-style: none; }
 
 /* --- UTILITIES --- */
@@ -124,13 +128,11 @@ ul { list-style: none; }
     font-size: 3.5rem;
     line-height: 1.2;
     margin-bottom: 20px;
-    
-    /* Efek Gradient Text */
     background: linear-gradient(to right, var(--dark), var(--primary));
-    background-clip: text;            /* Standar */
-    -webkit-background-clip: text;    /* Wajib untuk Chrome/Safari */
-    -webkit-text-fill-color: transparent; /* Membuat isi teks transparan */
-    color: transparent;               /* Fallback */
+    background-clip: text;     
+    -webkit-background-clip: text;   
+    -webkit-text-fill-color: transparent;
+    color: transparent; 
 }
 
 .hero p {
@@ -178,7 +180,12 @@ ul { list-style: none; }
     gap: 6px;
 }
 
-.circle { width: 10px; height: 10px; border-radius: 50%; }
+.circle { width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #e2e8f0;
+}
+
 .red { background: #ef4444; }
 .yellow { background: #f59e0b; }
 .green { background: #10b981; }
@@ -191,11 +198,28 @@ ul { list-style: none; }
     gap: 15px;
 }
 
-.avatar-placeholder { width: 80px; height: 80px; background: #e2e8f0; border-radius: 50%; }
-.line { height: 10px; background: #f1f5f9; border-radius: 5px; }
+.avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    background: #e2e8f0;
+    border-radius: 50%;
+}
+
+.line {
+    height: 10px;
+    background: #f1f5f9;
+    border-radius: 5px;
+}
+.w-30 { width: 30%; }
 .w-50 { width: 50%; }
 .w-80 { width: 80%; }
-.btn-placeholder { width: 100%; height: 40px; background: var(--primary); opacity: 0.1; border-radius: 8px; }
+.btn-placeholder {
+    width: 100%;
+    height: 40px;
+    background: var(--primary);
+    opacity: 0.1;
+    border-radius: 8px;
+}
 
 /* --- FEATURES --- */
 .features {
@@ -257,18 +281,13 @@ footer {
 
 /* --- RESPONSIVE (MOBILE FIX) --- */
 @media (max-width: 768px) {
-    /* 1. Judul Hero dikecilin dikit biar gak terlalu raksasa */
     .hero h1 { font-size: 2.5rem; }
-    
-    /* 2. Tombol di HERO (Tengah) tetap Full Width biar enak dipencet */
     .cta-group { flex-direction: column; gap: 15px; }
-    .hero .btn { width: 100%; text-align: center; }
-
-    /* 3. FIX NAVBAR (PENTING!) */
-    .navbar .container {
-        padding: 0 20px;
+    .hero .btn {
+        width: 100%;
+        text-align: center;
     }
-
+    .navbar .container { padding: 0 20px; }
     .nav-links {
         display: flex;
         align-items: center;
@@ -290,10 +309,9 @@ footer {
 /* --- SKELETON LOADING ANIMATION --- */
 .skeleton {
     background: #f1f5f9;
-    /* Gradasi lebih lebar biar kilaunya halus */
     background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%); 
     background-size: 200% 100%;
-    animation: shimmer 1.2s infinite linear; /* Percepat jadi 1.2s */
+    animation: shimmer 1.2s infinite linear;
     border-radius: 8px;
     color: transparent !important;
 }
@@ -303,7 +321,7 @@ footer {
     100% { background-position: -200% 0; }
 }
 
-/* Scrollbar Custom (Biar ganteng di Chrome/Edge) */
+/* --- CUSTOM SCROLLBAR --- */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #f1f5f9; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
@@ -321,7 +339,6 @@ footer {
     }
 }
 
-/* Class ini nanti ditempel via JS */
 .animate-enter {
     opacity: 0; /* Sembunyi dulu */
     animation: slideUpFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;

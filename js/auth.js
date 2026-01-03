@@ -55,7 +55,7 @@ if (registerForm) {
                 password: password,
                 options: {
                     data: {
-                        username: username // <--- INI PENTING! Dikirim ke Trigger DB
+                        username: username
                     }
                 }
             });
@@ -109,8 +109,6 @@ if (loginForm) {
 }
 
 // --- 3. LOGIC CEK SESSION (Auto Redirect) ---
-// Kalau user buka halaman login/register tapi sebenernya udah login,
-// langsung lempar ke dashboard.
 async function checkSession() {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
@@ -121,10 +119,6 @@ async function checkSession() {
         }
     }
 }
-
-// ... kode checkSession() di atasnya ...
-
-// ... kode checkSession() di atasnya ...
 
 // --- 4. LOGIC SOCIAL LOGIN (Google, GitHub, LinkedIn) ---
 window.handleSocialLogin = async (provider) => {
