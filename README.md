@@ -1,4 +1,4 @@
-# SAPA - Satu Page Aja 🚀
+# SAPA - Satu Page Aja
 
 ![SAPA Banner](assets/Icons/favicon.png)
 
