@@ -169,7 +169,7 @@ ul { list-style: none; }
 
 @keyframes float {
     0% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); } /* Naik 20px */
+    50% { transform: translateY(-20px); }
     100% { transform: translateY(0px); }
 }
 
@@ -279,7 +279,7 @@ footer {
     border-top: 1px solid #e2e8f0;
 }
 
-/* --- RESPONSIVE (MOBILE FIX) --- */
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
     .hero h1 { font-size: 2.5rem; }
     .cta-group { flex-direction: column; gap: 15px; }
@@ -306,7 +306,6 @@ footer {
     }
 }
 
-/* --- SKELETON LOADING ANIMATION --- */
 .skeleton {
     background: #f1f5f9;
     background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%); 
@@ -327,7 +326,6 @@ footer {
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-/* --- ANIMASI CASCADE LINK --- */
 @keyframes slideUpFade {
     from {
         opacity: 0;
@@ -340,7 +338,7 @@ footer {
 }
 
 .animate-enter {
-    opacity: 0; /* Sembunyi dulu */
+    opacity: 0;
     animation: slideUpFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 

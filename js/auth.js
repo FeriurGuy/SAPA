@@ -9,16 +9,15 @@ const alertBox = document.getElementById('alert-box');
 function showAlert(message, type = 'error') {
     if (!alertBox) return;
     alertBox.textContent = message;
-    alertBox.className = `alert ${type}`; // reset class
+    alertBox.className = `alert ${type}`;
     alertBox.classList.remove('hidden');
-    
-    // Sembunyikan otomatis setelah 3 detik
+
     setTimeout(() => {
         alertBox.classList.add('hidden');
     }, 5000);
 }
 
-// --- 1. LOGIC REGISTER ---
+// --- REGISTER ---
 if (registerForm) {
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -37,7 +36,6 @@ if (registerForm) {
             btn.textContent = "Loading...";
             btn.disabled = true;
 
-            // 1. Cek dulu apakah username sudah dipakai?
             const { data: existingUser, error: checkError } = await supabase
                 .from('profiles')
                 .select('username')
@@ -49,7 +47,6 @@ if (registerForm) {
                 throw new Error("Username sudah dipakai. Ganti yang lain ya!");
             }
 
-            // 2. Daftar Auth + TITIP USERNAME di Metadata
             const { data, error } = await supabase.auth.signUp({
                 email: email,
                 password: password,
@@ -62,10 +59,8 @@ if (registerForm) {
 
             if (error) throw error;
 
-            // 3. Sukses (Tidak perlu insert profile manual lagi)
             showAlert("Sukses! Silakan cek email kamu untuk verifikasi.", "success");
-            
-            // Opsional: Disable form biar gak dipencet lagi
+
             registerForm.reset();
             
         } catch (error) {
@@ -77,7 +72,7 @@ if (registerForm) {
     });
 }
 
-// --- 2. LOGIC LOGIN ---
+// --- LOGIN ---
 if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -97,7 +92,6 @@ if (loginForm) {
 
             if (error) throw error;
 
-            // Login sukses
             window.location.href = 'dashboard.html';
 
         } catch (error) {
@@ -108,11 +102,11 @@ if (loginForm) {
     });
 }
 
-// --- 3. LOGIC CEK SESSION (Auto Redirect) ---
+// --- CEK SESSION (Auto Redirect) ---
 async function checkSession() {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
-        // Cek nama file sekarang
+
         const path = window.location.pathname;
         if (path.includes('login.html') || path.includes('register.html')) {
             window.location.href = 'dashboard.html';
@@ -120,16 +114,16 @@ async function checkSession() {
     }
 }
 
-// --- 4. LOGIC SOCIAL LOGIN (Google, GitHub, LinkedIn) ---
+// --- SOCIAL LOGIN ---
 window.handleSocialLogin = async (provider) => {
     try {
-        // Opsi tambahan: Kalau LinkedIn, kita WAJIB minta scopes ini
+
         let options = {
             redirectTo: window.location.origin + '/dashboard.html'
         };
 
         if (provider === 'linkedin') {
-            options.scopes = 'openid profile email'; // <--- INI KUNCINYA BRO!
+            options.scopes = 'openid profile email';
         }
 
         const { data, error } = await supabase.auth.signInWithOAuth({

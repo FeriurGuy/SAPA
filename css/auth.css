@@ -91,7 +91,7 @@
 }
 
 .input-prefix input:focus {
-    box-shadow: none; /* Hilangkan shadow karena sudah di wrapper */
+    box-shadow: none;
 }
 
 /* Button Full Width */
@@ -159,7 +159,6 @@
     font-size: 0.85rem;
 }
 
-/* Garis di belakang teks "atau masuk dengan" */
 .divider-text::after {
     content: '';
     position: absolute;
@@ -191,7 +190,6 @@
     font-size: 1.2rem;
 }
 
-/* Efek Hover */
 .btn-social:hover {
     background-color: #f8fafc;
     transform: translateY(-2px);
@@ -199,7 +197,10 @@
     border-color: #cbd5e1;
 }
 
-/* Warna spesifik ikon pas di-hover */
+.btn-social i {
+    transition: color 0.2s ease;
+}
+
 .btn-social.google:hover i { color: #DB4437; }
 .btn-social.github:hover i { color: #333; }
 .btn-social.linkedin:hover i { color: #0077b5; }

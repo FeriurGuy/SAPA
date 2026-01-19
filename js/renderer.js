@@ -8,14 +8,12 @@ const pName = document.getElementById('pName');
 const pBio = document.getElementById('pBio');
 const pLinks = document.getElementById('pLinks');
 
-// Fungsi: Bersihkan input dari script jahat (XSS Prevention)
 function sanitize(str) {
     const temp = document.createElement('div');
     temp.textContent = str;
     return temp.innerHTML;
 }
 
-// Fungsi: Tentukan warna teks (Hitam/Putih) berdasarkan background
 function getContrastColor(hexColor) {
     if (hexColor.length < 7) return '#000000';
     const r = parseInt(hexColor.substr(1, 2), 16);
@@ -74,7 +72,6 @@ function renderMusicPlayer(url) {
                 playerDiv.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&loop=1&playlist=${videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="pointer-events: none; transform: scale(2);"></iframe>`;
                 document.body.appendChild(playerDiv);
                 
-                // Inject CSS Animasi Spin
                 if (!document.getElementById('animSpin')) {
                     const style = document.createElement('style');
                     style.id = 'animSpin';
@@ -94,7 +91,6 @@ function renderMusicPlayer(url) {
                 const spotifyDiv = document.createElement('div');
                 spotifyDiv.style.cssText = 'position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 100; width: 90%; max-width: 400px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.2);';
                 
-                // Pakai iframe resmi Spotify
                 spotifyDiv.innerHTML = `<iframe style="border-radius:12px" src="${embedUrl}" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
                 
                 document.body.appendChild(spotifyDiv);
@@ -110,27 +106,20 @@ function renderMusicPlayer(url) {
 // 4. MAIN LOGIC (RENDER PROFILE)
 // ==========================================
 async function renderProfile() {
-    // ---> DETEKSI USERNAME (LOGIC BARU) <---
-    // 1. Cek Parameter URL (sapa.my.id/profile.html?u=feri)
     const params = new URLSearchParams(window.location.search);
     let username = params.get('u');
 
-    // 2. Kalau kosong, Cek Path URL (sapa.my.id/feri)
     if (!username) {
-        const path = window.location.pathname; // misal: "/feri"
+        const path = window.location.pathname;
         
-        // Filter: Pastikan path bukan halaman sistem
         if (path !== '/' && 
             path !== '/index.html' && 
             path !== '/profile.html' && 
             !path.includes('.html')) {
-            
-            // Ambil nama user (hilangkan tanda slash '/')
             username = path.startsWith('/') ? path.substring(1) : path;
         }
     }
 
-    // Kalau tetep gak ada username, tampilkan 404
     if (!username) { show404(); return; }
 
     try {
@@ -140,20 +129,14 @@ async function renderProfile() {
 
         if (profileError || !profile) { show404(); return; }
 
-        // --- RENDER INFO DASAR ---
-        // Hapus class skeleton biar loadingnya ilang
         pAvatar.classList.remove('skeleton');
         pName.classList.remove('skeleton');
-        pBio.classList.remove('skeleton');
-        
-        // Reset lebar elemen biar pas sama teks
+        pBio.classList.remove('skeleton'); 
         pName.style.width = 'auto';
         pBio.style.width = 'auto';
-        
-        // Update Title Browser
         document.title = `${profile.full_name} | SAPA`;
         
-        // Render Nama & Verified Badge
+        // Verified Badge
         pName.innerHTML = sanitize(profile.full_name || `@${profile.username}`);
         if (profile.is_pro) {
             const badge = document.createElement('i');
@@ -168,11 +151,9 @@ async function renderProfile() {
         let customCardBorder = null;
         let textColor = '#0f172a';
 
-        // Reset style body bawaan
         document.body.className = ''; 
         document.body.style = '';
 
-        // Prioritas 1: Background Image (User Pro)
         if (profile.bg_image_url) {
             document.body.style.backgroundImage = `url('${profile.bg_image_url}')`;
             document.body.style.backgroundSize = 'cover';
@@ -181,14 +162,13 @@ async function renderProfile() {
             
             textColor = '#ffffff';
             document.body.style.color = textColor;
-            customCardBg = 'rgba(0, 0, 0, 0.6)'; // Transparan Gelap
+            customCardBg = 'rgba(0, 0, 0, 0.6)';
             customCardBorder = '1px solid rgba(255, 255, 255, 0.3)';
         } 
-        // Prioritas 2: Warna / Tema Preset
+
         else if (profile.bg_color) {
             const color = profile.bg_color.toLowerCase();
             
-            // Cek Preset Themes
             if (color === '#0f172a') document.body.classList.add('theme-dark');
             else if (['#f43f5e', '#fff1f2', '#fecdd3'].includes(color)) document.body.classList.add('theme-pastel');
             else if (color === '#10b981') document.body.classList.add('theme-cyber');
@@ -196,7 +176,6 @@ async function renderProfile() {
             else if (color === '#0ea5e9') document.body.classList.add('theme-ocean');  // Ocean
             else if (color === '#f97316') document.body.classList.add('theme-sunset'); // Sunset
             else {
-                // Warna Custom Manual
                 document.body.style.backgroundColor = profile.bg_color;
                 textColor = getContrastColor(profile.bg_color);
                 document.body.style.color = textColor;
@@ -210,45 +189,39 @@ async function renderProfile() {
                 }
             }
         }
-        
-        // Render Avatar
+
         pAvatar.src = profile.avatar_url || 'https://ui-avatars.com/api/?name=' + profile.username;
 
-        // --- RENDER LINKS ---
         const { data: links } = await supabase
             .from('links').select('*').eq('user_id', profile.id)
             .order('position', { ascending: true }).order('created_at', { ascending: true });
 
-        pLinks.innerHTML = ''; // Kosongkan placeholder skeleton
+        pLinks.innerHTML = '';
         
         if (links) {
             links.forEach((link, index) => {
                 const a = document.createElement('a');
                 a.href = link.url;
-                a.target = '_blank'; // Default buka tab baru
+                a.target = '_blank';
                 a.className = 'link-card animate-enter';
                 a.style.animationDelay = `${index * 0.1}s`; 
 
-                // Terapkan style custom kalau ada
                 if (customCardBg) {
                     a.style.background = customCardBg;
                     a.style.border = customCardBorder;
                     a.style.color = textColor;
                 }
 
-                // ---> ANALYTICS HYBRID (Fix Laptop/Mobile) <---
                 a.addEventListener('click', (e) => {
-                    // 1. Rekam klik ke database (Async/Background)
+                    // 1. Analytics
                     supabase.rpc('increment_clicks', { link_id: link.id })
                         .then(() => console.log('Click recorded'))
                         .catch(err => console.warn('Analytics skipped:', err));
 
                     // 2. Logic Navigasi
                     if (a.target === '_blank') {
-                        // Kalau Tab Baru: Biarin browser kerja (Return) -> Laptop Aman
                         return; 
                     } else {
-                        // Kalau Tab Sama: Tahan sebentar buat kirim data
                         e.preventDefault();
                         setTimeout(() => window.location.href = link.url, 300);
                     }
@@ -271,7 +244,6 @@ async function renderProfile() {
                 a.innerHTML = `<i class="${iconClass}" style="margin-right:10px; font-size: 1.1em;"></i> ${sanitize(link.title)}`;
                 pLinks.appendChild(a);
 
-                // ---> EFEK 3D TILT (WAJIB LOAD LIBRARY DULU DI HTML) <---
                 if (typeof VanillaTilt !== 'undefined') {
                     VanillaTilt.init(a, { 
                         max: 15, 
@@ -284,7 +256,7 @@ async function renderProfile() {
             });
         }
         
-        // --- TERAKHIR: LOAD MUSIK (JIKA ADA) ---
+        // --- LOAD MUSIK ---
         if (profile.music_url) renderMusicPlayer(profile.music_url);
 
     } catch (error) {
@@ -293,5 +265,4 @@ async function renderProfile() {
     }
 }
 
-// Jalankan Fungsi Utama
 renderProfile();
