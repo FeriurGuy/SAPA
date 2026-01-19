@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Imsakiyah - SAPA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <style>
+        /* CSS Tambahan Khusus Halaman Ini */
+        .imsak-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .time-big {
+            font-size: 3.5rem;
+            font-family: 'Outfit', sans-serif;
+            color: #4f46e5;
+            margin: 10px 0;
+            font-weight: 700;
+        }
+        .date-display {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        .schedule-list {
+            list-style: none;
+            margin-top: 30px;
+            text-align: left;
+        }
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            font-size: 1.1rem;
+        }
+        .schedule-item:last-child { border-bottom: none; }
+        .schedule-item.active {
+            color: #4f46e5;
+            font-weight: 700;
+        }
+        .location-badge {
+            background: #e0e7ff;
+            color: #4f46e5;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" style="background: white; border-bottom: 1px solid #e2e8f0;">
+        <div class="container">
+            <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
+            <a href="dashboard.html" class="btn btn-outline btn-sm">Kembali ke Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="container" style="padding: 40px 20px;">
+        
+        <div class="imsak-card">
+            <div id="loadingMsg">
+                <i class="fa-solid fa-compass fa-spin fa-2x" style="color: #4f46e5; margin-bottom: 15px;"></i>
+                <p>Mencari lokasimu...</p>
+                <small style="color: #94a3b8;">Izinkan akses lokasi browser ya!</small>
+            </div>
+
+            <div id="scheduleContent" style="display: none;">
+                <div class="location-badge">
+                    <i class="fa-solid fa-location-dot"></i> <span id="locName">Lokasi Kamu</span>
+                </div>
+                
+                <div class="date-display" id="dateNow">Senin, 19 Januari 2026</div>
+
+                <h3>Menuju Maghrib</h3>
+                <div class="time-big" id="countdown">00:00:00</div>
+                
+                <ul class="schedule-list">
+                    <li class="schedule-item" id="row-fajr">
+                        <span>Imsak (Subuh)</span> <span id="time-fajr">--:--</span>
+                    </li>
+                    <li class="schedule-item" id="row-dhuhr">
+                        <span>Dzuhur</span> <span id="time-dhuhr">--:--</span>
+                    </li>
+                    <li class="schedule-item" id="row-asr">
+                        <span>Ashar</span> <span id="time-asr">--:--</span>
+                    </li>
+                    <li class="schedule-item active" id="row-maghrib">
+                        <span>Maghrib (Buka)</span> <span id="time-maghrib">--:--</span>
+                    </li>
+                    <li class="schedule-item" id="row-isha">
+                        <span>Isya</span> <span id="time-isha">--:--</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/adhan@4.4.4/Adhan.min.js"></script>
+
+    <script>
+        // --- LOGIKA JADWAL SALAT ---
+        
+        function initApp() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(successLoc, errorLoc);
+            } else {
+                alert("Browser kamu gak support Geolocation :(");
+            }
+        }
+
+        function successLoc(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+
+            // 1. Hitung Jadwal Pakai Adhan.js
+            const coordinates = new adhan.Coordinates(lat, lng);
+            const date = new Date();
+            const params = adhan.CalculationMethod.Singapore(); // Standar mirip Kemenag buat WIB
+            const prayerTimes = new adhan.PrayerTimes(coordinates, date, params);
+
+            // 2. Format Waktu (Ambil Jam:Menit)
+            const formattedTime = (time) => {
+                const dateObj = new Date(time);
+                // Tambah 0 di depan angka satuan
+                const h = String(dateObj.getHours()).padStart(2, '0');
+                const m = String(dateObj.getMinutes()).padStart(2, '0');
+                return `${h}:${m}`;
+            };
+
+            // 3. Tampilkan ke HTML
+            document.getElementById('time-fajr').innerText = formattedTime(prayerTimes.fajr);
+            document.getElementById('time-dhuhr').innerText = formattedTime(prayerTimes.dhuhr);
+            document.getElementById('time-asr').innerText = formattedTime(prayerTimes.asr);
+            document.getElementById('time-maghrib').innerText = formattedTime(prayerTimes.maghrib);
+            document.getElementById('time-isha').innerText = formattedTime(prayerTimes.isha);
+
+            // Tampilkan Tanggal
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('dateNow').innerText = date.toLocaleDateString('id-ID', options);
+
+            // Tampilkan Koordinat (Sementara, nanti bisa diganti nama kota pake API lain)
+            document.getElementById('locName').innerText = `Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)}`;
+
+            // Tampilkan UI, Sembunyikan Loading
+            document.getElementById('loadingMsg').style.display = 'none';
+            document.getElementById('scheduleContent').style.display = 'block';
+
+            // Jalankan Countdown
+            startCountdown(prayerTimes.maghrib);
+        }
+
+        function errorLoc() {
+            document.getElementById('loadingMsg').innerHTML = `
+                <p style="color: red;">Gagal ambil lokasi. Pastikan GPS nyala dan izinkan browser.</p>
+                <button onclick="initApp()" class="btn btn-primary btn-sm" style="margin-top:10px;">Coba Lagi</button>
+            `;
+        }
+
+        function startCountdown(targetTime) {
+            setInterval(() => {
+                const now = new Date();
+                const diff = targetTime - now;
+
+                if (diff > 0) {
+                    const hours = Math.floor(diff / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                    
+                    document.getElementById('countdown').innerText = 
+                        `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+                } else {
+                    document.getElementById('countdown').innerText = "SUDAH BUKA!";
+                }
+            }, 1000);
+        }
+
+        // Mulai Aplikasi
+        initApp();
+    </script>
+
+</body>
+</html>
