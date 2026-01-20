@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Imsakiyah - SAPA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/Icons/favicon.png" type="image/png" sizes="96x96">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <style>
+        /* 1. BADGE & TEXT */
+        .location-badge {
+            background: #e0e7ff; color: #4f46e5;
+            padding: 6px 15px; border-radius: 50px;
+            font-size: 0.9rem; font-weight: 600; display: inline-block;
+        }
+
+        /* 2. KOTAK COUNTDOWN (3 KOTAK TERPISAH) */
+        .countdown-split {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px; /* Jarak antar kotak */
+            margin: 20px 0;
+        }
+
+        .time-part {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 0;
+            width: 70px; /* Lebar fix di desktop */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .time-part span {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1;
+        }
+
+        .time-part small {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .seperator {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            margin-bottom: 15px; /* Biar sejajar sama angka */
+        }
+
+        /* 3. LIST JADWAL (SIDEBAR) */
+        .today-list { list-style: none; margin-top: 20px; text-align: left; padding: 0; }
+        .today-list li { 
+            display: flex; justify-content: space-between; 
+            padding: 12px 0; border-bottom: 1px dashed #e2e8f0; 
+            color: #64748b; font-size: 0.95rem; 
+        }
+        .today-list li:last-child { border-bottom: none; }
+        .today-list li .time-val { font-family: 'Outfit', sans-serif; font-weight: 700; color: #0f172a; }
+        
+        /* Highlight Aktif */
+        .today-list li.active .time-val { 
+            color: #4f46e5; background: #e0e7ff; 
+            padding: 4px 10px; border-radius: 6px; 
+        }
+
+        /* 4. TABEL (KANAN) */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto; /* Wajib scroll samping */
+            -webkit-overflow-scrolling: touch;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-top: 20px;
+        }
+
+        .table-imsak { width: 100%; border-collapse: collapse; font-size: 0.9rem; white-space: nowrap; }
+        .table-imsak th, .table-imsak td { padding: 15px; text-align: center; border-bottom: 1px solid #e2e8f0; }
+        .table-imsak thead { background: #f8fafc; color: #475569; }
+        .table-imsak th { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+        
+        /* Sticky Column Tanggal */
+        .table-imsak td:first-child {
+            position: sticky; left: 0; 
+            background: white; z-index: 5; 
+            border-right: 1px solid #f1f5f9; 
+            text-align: left; font-weight: 600; color: #0f172a;
+        }
+
+        /* --- MOBILE TWEAK --- */
+        @media (max-width: 768px) {
+            /* Perkecil kotak jam dikit di HP */
+            .time-part { width: 60px; padding: 8px 0; }
+            .time-part span { font-size: 1.5rem; }
+            .countdown-split { gap: 5px; }
+            
+            /* Padatkan tabel */
+            .table-imsak th, .table-imsak td { padding: 10px 8px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="dash-nav">
+        <div class="container nav-flex">
+            <div class="brand">
+                <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
+                <span class="divider">/</span>
+                <span class="username-display">Ramadhan 1447H</span>
+            </div>
+
+            <div class="actions" style="position: relative;">
+                <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only" style="border: 1px solid #cbd5e1;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div id="dropdownMenu" class="nav-dropdown hidden">
+                    <div class="dropdown-header"><small>Menu Aplikasi</small></div>
+                    <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-link"></i> Link Manager</a>
+                    <a href="imsakiyah.html" class="dropdown-item active"><i class="fa-solid fa-mosque" style="color: #10b981;"></i> Imsakiyah</a>
+                    <a href="kartu-ucapan.html" class="dropdown-item"><i class="fa-solid fa-envelope-open-text" style="color: #f59e0b;"></i> Kartu Ucapan</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="index.html" class="dropdown-item text-red"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <div class="dash-grid">
+
+            <aside class="profile-editor">
+                <div class="card p-30 text-center">
+                    <div class="location-badge">
+                        <i class="fa-solid fa-location-dot"></i> <span id="locName">Banda Aceh</span>
+                    </div>
+                    
+                    <h4 id="dateNow" style="margin: 15px 0; color: #64748b; font-size: 0.9rem;">-</h4>
+
+                    <div class="countdown-split">
+                        <div class="time-part">
+                            <span id="timerH">00</span><small>Jam</small>
+                        </div>
+                        <div class="seperator">:</div>
+                        <div class="time-part">
+                            <span id="timerM">00</span><small>Menit</small>
+                        </div>
+                        <div class="seperator">:</div>
+                        <div class="time-part">
+                            <span id="timerS">00</span><small>Detik</small>
+                        </div>
+                    </div>
+                    
+                    <p style="font-size: 0.85rem; color: #64748b; margin-top: 10px;">
+                        Menuju <span id="nextPrayerName" style="color: #4f46e5; font-weight: bold;">...</span>
+                    </p>
+
+                    <hr style="border:0; border-top:1px dashed #cbd5e1; margin: 20px 0;">
+
+                    <ul class="today-list">
+                        <li id="row-fajr"><span>Imsak</span> <span class="time-val" id="time-fajr">--:--</span></li>
+                        <li id="row-dhuhr"><span>Dzuhur</span> <span class="time-val" id="time-dhuhr">--:--</span></li>
+                        <li id="row-asr"><span>Ashar</span> <span class="time-val" id="time-asr">--:--</span></li>
+                        <li id="row-maghrib"><span>Maghrib</span> <span class="time-val" id="time-maghrib">--:--</span></li>
+                        <li id="row-isha"><span>Isya</span> <span class="time-val" id="time-isha">--:--</span></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="links-manager">
+                <div class="card p-30">
+                    <div class="section-header">
+                        <h3>Jadwal Imsakiyah</h3>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table-imsak">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Imsak</th>
+                                    <th>Subuh</th>
+                                    <th>Dzuhur</th>
+                                    <th>Ashar</th>
+                                    <th>Maghrib</th>
+                                    <th>Isya</th>
+                                </tr>
+                            </thead>
+                            <tbody id="imsakTableBody">
+                                <tr><td>1 Ramadhan</td><td>05:08</td><td>05:18</td><td>12:48</td><td>16:03</td><td>18:52</td><td>20:02</td></tr>
+                                <tr><td>2 Ramadhan</td><td>05:08</td><td>05:18</td><td>12:48</td><td>16:03</td><td>18:52</td><td>20:02</td></tr>
+                                <tr><td>3 Ramadhan</td><td>05:07</td><td>05:17</td><td>12:48</td><td>16:02</td><td>18:52</td><td>20:02</td></tr>
+                                <tr><td>4 Ramadhan</td><td>05:07</td><td>05:17</td><td>12:47</td><td>16:02</td><td>18:52</td><td>20:02</td></tr>
+                                <tr><td>5 Ramadhan</td><td>05:07</td><td>05:17</td><td>12:47</td><td>16:01</td><td>18:52</td><td>20:01</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <footer class="dash-footer">
+        <div class="container text-center">
+            <p>&copy; 2026 SAPA Project. Created by <strong>Feri Ramadhan Azhari</strong>.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { Adhan } from './js/adhan.js';
+
+        // --- 1. CONFIG ---
+        const MY_LAT = 5.5483; // Banda Aceh
+        const MY_LNG = 95.3238; 
+        const PRAYER_NAMES = { fajr: 'Subuh', dhuhr: 'Dzuhur', asr: 'Ashar', maghrib: 'Maghrib', isha: 'Isya' };
+
+        // --- 2. DOM ELEMENTS ---
+        const elH = document.getElementById('timerH');
+        const elM = document.getElementById('timerM');
+        const elS = document.getElementById('timerS');
+        const elNextName = document.getElementById('nextPrayerName');
+        const elDate = document.getElementById('dateNow');
+
+        // --- 3. INIT APP ---
+        function initApp() {
+            const prayer = new Adhan();
+            prayer.setMethod('MWL');
+            
+            // Hitung Jadwal Hari Ini
+            const times = prayer.getTimes(new Date(), [MY_LAT, MY_LNG, 0], 7, 0, '24h');
+
+            // Isi List Sidebar
+            document.getElementById('time-fajr').innerText = times.fajr;
+            document.getElementById('time-dhuhr').innerText = times.dhuhr;
+            document.getElementById('time-asr').innerText = times.asr;
+            document.getElementById('time-maghrib').innerText = times.maghrib;
+            document.getElementById('time-isha').innerText = times.isha;
+            
+            // Tanggal
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            elDate.innerText = new Date().toLocaleDateString('id-ID', options);
+
+            // Jalankan Timer
+            startLiveTimer(times);
+        }
+
+        function startLiveTimer(times) {
+            const parseTime = (strTime) => {
+                const now = new Date();
+                const [h, m] = strTime.split(':');
+                const d = new Date(now);
+                d.setHours(h, m, 0, 0);
+                return d;
+            };
+
+            const prayerObj = {
+                fajr: parseTime(times.fajr), dhuhr: parseTime(times.dhuhr),
+                asr: parseTime(times.asr), maghrib: parseTime(times.maghrib), isha: parseTime(times.isha)
+            };
+
+            setInterval(() => {
+                const now = new Date();
+                let nextPrayerKey = null;
+                let minDiff = Infinity;
+
+                for (const [key, timeVal] of Object.entries(prayerObj)) {
+                    const diff = timeVal - now;
+                    if (diff > 0 && diff < minDiff) {
+                        minDiff = diff;
+                        nextPrayerKey = key;
+                    }
+                }
+
+                if (!nextPrayerKey) {
+                    elNextName.innerText = "Istirahat";
+                    return;
+                }
+
+                // Update Countdown
+                const h = Math.floor(minDiff / 3600000);
+                const m = Math.floor((minDiff % 3600000) / 60000);
+                const s = Math.floor((minDiff % 60000) / 1000);
+                
+                if(elH) elH.innerText = String(h).padStart(2,'0');
+                if(elM) elM.innerText = String(m).padStart(2,'0');
+                if(elS) elS.innerText = String(s).padStart(2,'0');
+                
+                elNextName.innerText = PRAYER_NAMES[nextPrayerKey];
+
+                // Highlight List
+                document.querySelectorAll('.today-list li').forEach(el => el.classList.remove('active'));
+                const row = document.getElementById(`row-${nextPrayerKey}`);
+                if(row) row.classList.add('active');
+
+            }, 1000);
+        }
+
+        // Jalankan
+        initApp();
+
+        // --- HAMBURGER MENU LOGIC ---
+        const hbBtn = document.getElementById('hamburgerBtn');
+        const menu = document.getElementById('dropdownMenu');
+        if(hbBtn && menu) {
+            hbBtn.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                menu.classList.toggle('hidden'); 
+            });
+            window.addEventListener('click', (e) => { 
+                if(!menu.contains(e.target) && !hbBtn.contains(e.target)) {
+                    menu.classList.add('hidden'); 
+                }
+            });
+        }
+    </script>
+</body>
+</html>

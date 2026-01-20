@@ -2,15 +2,18 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jadwal Imsakiyah - SAPA</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" href="assets/Icons/favicon.png" type="image/png" sizes="96x96">
     <link rel="stylesheet" href="css/imsakiyah.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <style>
+        
+    </style>
 </head>
 <body>
 
@@ -19,29 +22,18 @@
             <div class="brand">
                 <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
                 <span class="divider">/</span>
-                <span class="username-display">Ramadhan 1447 H</span>
+                <span class="username-display">Ramadhan 1447H</span>
             </div>
-
             <div class="actions" style="position: relative;">
                 <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only" style="border: 1px solid #cbd5e1;">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-
                 <div id="dropdownMenu" class="nav-dropdown hidden">
-                    <div class="dropdown-header">Menu Aplikasi</div>
-                    <a href="dashboard.html" class="dropdown-item">
-                        <i class="fa-solid fa-link"></i> Link Manager
-                    </a>
-                    <a href="imsakiyah.html" class="dropdown-item active">
-                        <i class="fa-solid fa-mosque"></i> Imsakiyah
-                    </a>
-                    <a href="kartu-ucapan.html" class="dropdown-item">
-                        <i class="fa-solid fa-envelope-open-text"></i> Kartu Ucapan
-                    </a>
+                    <div class="dropdown-header"><small>Menu Aplikasi</small></div>
+                    <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-link"></i> Link Manager</a>
+                    <a href="imsakiyah.html" class="dropdown-item active"><i class="fa-solid fa-mosque" style="color: #10b981;"></i> Imsakiyah</a>
                     <div class="dropdown-divider"></div>
-                    <a href="index.html" class="dropdown-item text-red">
-                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
-                    </a>
+                    <a href="index.html" class="dropdown-item text-red"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
                 </div>
             </div>
         </div>
@@ -51,120 +43,64 @@
         <div class="dash-grid">
 
             <aside class="profile-editor">
-                <div class="card p-30 text-center sticky-card">
-                    <div class="location-badge">
-                        <i class="fa-solid fa-location-dot"></i> <span id="locName">Banda Aceh</span>
+                <div class="card p-30 text-center">
+                    <div class="location-badge"><i class="fa-solid fa-location-dot"></i> <span id="locName">Banda Aceh</span></div>
+                    <h4 id="dateNow" style="margin: 15px 0; color: #64748b; font-size: 0.9rem;">-</h4>
+                    <div class="countdown-split">
+                        <div class="time-part"><span id="timerH">00</span><small>Jam</small></div>
+                        <div class="seperator">:</div>
+                        <div class="time-part"><span id="timerM">00</span><small>Menit</small></div>
+                        <div class="seperator">:</div>
+                        <div class="time-part"><span id="timerS">00</span><small>Detik</small></div>
                     </div>
-                    
-                    <h4 id="dateNow" style="margin: 15px 0; color: #64748b; font-size: 1rem;">-</h4>
-
-                    <div class="countdown-box">
-                        <p class="small-label">Menuju <span id="nextPrayerName" style="font-weight: bold; color: #4f46e5;">...</span></p>
-                        <div class="time-big" id="countdown">--:--:--</div>
-                    </div>
-
-                    <hr class="divider-line">
-
+                    <p style="font-size: 0.85rem; color: #64748b; margin-top: 10px;">
+                        Menuju <span id="nextPrayerName" style="color: #4f46e5; font-weight: bold;">...</span>
+                    </p>
+                    <hr style="border:0; border-top:1px dashed #cbd5e1; margin: 20px 0;">
                     <ul class="today-list">
                         <li id="row-fajr"><span>Imsak</span> <span class="time-val" id="time-fajr">--:--</span></li>
                         <li id="row-dhuhr"><span>Dzuhur</span> <span class="time-val" id="time-dhuhr">--:--</span></li>
                         <li id="row-asr"><span>Ashar</span> <span class="time-val" id="time-asr">--:--</span></li>
-                        <li id="row-maghrib" class="highlight"><span>Maghrib</span> <span class="time-val" id="time-maghrib">--:--</span></li>
+                        <li id="row-maghrib"><span>Maghrib</span> <span class="time-val" id="time-maghrib">--:--</span></li>
                         <li id="row-isha"><span>Isya</span> <span class="time-val" id="time-isha">--:--</span></li>
                     </ul>
                 </div>
             </aside>
 
-            <main class="links-manager">
+            <div class="links-manager">
                 <div class="card p-30">
-                    <div class="section-header">
-                        <h3>Jadwal Imsakiyah - Kota Banda Aceh</h3>
-                        <button class="btn btn-primary btn-sm" onclick="alert('Fitur download PDF segera hadir!')">
-                            <i class="fa-solid fa-print"></i> Cetak
-                        </button>
-                    </div>
+                    <h3>Jadwal Imsakiyah</h3>
 
                     <div class="table-responsive">
                         <table class="table-imsak">
                             <thead>
                                 <tr>
-                                    <th>Tanggal</th>
-                                    <th>Imsak</th>
-                                    <th>Subuh</th>
-                                    <th>Dzuhur</th>
-                                    <th>Ashar</th>
-                                    <th>Maghrib</th>
-                                    <th>Isya</th>
+                                    <th>Tanggal</th> 
+                                    <th>Imsak</th> <th>Subuh</th> <th>Dzuhur</th> <th>Ashar</th> <th>Maghrib</th> <th>Isya</th>
                                 </tr>
                             </thead>
                             <tbody id="imsakTableBody">
-                                <tr>
-                                    <td>1 Ramadhan</td>
-                                    <td>05:08</td>
-                                    <td>05:18</td>
-                                    <td>12:48</td>
-                                    <td>16:03</td>
-                                    <td>18:52</td>
-                                    <td>20:02</td>
-                                </tr>
-                                <tr>
-                                    <td>2 Ramadhan</td>
-                                    <td>05:08</td>
-                                    <td>05:18</td>
-                                    <td>12:48</td>
-                                    <td>16:03</td>
-                                    <td>18:52</td>
-                                    <td>20:02</td>
-                                </tr>
-                                <tr>
-                                    <td>3 Ramadhan</td>
-                                    <td>05:07</td>
-                                    <td>05:17</td>
-                                    <td>12:48</td>
-                                    <td>16:02</td>
-                                    <td>18:52</td>
-                                    <td>20:02</td>
-                                </tr>
-                                <tr>
-                                    <td>4 Ramadhan</td>
-                                    <td>05:07</td>
-                                    <td>05:17</td>
-                                    <td>12:47</td>
-                                    <td>16:02</td>
-                                    <td>18:52</td>
-                                    <td>20:02</td>
-                                </tr>
-                                <tr>
-                                    <td>5 Ramadhan</td>
-                                    <td>05:07</td>
-                                    <td>05:17</td>
-                                    <td>12:47</td>
-                                    <td>16:01</td>
-                                    <td>18:52</td>
-                                    <td>20:01</td>
-                                </tr>
-                                </tbody>
+                                <tr><td>1 Ramadhan</td><td>05:08</td><td>05:18</td><td>12:48</td><td>16:03</td><td>18:52</td><td>20:02</td></tr>
+                                <tr><td>2 Ramadhan</td><td>05:08</td><td>05:18</td><td>12:48</td><td>16:03</td><td>18:52</td><td>20:02</td></tr>
+                                <tr><td>3 Ramadhan</td><td>05:07</td><td>05:17</td><td>12:48</td><td>16:02</td><td>18:52</td><td>20:02</td></tr>
+                                <tr><td>4 Ramadhan</td><td>05:07</td><td>05:17</td><td>12:47</td><td>16:02</td><td>18:52</td><td>20:02</td></tr>
+                                <tr><td>5 Ramadhan</td><td>05:07</td><td>05:17</td><td>12:47</td><td>16:01</td><td>18:52</td><td>20:01</td></tr>
+                            </tbody>
                         </table>
                     </div>
-                    
-                    <div class="alert-info" style="margin-top: 20px; background: #eff6ff; padding: 15px; border-radius: 8px; color: #1e40af; font-size: 0.9rem;">
-                        <i class="fa-solid fa-circle-info"></i> Data di atas adalah placeholder manual untuk Kota Banda Aceh.
-                    </div>
                 </div>
-            </main>
+            </div>
 
         </div>
     </div>
 
-    <script type="module" src="js/imsakiyah.js"></script>
+    <footer class="dash-footer">
+        <div class="container text-center"><p>&copy; 2026 SAPA Project. Created by 
+            <br>
+            <strong>Feri Ramadhan Azhari</strong></p>
+        </div>
+    </footer>
 
-    <script>
-        const hbBtn = document.getElementById('hamburgerBtn');
-        const menu = document.getElementById('dropdownMenu');
-        if(hbBtn && menu) {
-            hbBtn.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('hidden'); });
-            window.addEventListener('click', (e) => { if(!menu.contains(e.target) && !hbBtn.contains(e.target)) menu.classList.add('hidden'); });
-        }
-    </script>
+    <script src="js/imsakiyah.js"></script>
 </body>
 </html>
