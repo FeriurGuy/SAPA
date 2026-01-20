@@ -1,0 +1,165 @@
+/* --- STYLES KHUSUS IMSAKIYAH --- */
+
+/* 1. LAYOUT UTAMA */
+/* Kita pakai variable CSS biar konsisten */
+:root {
+    --primary: #4f46e5;
+    --bg-light: #f8fafc;
+    --text-dark: #0f172a;
+    --text-gray: #64748b;
+}
+
+/* Badge Lokasi */
+.location-badge {
+    background: #e0e7ff;
+    color: var(--primary);
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Sticky Sidebar (Hanya aktif di Desktop) */
+.sticky-card {
+    position: sticky;
+    top: 90px;
+    z-index: 10;
+}
+
+/* 2. KOTAK COUNTDOWN (YANG BIKIN MASALAH) */
+.countdown-box {
+    background: var(--bg-light);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    overflow: hidden; /* PENTING: Cegah jam keluar kotak */
+}
+
+.time-big {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.5rem; /* Ukuran Desktop */
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.1;
+    margin-top: 5px;
+    white-space: nowrap; /* Jangan turun baris di desktop */
+}
+
+.small-label {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* 3. LIST JADWAL HARI INI (SIDEBAR) */
+.today-list {
+    list-style: none;
+    margin-top: 20px;
+    text-align: left;
+    padding: 0;
+}
+
+.today-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px dashed #e2e8f0;
+    color: var(--text-gray);
+    font-size: 0.95rem;
+}
+
+.today-list li:last-child { border-bottom: none; }
+.today-list li .time-val { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--text-dark); }
+
+.today-list li.active { color: var(--primary); }
+.today-list li.active .time-val {
+    color: var(--primary);
+    background: #e0e7ff;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+/* 4. TABEL IMSAKIYAH (KANAN) */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Scroll samping aktif */
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-top: 20px;
+}
+
+.table-imsak {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    white-space: nowrap; /* Teks tabel sejajar */
+}
+
+.table-imsak th, .table-imsak td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table-imsak thead { background: var(--bg-light); color: #475569; }
+.table-imsak th { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+
+/* Sticky Tanggal di Tabel */
+.table-imsak td:first-child {
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 5;
+    border-right: 1px solid #f1f5f9;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE FIX (PERBAIKAN TOTAL)
+   ========================================== */
+@media (max-width: 768px) {
+    
+    /* 1. RESET GRID JADI BLOCK (TUMPUK KE BAWAH) */
+    .dash-grid {
+        display: block !important; /* Paksa tumpuk */
+        width: 100% !important;
+    }
+
+    /* 2. ATUR LEBAR CONTAINER */
+    .profile-editor, .links-manager {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 25px; /* Jarak antar kartu */
+    }
+
+    /* 3. MATIKAN STICKY SIDEBAR DI HP */
+    .sticky-card {
+        position: static !important;
+    }
+
+    /* 4. PERBAIKAN UKURAN FONT JAM (KUNCI MASALAH) */
+    .time-big {
+        font-size: 14vw !important; /* Ukuran dinamis ikut lebar layar HP */
+        letter-spacing: -2px;       /* Rapatkan dikit biar muat */
+        margin: 10px 0;
+    }
+
+    /* 5. ATUR PADDING KARTU BIAR LEGA */
+    .p-30 {
+        padding: 20px !important;
+    }
+
+    /* 6. CONTAINER NAVIGASI */
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

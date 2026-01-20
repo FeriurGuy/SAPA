@@ -221,7 +221,7 @@ profileForm.addEventListener('submit', async (e) => {
         const { error } = await supabase.from('profiles').upsert(updates);
         if (error) throw error;
 
-        showToast('Berhasil!', 'Profil disimpan.', 'success');
+        showToast('Berhasil!',  'Profil disimpan.', 'success');
         isDirty = false;
         
         // Reload local data
@@ -410,4 +410,74 @@ if (shareBtn) {
             showToast('Disalin!', 'Link profil siap dibagikan', 'success');
         });
     });
+}
+
+// ==========================================
+// HAMBURGER MENU 
+// ==========================================
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const dropdownMenu = document.getElementById('dropdownMenu');
+
+if (hamburgerBtn && dropdownMenu) {
+    // Toggle Menu saat tombol diklik
+    hamburgerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Tutup Menu kalau klik di luar area
+    window.addEventListener('click', (e) => {
+        if (!hamburgerBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+    });
+}
+
+const currentPath = window.location.pathname;
+const menuLinks = document.querySelectorAll('.dropdown-item');
+
+menuLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href) return;
+
+    const cleanHref = href.replace('.html', '');
+
+    if (currentPath.includes(cleanHref)) {
+        link.classList.add('active');
+    }
+});
+
+// ==========================================
+// QR CODE GENERATION
+// ==========================================
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const userText = document.getElementById('navUsername').innerText.replace('@', '').trim();
+        const cleanUrl = window.location.origin + '/' + userText;
+        
+        const qrContainer = document.getElementById('qrcode');
+        qrContainer.innerHTML = "";
+        
+        new QRCode(qrContainer, {
+            text: cleanUrl,
+            width: 140,
+            height: 140,
+            colorDark : "#0f172a",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    }, 2000); //
+});
+
+function downloadQR() {
+    const img = document.querySelector("#qrcode img");
+    if(img) {
+        const link = document.createElement('a');
+        link.download = `QR-SAPA-${Date.now()}.png`;
+        link.href = img.src;
+        link.click();
+    } else {
+        alert("Tunggu sebentar, QR Code lagi dibuat...");
+    }
 }

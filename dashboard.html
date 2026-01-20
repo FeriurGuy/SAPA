@@ -18,14 +18,41 @@
     <nav class="dash-nav">
         <div class="container nav-flex">
             <div class="brand">
-                <a href="index.html" class="logo">SAPA<span class="dot">.</span></a>
+                <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
                 <span class="divider">/</span>
                 <span class="username-display" id="navUsername">@username</span>
             </div>
-            <div class="actions">
-                <button id="logoutBtn" class="btn btn-danger btn-sm btn-icon-only" title="Keluar">
-                    <i class="fa-solid fa-right-from-bracket"></i>
+
+            <div class="actions" style="position: relative;">
+                
+                <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only" style="border: 1px solid #cbd5e1;">
+                    <i class="fa-solid fa-bars"></i>
                 </button>
+
+                <div id="dropdownMenu" class="nav-dropdown hidden">
+                    <div class="dropdown-header">
+                        <small>Menu Aplikasi</small>
+                    </div>
+                    
+                    <a href="dashboard.html" class="dropdown-item">
+                        <i class="fa-solid fa-link"></i> Link Manager
+                    </a>
+                    
+                    <a href="imsakiyah.html" class="dropdown-item">
+                        <i class="fa-solid fa-mosque" style="color: #10b981;"></i> Imsakiyah
+                    </a>
+
+                    <a href="kartu-ucapan.html" class="dropdown-item">
+                        <i class="fa-solid fa-envelope-open-text" style="color: #f59e0b;"></i> Kartu Ucapan
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+                    
+                    <button id="logoutBtn" class="dropdown-item text-red" style="width: 100%; text-align: left; background: none; border: none;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                    </button>
+                </div>
+
             </div>
         </div>
     </nav>
@@ -198,14 +225,6 @@
                             </small>
                         </div>
 
-                        <div class="form-group">
-                            <label>Username</label>
-                            <a href="imsakiyah.html">
-                                <button type="button" class="btn btn-outline btn-block">
-                                    <i class="fa-solid fa-clock"></i> Atur Waktu Imsakiyah
-                                </button>
-                            </a>
-                        </div>
                         <button type="submit" class="btn btn-primary btn-block" style="margin-top: 20px;">
                             <i class="fa-solid fa-floppy-disk"></i> Simpan Profil
                         </button>                    
@@ -242,6 +261,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="card p-30" style="margin-top: 30px; text-align: center; position: relative; overflow: hidden;">
+                
+                <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: #f1f5f9; border-radius: 50%; opacity: 0.5; z-index: 0;"></div>
+
+                <div style="position: relative; z-index: 1;">
+                    <h3 style="margin-bottom: 10px; font-size: 1.1rem;">Scan Profil Saya</h3>
+                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">
+                        Biar temanmu gampang buka profil ini.
+                    </p>
+
+                    <div id="qrcode" style="display: flex; justify-content: center; margin-bottom: 20px; padding: 10px; background: white; border-radius: 12px; display: inline-block; border: 1px solid #e2e8f0;"></div>
+                    
+                    <br>
+                    <button onclick="downloadQR()" class="btn btn-primary" style="flex: 1;">
+                        <i class="fa-solid fa-download"></i> Simpan QR
+                    </button>
+                </div>
+            </div>
             </main>
         </div>
     </div>
@@ -297,5 +334,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <script type="module" src="js/dashboard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 </html>

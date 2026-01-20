@@ -10,190 +10,161 @@
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
-
-    <style>
-        /* CSS Tambahan Khusus Halaman Ini */
-        .imsak-card {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .time-big {
-            font-size: 3.5rem;
-            font-family: 'Outfit', sans-serif;
-            color: #4f46e5;
-            margin: 10px 0;
-            font-weight: 700;
-        }
-        .date-display {
-            color: #64748b;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-        .schedule-list {
-            list-style: none;
-            margin-top: 30px;
-            text-align: left;
-        }
-        .schedule-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px dashed #e2e8f0;
-            font-size: 1.1rem;
-        }
-        .schedule-item:last-child { border-bottom: none; }
-        .schedule-item.active {
-            color: #4f46e5;
-            font-weight: 700;
-        }
-        .location-badge {
-            background: #e0e7ff;
-            color: #4f46e5;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/imsakiyah.css">
 </head>
 <body>
 
-    <nav class="navbar" style="background: white; border-bottom: 1px solid #e2e8f0;">
-        <div class="container">
-            <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
-            <a href="dashboard.html" class="btn btn-outline btn-sm">Kembali ke Dashboard</a>
+    <nav class="dash-nav">
+        <div class="container nav-flex">
+            <div class="brand">
+                <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
+                <span class="divider">/</span>
+                <span class="username-display">Ramadhan 1447 H</span>
+            </div>
+
+            <div class="actions" style="position: relative;">
+                <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only" style="border: 1px solid #cbd5e1;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div id="dropdownMenu" class="nav-dropdown hidden">
+                    <div class="dropdown-header">Menu Aplikasi</div>
+                    <a href="dashboard.html" class="dropdown-item">
+                        <i class="fa-solid fa-link"></i> Link Manager
+                    </a>
+                    <a href="imsakiyah.html" class="dropdown-item active">
+                        <i class="fa-solid fa-mosque"></i> Imsakiyah
+                    </a>
+                    <a href="kartu-ucapan.html" class="dropdown-item">
+                        <i class="fa-solid fa-envelope-open-text"></i> Kartu Ucapan
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="index.html" class="dropdown-item text-red">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <div class="container" style="padding: 40px 20px;">
-        
-        <div class="imsak-card">
-            <div id="loadingMsg">
-                <i class="fa-solid fa-compass fa-spin fa-2x" style="color: #4f46e5; margin-bottom: 15px;"></i>
-                <p>Mencari lokasimu...</p>
-                <small style="color: #94a3b8;">Izinkan akses lokasi browser ya!</small>
-            </div>
+    <div class="container main-content">
+        <div class="dash-grid">
 
-            <div id="scheduleContent" style="display: none;">
-                <div class="location-badge">
-                    <i class="fa-solid fa-location-dot"></i> <span id="locName">Lokasi Kamu</span>
+            <aside class="profile-editor">
+                <div class="card p-30 text-center sticky-card">
+                    <div class="location-badge">
+                        <i class="fa-solid fa-location-dot"></i> <span id="locName">Banda Aceh</span>
+                    </div>
+                    
+                    <h4 id="dateNow" style="margin: 15px 0; color: #64748b; font-size: 1rem;">-</h4>
+
+                    <div class="countdown-box">
+                        <p class="small-label">Menuju <span id="nextPrayerName" style="font-weight: bold; color: #4f46e5;">...</span></p>
+                        <div class="time-big" id="countdown">--:--:--</div>
+                    </div>
+
+                    <hr class="divider-line">
+
+                    <ul class="today-list">
+                        <li id="row-fajr"><span>Imsak</span> <span class="time-val" id="time-fajr">--:--</span></li>
+                        <li id="row-dhuhr"><span>Dzuhur</span> <span class="time-val" id="time-dhuhr">--:--</span></li>
+                        <li id="row-asr"><span>Ashar</span> <span class="time-val" id="time-asr">--:--</span></li>
+                        <li id="row-maghrib" class="highlight"><span>Maghrib</span> <span class="time-val" id="time-maghrib">--:--</span></li>
+                        <li id="row-isha"><span>Isya</span> <span class="time-val" id="time-isha">--:--</span></li>
+                    </ul>
                 </div>
-                
-                <div class="date-display" id="dateNow">Senin, 19 Januari 2026</div>
+            </aside>
 
-                <h3>Menuju Maghrib</h3>
-                <div class="time-big" id="countdown">00:00:00</div>
-                
-                <ul class="schedule-list">
-                    <li class="schedule-item" id="row-fajr">
-                        <span>Imsak (Subuh)</span> <span id="time-fajr">--:--</span>
-                    </li>
-                    <li class="schedule-item" id="row-dhuhr">
-                        <span>Dzuhur</span> <span id="time-dhuhr">--:--</span>
-                    </li>
-                    <li class="schedule-item" id="row-asr">
-                        <span>Ashar</span> <span id="time-asr">--:--</span>
-                    </li>
-                    <li class="schedule-item active" id="row-maghrib">
-                        <span>Maghrib (Buka)</span> <span id="time-maghrib">--:--</span>
-                    </li>
-                    <li class="schedule-item" id="row-isha">
-                        <span>Isya</span> <span id="time-isha">--:--</span>
-                    </li>
-                </ul>
-            </div>
+            <main class="links-manager">
+                <div class="card p-30">
+                    <div class="section-header">
+                        <h3>Jadwal Imsakiyah - Kota Banda Aceh</h3>
+                        <button class="btn btn-primary btn-sm" onclick="alert('Fitur download PDF segera hadir!')">
+                            <i class="fa-solid fa-print"></i> Cetak
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table-imsak">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Imsak</th>
+                                    <th>Subuh</th>
+                                    <th>Dzuhur</th>
+                                    <th>Ashar</th>
+                                    <th>Maghrib</th>
+                                    <th>Isya</th>
+                                </tr>
+                            </thead>
+                            <tbody id="imsakTableBody">
+                                <tr>
+                                    <td>1 Ramadhan</td>
+                                    <td>05:08</td>
+                                    <td>05:18</td>
+                                    <td>12:48</td>
+                                    <td>16:03</td>
+                                    <td>18:52</td>
+                                    <td>20:02</td>
+                                </tr>
+                                <tr>
+                                    <td>2 Ramadhan</td>
+                                    <td>05:08</td>
+                                    <td>05:18</td>
+                                    <td>12:48</td>
+                                    <td>16:03</td>
+                                    <td>18:52</td>
+                                    <td>20:02</td>
+                                </tr>
+                                <tr>
+                                    <td>3 Ramadhan</td>
+                                    <td>05:07</td>
+                                    <td>05:17</td>
+                                    <td>12:48</td>
+                                    <td>16:02</td>
+                                    <td>18:52</td>
+                                    <td>20:02</td>
+                                </tr>
+                                <tr>
+                                    <td>4 Ramadhan</td>
+                                    <td>05:07</td>
+                                    <td>05:17</td>
+                                    <td>12:47</td>
+                                    <td>16:02</td>
+                                    <td>18:52</td>
+                                    <td>20:02</td>
+                                </tr>
+                                <tr>
+                                    <td>5 Ramadhan</td>
+                                    <td>05:07</td>
+                                    <td>05:17</td>
+                                    <td>12:47</td>
+                                    <td>16:01</td>
+                                    <td>18:52</td>
+                                    <td>20:01</td>
+                                </tr>
+                                </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="alert-info" style="margin-top: 20px; background: #eff6ff; padding: 15px; border-radius: 8px; color: #1e40af; font-size: 0.9rem;">
+                        <i class="fa-solid fa-circle-info"></i> Data di atas adalah placeholder manual untuk Kota Banda Aceh.
+                    </div>
+                </div>
+            </main>
+
         </div>
-
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/adhan@4.4.4/Adhan.min.js"></script>
+    <script type="module" src="js/imsakiyah.js"></script>
 
     <script>
-        // --- LOGIKA JADWAL SALAT ---
-        
-        function initApp() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(successLoc, errorLoc);
-            } else {
-                alert("Browser kamu gak support Geolocation :(");
-            }
+        const hbBtn = document.getElementById('hamburgerBtn');
+        const menu = document.getElementById('dropdownMenu');
+        if(hbBtn && menu) {
+            hbBtn.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('hidden'); });
+            window.addEventListener('click', (e) => { if(!menu.contains(e.target) && !hbBtn.contains(e.target)) menu.classList.add('hidden'); });
         }
-
-        function successLoc(position) {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-
-            // 1. Hitung Jadwal Pakai Adhan.js
-            const coordinates = new adhan.Coordinates(lat, lng);
-            const date = new Date();
-            const params = adhan.CalculationMethod.Singapore(); // Standar mirip Kemenag buat WIB
-            const prayerTimes = new adhan.PrayerTimes(coordinates, date, params);
-
-            // 2. Format Waktu (Ambil Jam:Menit)
-            const formattedTime = (time) => {
-                const dateObj = new Date(time);
-                // Tambah 0 di depan angka satuan
-                const h = String(dateObj.getHours()).padStart(2, '0');
-                const m = String(dateObj.getMinutes()).padStart(2, '0');
-                return `${h}:${m}`;
-            };
-
-            // 3. Tampilkan ke HTML
-            document.getElementById('time-fajr').innerText = formattedTime(prayerTimes.fajr);
-            document.getElementById('time-dhuhr').innerText = formattedTime(prayerTimes.dhuhr);
-            document.getElementById('time-asr').innerText = formattedTime(prayerTimes.asr);
-            document.getElementById('time-maghrib').innerText = formattedTime(prayerTimes.maghrib);
-            document.getElementById('time-isha').innerText = formattedTime(prayerTimes.isha);
-
-            // Tampilkan Tanggal
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('dateNow').innerText = date.toLocaleDateString('id-ID', options);
-
-            // Tampilkan Koordinat (Sementara, nanti bisa diganti nama kota pake API lain)
-            document.getElementById('locName').innerText = `Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)}`;
-
-            // Tampilkan UI, Sembunyikan Loading
-            document.getElementById('loadingMsg').style.display = 'none';
-            document.getElementById('scheduleContent').style.display = 'block';
-
-            // Jalankan Countdown
-            startCountdown(prayerTimes.maghrib);
-        }
-
-        function errorLoc() {
-            document.getElementById('loadingMsg').innerHTML = `
-                <p style="color: red;">Gagal ambil lokasi. Pastikan GPS nyala dan izinkan browser.</p>
-                <button onclick="initApp()" class="btn btn-primary btn-sm" style="margin-top:10px;">Coba Lagi</button>
-            `;
-        }
-
-        function startCountdown(targetTime) {
-            setInterval(() => {
-                const now = new Date();
-                const diff = targetTime - now;
-
-                if (diff > 0) {
-                    const hours = Math.floor(diff / (1000 * 60 * 60));
-                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                    
-                    document.getElementById('countdown').innerText = 
-                        `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
-                } else {
-                    document.getElementById('countdown').innerText = "SUDAH BUKA!";
-                }
-            }, 1000);
-        }
-
-        // Mulai Aplikasi
-        initApp();
     </script>
-
 </body>
 </html>

@@ -47,6 +47,14 @@ if (registerForm) {
                 throw new Error("Username sudah dipakai. Ganti yang lain ya!");
             }
 
+        const password = document.getElementById('password').value;
+        // confirm password
+        const confirmPassword = document.getElementById('confirmPassword').value; 
+
+            if (password !== confirmPassword) {
+                return showAlert("Password tidak cocok lae! Coba cek lagi.");
+            }    
+
             const { data, error } = await supabase.auth.signUp({
                 email: email,
                 password: password,
