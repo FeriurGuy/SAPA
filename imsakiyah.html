@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="css/imsakiyah.css">
     <link rel="stylesheet" href="css/dashboard.css">
 
-    <style>
-        
-    </style>
 </head>
 <body>
 
@@ -22,19 +19,39 @@
             <div class="brand">
                 <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
                 <span class="divider">/</span>
-                <span class="username-display">Ramadhan 1447H</span>
+                <span class="username-display" id="navUsername">@username</span>
             </div>
+
             <div class="actions" style="position: relative;">
+                
                 <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only" style="border: 1px solid #cbd5e1;">
                     <i class="fa-solid fa-bars"></i>
                 </button>
+
                 <div id="dropdownMenu" class="nav-dropdown hidden">
-                    <div class="dropdown-header"><small>Menu Aplikasi</small></div>
-                    <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-link"></i> Link Manager</a>
-                    <a href="imsakiyah.html" class="dropdown-item active"><i class="fa-solid fa-mosque" style="color: #10b981;"></i> Imsakiyah</a>
+                    <div class="dropdown-header">
+                        <small>Menu Aplikasi</small>
+                    </div>
+                    
+                    <a href="dashboard.html" class="dropdown-item">
+                        <i class="fa-solid fa-link"></i> Link Manager
+                    </a>
+                    
+                    <a href="imsakiyah.html" class="dropdown-item">
+                        <i class="fa-solid fa-mosque" style="color: #10b981;"></i> Imsakiyah
+                    </a>
+
+                    <a href="kartu-ucapan.html" class="dropdown-item">
+                        <i class="fa-solid fa-envelope-open-text" style="color: #f59e0b;"></i> Kartu Ucapan
+                    </a>
+
                     <div class="dropdown-divider"></div>
-                    <a href="index.html" class="dropdown-item text-red"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
+                    
+                    <button id="logoutBtn" class="dropdown-item text-red" style="width: 100%; text-align: left; background: none; border: none;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                    </button>
                 </div>
+
             </div>
         </div>
     </nav>
@@ -101,7 +118,10 @@
         </div>
     </footer>
 
-    <script src="js/imsakiyah.js"></script>
-    <script src="js/dashboard.js"></script>
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script type="module" src="js/imsakiyah.js"></script>
+
 </body>
 </html>
