@@ -8,8 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="assets/Icons/favicon.png" type="image/png" sizes="96x96">
-    <link rel="stylesheet" href="css/imsakiyah.css">
+    
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/imsakiyah.css">
 
 </head>
 <body>
@@ -17,41 +18,25 @@
     <nav class="dash-nav">
         <div class="container nav-flex">
             <div class="brand">
-                <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
-                <span class="divider">/</span>
-                <span class="username-display" id="navUsername">@username</span>
+                <a href="dashboard.html" class="logo">SAPA<span class="logo-dot">.</span></a>
+                <span class="username">Ramadhan Edition</span>
             </div>
 
             <div class="actions" style="position: relative;">
-                
                 <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only" style="border: 1px solid #cbd5e1;">
                     <i class="fa-solid fa-bars"></i>
                 </button>
 
                 <div id="dropdownMenu" class="nav-dropdown hidden">
-                    <div class="dropdown-header">
-                        <small>Menu Aplikasi</small>
-                    </div>
-                    
-                    <a href="dashboard.html" class="dropdown-item">
-                        <i class="fa-solid fa-link"></i> Link Manager
-                    </a>
-                    
-                    <a href="imsakiyah.html" class="dropdown-item">
-                        <i class="fa-solid fa-mosque" style="color: #10b981;"></i> Imsakiyah
-                    </a>
-
-                    <a href="kartu-ucapan.html" class="dropdown-item">
-                        <i class="fa-solid fa-envelope-open-text" style="color: #f59e0b;"></i> Kartu Ucapan
-                    </a>
-
+                    <div class="dropdown-header"><small>Menu Aplikasi</small></div>
+                    <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-link"></i> Link Manager</a>
+                    <a href="imsakiyah.html" class="dropdown-item active"><i class="fa-solid fa-mosque" style="color: #10b981;"></i> Imsakiyah</a>
+                    <a href="kartu-ucapan.html" class="dropdown-item"><i class="fa-solid fa-envelope-open-text" style="color: #f59e0b;"></i> Kartu Ucapan</a>
                     <div class="dropdown-divider"></div>
-                    
                     <button id="logoutBtn" class="dropdown-item text-red" style="width: 100%; text-align: left; background: none; border: none;">
                         <i class="fa-solid fa-right-from-bracket"></i> Keluar
                     </button>
                 </div>
-
             </div>
         </div>
     </nav>
@@ -86,41 +71,151 @@
 
             <div class="links-manager">
                 <div class="card p-30">
-                    <h3>Jadwal Imsakiyah</h3>
-
-                    <div class="table-responsive">
-                        <table class="table-imsak">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th> 
-                                    <th>Imsak</th> <th>Subuh</th> <th>Dzuhur</th> <th>Ashar</th> <th>Maghrib</th> <th>Isya</th>
-                                </tr>
-                            </thead>
-                            <tbody id="imsakTableBody">
-                                <tr><td>1 Ramadhan</td><td>05:08</td><td>05:18</td><td>12:48</td><td>16:03</td><td>18:52</td><td>20:02</td></tr>
-                                <tr><td>2 Ramadhan</td><td>05:08</td><td>05:18</td><td>12:48</td><td>16:03</td><td>18:52</td><td>20:02</td></tr>
-                                <tr><td>3 Ramadhan</td><td>05:07</td><td>05:17</td><td>12:48</td><td>16:02</td><td>18:52</td><td>20:02</td></tr>
-                                <tr><td>4 Ramadhan</td><td>05:07</td><td>05:17</td><td>12:47</td><td>16:02</td><td>18:52</td><td>20:02</td></tr>
-                                <tr><td>5 Ramadhan</td><td>05:07</td><td>05:17</td><td>12:47</td><td>16:01</td><td>18:52</td><td>20:01</td></tr>
-                            </tbody>
-                        </table>
+                    
+                    <div class="imsak-header">
+                        <div class="header-title">
+                            <h3>Jadwal Imsakiyah</h3>
+                            <p style="font-size: 0.8rem; color: #64748b; margin: 0;">1447 Hijriah</p>
+                        </div>
+                        <div class="header-actions">
+                            <button id="btnDownload" class="btn-download-icon" title="Download Full Jadwal">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                            <div class="week-badge">
+                                <span id="currentWeekNum">1</span>/4
+                            </div>
+                        </div>
                     </div>
+
+                    <div id="tablePage1" class="table-wrapper animate-fade">
+                        <div class="table-responsive">
+                            <table class="table-imsak">
+                                <thead><tr><th>Tgl</th><th>Imsak</th><th>Subuh</th><th>Dzuhur</th><th>Ashar</th><th>Maghrib</th><th>Isya</th></tr></thead>
+                                <tbody>
+                                    <tr><td>1 Ram</td><td>05:08</td><td>05:18</td><td>12:48</td><td>16:03</td><td>18:52</td><td>20:02</td></tr>
+                                    <tr><td>2 Ram</td><td>05:08</td><td>05:18</td><td>12:48</td><td>16:03</td><td>18:52</td><td>20:02</td></tr>
+                                    <tr><td>3 Ram</td><td>05:07</td><td>05:17</td><td>12:48</td><td>16:02</td><td>18:52</td><td>20:02</td></tr>
+                                    <tr><td>4 Ram</td><td>05:07</td><td>05:17</td><td>12:47</td><td>16:02</td><td>18:52</td><td>20:02</td></tr>
+                                    <tr><td>5 Ram</td><td>05:07</td><td>05:17</td><td>12:47</td><td>16:01</td><td>18:52</td><td>20:01</td></tr>
+                                    <tr><td>6 Ram</td><td>05:06</td><td>05:16</td><td>12:47</td><td>16:01</td><td>18:52</td><td>20:01</td></tr>
+                                    <tr><td>7 Ram</td><td>05:06</td><td>05:16</td><td>12:47</td><td>16:00</td><td>18:52</td><td>20:01</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="tablePage2" class="table-wrapper animate-fade hidden">
+                        <div class="table-responsive">
+                            <table class="table-imsak">
+                                <thead><tr><th>Tgl</th><th>Imsak</th><th>Subuh</th><th>Dzuhur</th><th>Ashar</th><th>Maghrib</th><th>Isya</th></tr></thead>
+                                <tbody>
+                                    <tr><td>8 Ram</td><td>05:05</td><td>05:15</td><td>12:46</td><td>15:59</td><td>18:51</td><td>20:00</td></tr>
+                                    <tr><td>9 Ram</td><td>05:05</td><td>05:15</td><td>12:46</td><td>15:58</td><td>18:51</td><td>20:00</td></tr>
+                                    <tr><td>10 Ram</td><td>05:04</td><td>05:14</td><td>12:46</td><td>15:58</td><td>18:51</td><td>20:00</td></tr>
+                                    <tr><td>11 Ram</td><td>05:04</td><td>05:14</td><td>12:45</td><td>15:57</td><td>18:51</td><td>20:00</td></tr>
+                                    <tr><td>12 Ram</td><td>05:03</td><td>05:13</td><td>12:45</td><td>15:56</td><td>18:50</td><td>19:59</td></tr>
+                                    <tr><td>13 Ram</td><td>05:03</td><td>05:13</td><td>12:45</td><td>15:55</td><td>18:50</td><td>19:59</td></tr>
+                                    <tr><td>14 Ram</td><td>05:02</td><td>05:12</td><td>12:45</td><td>15:54</td><td>18:50</td><td>19:59</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="tablePage3" class="table-wrapper animate-fade hidden">
+                        <div class="table-responsive">
+                            <table class="table-imsak">
+                                <thead><tr><th>Tgl</th><th>Imsak</th><th>Subuh</th><th>Dzuhur</th><th>Ashar</th><th>Maghrib</th><th>Isya</th></tr></thead>
+                                <tbody>
+                                    <tr><td>15 Ram</td><td>05:02</td><td>05:12</td><td>12:44</td><td>15:53</td><td>18:49</td><td>19:58</td></tr>
+                                    <tr><td>16 Ram</td><td>05:01</td><td>05:11</td><td>12:44</td><td>15:52</td><td>18:49</td><td>19:58</td></tr>
+                                    <tr><td>17 Ram</td><td>05:01</td><td>05:11</td><td>12:44</td><td>15:51</td><td>18:49</td><td>19:58</td></tr>
+                                    <tr><td>18 Ram</td><td>05:00</td><td>05:10</td><td>12:43</td><td>15:50</td><td>18:49</td><td>19:58</td></tr>
+                                    <tr><td>19 Ram</td><td>05:00</td><td>05:10</td><td>12:43</td><td>15:49</td><td>18:48</td><td>19:57</td></tr>
+                                    <tr><td>20 Ram</td><td>04:59</td><td>05:09</td><td>12:43</td><td>15:48</td><td>18:48</td><td>19:57</td></tr>
+                                    <tr><td>21 Ram</td><td>04:59</td><td>05:09</td><td>12:42</td><td>15:47</td><td>18:48</td><td>19:57</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="tablePage4" class="table-wrapper animate-fade hidden">
+                        <div class="table-responsive">
+                            <table class="table-imsak">
+                                <thead><tr><th>Tgl</th><th>Imsak</th><th>Subuh</th><th>Dzuhur</th><th>Ashar</th><th>Maghrib</th><th>Isya</th></tr></thead>
+                                <tbody>
+                                    <tr><td>22 Ram</td><td>04:58</td><td>05:08</td><td>12:42</td><td>15:46</td><td>18:47</td><td>19:56</td></tr>
+                                    <tr><td>23 Ram</td><td>04:58</td><td>05:08</td><td>12:42</td><td>15:45</td><td>18:47</td><td>19:56</td></tr>
+                                    <tr><td>24 Ram</td><td>04:57</td><td>05:07</td><td>12:42</td><td>15:44</td><td>18:47</td><td>19:56</td></tr>
+                                    <tr><td>25 Ram</td><td>04:57</td><td>05:07</td><td>12:41</td><td>15:43</td><td>18:47</td><td>19:56</td></tr>
+                                    <tr><td>26 Ram</td><td>04:56</td><td>05:06</td><td>12:41</td><td>15:42</td><td>18:46</td><td>19:55</td></tr>
+                                    <tr><td>27 Ram</td><td>04:56</td><td>05:06</td><td>12:41</td><td>15:41</td><td>18:46</td><td>19:55</td></tr>
+                                    <tr><td>28 Ram</td><td>04:55</td><td>05:05</td><td>12:40</td><td>15:40</td><td>18:46</td><td>19:55</td></tr>
+                                    <tr><td>29 Ram</td><td>04:55</td><td>05:05</td><td>12:40</td><td>15:39</td><td>18:46</td><td>19:55</td></tr>
+                                    <tr><td>30 Ram</td><td>04:55</td><td>05:05</td><td>12:40</td><td>15:39</td><td>18:46</td><td>19:55</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="nav-container">
+                        <button id="btnPrevTable" class="btn-nav" disabled>
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="nav-dots">
+                            <span class="dot active" id="dot1"></span>
+                            <span class="dot" id="dot2"></span>
+                            <span class="dot" id="dot3"></span>
+                            <span class="dot" id="dot4"></span>
+                        </div>
+
+                        <button id="btnNextTable" class="btn-nav">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+
                 </div>
             </div>
 
         </div>
     </div>
 
-    <footer class="dash-footer">
-        <div class="container text-center"><p>&copy; 2026 SAPA Project. Created by 
-            <br>
-            <strong>Feri Ramadhan Azhari</strong></p>
+    <div id="fullScheduleContainer" style="position: absolute; left: -9999px; top: 0; width: 600px; background: white; padding: 20px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2 style="color: #4f46e5; margin: 0;">Jadwal Imsakiyah 1447 H</h2>
+            <p style="color: #64748b;">Wilayah Banda Aceh & Sekitarnya</p>
         </div>
+        <table class="table-imsak" style="width: 100%; border: 1px solid #e2e8f0;">
+            <thead style="background: #f8fafc;">
+                <tr><th>Ramadhan</th><th>Imsak</th><th>Subuh</th><th>Maghrib</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1 Ram</td><td>05:08</td><td>05:18</td><td>18:52</td></tr>
+                <tr><td>2 Ram</td><td>05:08</td><td>05:18</td><td>18:52</td></tr>
+                <tr><td>3 Ram</td><td>05:07</td><td>05:17</td><td>18:52</td></tr>
+                <tr><td>4 Ram</td><td>05:07</td><td>05:17</td><td>18:52</td></tr>
+                <tr><td>5 Ram</td><td>05:07</td><td>05:17</td><td>18:52</td></tr>
+                <tr><td>6 Ram</td><td>05:06</td><td>05:16</td><td>18:52</td></tr>
+                <tr><td>7 Ram</td><td>05:06</td><td>05:16</td><td>18:52</td></tr>
+                <tr><td>8 Ram</td><td>05:05</td><td>05:15</td><td>18:51</td></tr>
+                <tr><td>9 Ram</td><td>05:05</td><td>05:15</td><td>18:51</td></tr>
+                <tr><td>10 Ram</td><td>05:04</td><td>05:14</td><td>18:51</td></tr>
+                <tr><td>11-20 Ram</td><td colspan="3" style="text-align:center; color:#94a3b8;">(Data Lengkap Ada di Aplikasi)</td></tr>
+                <tr><td>21-30 Ram</td><td colspan="3" style="text-align:center; color:#94a3b8;">(Data Lengkap Ada di Aplikasi)</td></tr>
+            </tbody>
+        </table>
+        <div style="text-align: center; margin-top: 20px; font-size: 0.8rem; color: #cbd5e1;">
+            Dibuat dengan SAPA (sapa.my.id)
+        </div>
+    </div>
+
+    <footer class="dash-footer">
+        <div class="container text-center"><p>&copy; 2026 SAPA Project. Created by <br> <strong>Feri Ramadhan Azhari</strong></p></div>
     </footer>
 
     <div id="toast-container" class="toast-container"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script type="module" src="js/imsakiyah.js"></script>
 
 </body>

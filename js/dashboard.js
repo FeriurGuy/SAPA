@@ -156,7 +156,6 @@ async function loadProfile() {
             musicInput.value = '';
         }
         
-        // FORCE ENABLE USERNAME (Just in case class .pro-input masih nyangkut di HTML)
         if(usernameInput) {
             usernameInput.disabled = false;
             usernameInput.parentElement.style.opacity = "1";
@@ -185,12 +184,10 @@ profileForm.addEventListener('submit', async (e) => {
             updated_at: new Date()
         };
 
-        // Logic Pro: Cuma Musik yang dibatasi
         if (userProfile.is_pro) {
             updates.music_url = musicInput.value;
         }
 
-        // --- USERNAME LOGIC (OPEN FOR ALL) ---
         if (usernameInput) {
             const newUsername = usernameInput.value.trim().toLowerCase();
             
