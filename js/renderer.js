@@ -347,6 +347,7 @@ async function renderProfile() {
                 });
             });
         }
+        renderShareFeature(profile.username, profile.full_name);
 
     } catch (error) {
         console.error("Critical Render Error:", error);
