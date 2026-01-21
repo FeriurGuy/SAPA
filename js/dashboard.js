@@ -61,6 +61,9 @@ async function init() {
     user = session.user;
     await loadProfile(); 
     await loadLinks();
+    
+    // --- PANGGIL FITUR SHARE DISINI ---
+    initFloatingShare();
 }
 init();
 
@@ -165,7 +168,7 @@ async function loadProfile() {
     } catch (error) { console.error('Load Error:', error); }
 }
 
-// --- SAVE PROFILE (REWRITTEN) ---
+// --- SAVE PROFILE ---
 profileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = profileForm.querySelector('button[type="submit"]'); 
@@ -190,42 +193,26 @@ profileForm.addEventListener('submit', async (e) => {
 
         if (usernameInput) {
             const newUsername = usernameInput.value.trim().toLowerCase();
-            
-            // Cek jika username berubah
             if (newUsername !== userProfile.username) {
-                // Validasi Regex
                 if (!/^[a-zA-Z0-9_]{3,}$/.test(newUsername)) {
                     throw new Error("Username minimal 3 karakter (huruf, angka, _).");
                 }
-
-                // Cek Availability di DB
-                const { data: existingUser, error: checkError } = await supabase
-                    .from('profiles')
-                    .select('id')
-                    .eq('username', newUsername)
-                    .maybeSingle();
-
+                const { data: existingUser, error: checkError } = await supabase.from('profiles').select('id').eq('username', newUsername).maybeSingle();
                 if (checkError) throw checkError;
-                if (existingUser) {
-                    throw new Error("Username sudah dipakai orang lain.");
-                }
-
+                if (existingUser) throw new Error("Username sudah dipakai orang lain.");
                 updates.username = newUsername;
             }
         }
 
-        // Execute Update
         const { error } = await supabase.from('profiles').upsert(updates);
         if (error) throw error;
 
         showToast('Berhasil!',  'Profil disimpan.', 'success');
         isDirty = false;
         
-        // Reload local data
         const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
         userProfile = data; 
         
-        // Update Navbar
         navUsername.textContent = '@' + userProfile.username;
         if (userProfile.is_pro && !navUsername.innerHTML.includes('check')) {
             navUsername.innerHTML += ` <i class="fa-solid fa-circle-check" style="color:#3b82f6; margin-left:5px;"></i>`;
@@ -252,13 +239,10 @@ bgInput.addEventListener('change', async (e) => {
         bgPreview.style.opacity = '0.5';
         const fileExt = file.name.split('.').pop();
         const fileName = `${user.id}-bg-${Date.now()}.${fileExt}`;
-        
         const { error: uploadError } = await supabase.storage.from('backgrounds').upload(fileName, file);
         if (uploadError) throw uploadError;
-
         const { data: { publicUrl } } = supabase.storage.from('backgrounds').getPublicUrl(fileName);
         await supabase.from('profiles').update({ bg_image_url: publicUrl }).eq('id', user.id);
-        
         bgPreview.style.backgroundImage = `url('${publicUrl}')`;
         bgPreview.innerHTML = '';
         deleteBgBtn.classList.remove('hidden');
@@ -289,7 +273,6 @@ avatarInput.addEventListener('change', async (e) => {
         const fileName = `${user.id}-${Math.random()}.${fileExt}`;
         const { error: uploadError } = await supabase.storage.from('avatars').upload(fileName, file);
         if (uploadError) throw uploadError;
-        
         const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(fileName);
         await supabase.from('profiles').update({ avatar_url: publicUrl }).eq('id', user.id);
         avatarPreview.style.backgroundImage = `url('${publicUrl}')`;
@@ -377,7 +360,6 @@ window.deleteLink = (id) => {
     });
 };
 
-// Modal & Confirm Utils
 const confirmModal = document.getElementById('confirmModal');
 const btnCancel = document.getElementById('btnCancel');
 const btnConfirm = document.getElementById('btnConfirm');
@@ -396,85 +378,113 @@ closeModal.addEventListener('click', closeLinkModal);
 function closeLinkModal() { linkModal.classList.add('hidden'); }
 window.addEventListener('click', (e) => { if (e.target == linkModal) closeLinkModal(); if (e.target === confirmModal) confirmModal.classList.add('hidden'); });
 
-// Logout & Share
 logoutBtn.addEventListener('click', async () => { await supabase.auth.signOut(); window.location.href = 'index.html'; });
 
-const shareBtn = document.getElementById('shareBtn');
-if (shareBtn) {
-    shareBtn.addEventListener('click', () => {
-        const fullUrl = `${window.location.origin}/${userProfile.username}`;
-        navigator.clipboard.writeText(fullUrl).then(() => {
-            showToast('Disalin!', 'Link profil siap dibagikan', 'success');
+// ==========================================
+// 6. FITUR SHARE FAB (FINAL FIX ICON SHARE)
+// ==========================================
+function initFloatingShare() {
+    if (!userProfile) return;
+
+    const username = userProfile.username;
+    const fullName = userProfile.full_name || username;
+    const publicUrl = `${window.location.origin}/${username}`; 
+    const shareText = `Sstt... Cek profil lengkap aku di sini! 👇✨`;
+
+    const oldFab = document.querySelector('.fab-container');
+    if (oldFab) oldFab.remove();
+
+    const fabHTML = `
+        <div class="fab-options">
+            <button class="fab-btn" id="fabCopy" data-label="Salin Link">
+                <i class="fa-solid fa-link text-copy"></i>
+            </button>
+            <a href="https://www.tiktok.com/" target="_blank" class="fab-btn" data-label="TikTok" onclick="navigator.clipboard.writeText('${publicUrl}')">
+                <i class="fa-brands fa-tiktok text-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" class="fab-btn" data-label="Instagram" onclick="navigator.clipboard.writeText('${publicUrl}')">
+                <i class="fa-brands fa-instagram text-ig"></i>
+            </a>
+            <a href="https://wa.me/?text=${encodeURIComponent(shareText + '\n' + publicUrl)}" target="_blank" class="fab-btn" data-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp text-wa"></i>
+            </a>
+        </div>
+
+        <button class="fab-main" id="fabTrigger" title="Bagikan">
+            <i class="fa-solid fa-share"></i>
+        </button>
+    `;
+
+    const fabContainer = document.createElement('div');
+    fabContainer.className = 'fab-container';
+    fabContainer.innerHTML = fabHTML;
+    document.body.appendChild(fabContainer);
+
+    const trigger = document.getElementById('fabTrigger');
+    const btnCopy = document.getElementById('fabCopy');
+
+    // --- LOGIC GANTI ICON (SHARE <-> SILANG) ---
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fabContainer.classList.toggle('active');
+        const icon = trigger.querySelector('i');
+        
+        if (fabContainer.classList.contains('active')) {
+            // Kalau menu TERBUKA: Ganti panah jadi X
+            icon.className = 'fa-solid fa-xmark'; 
+            icon.style.transform = 'rotate(90deg)'; // Putar dikit biar mulus
+        } else {
+            // Kalau menu TERTUTUP: Balikin jadi panah share
+            icon.className = 'fa-solid fa-share';
+            icon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!fabContainer.contains(e.target)) {
+            fabContainer.classList.remove('active');
+            const icon = trigger.querySelector('i');
+            // Reset ke ikon awal
+            icon.className = 'fa-solid fa-share';
+            icon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    btnCopy.addEventListener('click', () => {
+        navigator.clipboard.writeText(publicUrl).then(() => {
+            const icon = btnCopy.querySelector('i');
+            icon.className = 'fa-solid fa-check text-copy';
+            setTimeout(() => icon.className = 'fa-solid fa-link text-copy', 2000);
         });
     });
 }
 
-// ==========================================
-// HAMBURGER MENU 
-// ==========================================
+// QR Code Logic
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const dropdownMenu = document.getElementById('dropdownMenu');
-
 if (hamburgerBtn && dropdownMenu) {
-    // Toggle Menu saat tombol diklik
-    hamburgerBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        dropdownMenu.classList.toggle('hidden');
-    });
-
-    // Tutup Menu kalau klik di luar area
-    window.addEventListener('click', (e) => {
-        if (!hamburgerBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            dropdownMenu.classList.add('hidden');
-        }
-    });
+    hamburgerBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('hidden'); });
+    window.addEventListener('click', (e) => { if (!hamburgerBtn.contains(e.target) && !dropdownMenu.contains(e.target)) { dropdownMenu.classList.add('hidden'); }});
 }
-
-const currentPath = window.location.pathname;
-const menuLinks = document.querySelectorAll('.dropdown-item');
-
-menuLinks.forEach(link => {
-    const href = link.getAttribute('href');
-    if (!href) return;
-
-    const cleanHref = href.replace('.html', '');
-
-    if (currentPath.includes(cleanHref)) {
-        link.classList.add('active');
-    }
-});
-
-// ==========================================
-// QR CODE GENERATION
-// ==========================================
 
 window.addEventListener('load', () => {
     setTimeout(() => {
         const userText = document.getElementById('navUsername').innerText.replace('@', '').trim();
         const cleanUrl = window.location.origin + '/' + userText;
-        
         const qrContainer = document.getElementById('qrcode');
-        qrContainer.innerHTML = "";
-        
-        new QRCode(qrContainer, {
-            text: cleanUrl,
-            width: 140,
-            height: 140,
-            colorDark : "#0f172a",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
-        });
-    }, 2000); //
+        if(qrContainer) {
+            qrContainer.innerHTML = "";
+            new QRCode(qrContainer, { text: cleanUrl, width: 140, height: 140, colorDark : "#0f172a", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H });
+        }
+    }, 2000);
 });
 
-function downloadQR() {
+window.downloadQR = function() {
     const img = document.querySelector("#qrcode img");
     if(img) {
         const link = document.createElement('a');
         link.download = `QR-SAPA-${Date.now()}.png`;
         link.href = img.src;
         link.click();
-    } else {
-        alert("Tunggu sebentar, QR Code lagi dibuat...");
-    }
+    } else { alert("Tunggu sebentar, QR Code lagi dibuat..."); }
 }

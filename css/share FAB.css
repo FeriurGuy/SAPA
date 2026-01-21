@@ -1,0 +1,109 @@
+/* --- FLOATING SHARE BUTTON (FAB) --- */
+.fab-container {
+    position: fixed !important;
+    bottom: 30px !important;    /* KUNCI: Nempel di bawah */
+    right: 30px !important;     /* KUNCI: Nempel di kanan */
+    z-index: 99999 !important;
+    
+    display: flex !important;
+    flex-direction: column !important; /* Susun dari Atas ke Bawah */
+    align-items: center;
+    gap: 15px; /* Jarak antara grup opsi dan tombol utama */
+}
+
+/* Wrapper Opsi */
+.fab-options {
+    display: flex;
+    flex-direction: column; 
+    gap: 12px;
+    margin-bottom: 5px;
+}
+
+/* --- STYLE TOMBOL (BULAT SEMPURNA) --- */
+.fab-main, .fab-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: var(--primary);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+    position: relative;
+}
+
+/* Tombol Utama (Trigger - Tanda +) */
+.fab-main {
+    width: 45px;
+    height: 45px;
+    background-color: var(--primary); /* Warna Gelap */
+    color: white;
+    z-index: 20; /* Paling depan */
+}
+
+.fab-main:hover {
+    transform: scale(1.1);
+    background: #1e293b;
+}
+
+/* Tombol Opsi (Kecil) */
+.fab-btn {
+    width: 45px;
+    height: 45px;
+    background: white;
+    color: #475569;
+    
+    opacity: 0; /* Sembunyi */
+    transform: translateY(20px) scale(0.5); /* Posisi awal agak turun */
+    pointer-events: none; /* Gak bisa diklik pas ngumpet */
+    visibility: hidden;
+}
+
+.fab-btn:hover {
+    transform: scale(1.1) !important;
+    color: #4f46e5;
+}
+
+/* Warna Ikon */
+.text-wa { color: #25D366; }
+.text-x { color: #000000; }
+.text-copy { color: #6366f1; }
+.text-ig { color: #E1306C; } /* Pink Instagram */
+.text-tiktok { color: #000000; } /* Hitam TikTok */
+
+/* --- ANIMASI MEKAR --- */
+.fab-container.active .fab-btn {
+    opacity: 1;
+    transform: translateY(0) scale(1); /* Naik ke posisi asli */
+    pointer-events: auto;
+    visibility: visible;
+}
+
+/* Delay Animasi (Urutan muncul dari bawah ke atas) */
+.fab-container.active .fab-btn:nth-last-child(1) { transition-delay: 0.05s; } /* WA (Paling bawah) */
+.fab-container.active .fab-btn:nth-last-child(2) { transition-delay: 0.1s; }  /* X */
+.fab-container.active .fab-btn:nth-last-child(3) { transition-delay: 0.15s; } /* Copy (Paling atas) */
+
+/* Tooltip Label (Kiri) */
+.fab-btn::after {
+    content: attr(data-label);
+    position: absolute;
+    right: 55px; /* Muncul di kiri tombol */
+    background: rgba(15, 23, 42, 0.9);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+}
+
+.fab-btn:hover::after {
+    opacity: 1;
+}
