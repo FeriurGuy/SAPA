@@ -5,7 +5,6 @@ const dropdownMenu = document.getElementById('dropdownMenu');
 const logoutBtn = document.getElementById('logoutBtn');
 const navUsername = document.getElementById('navUsername');
 
-// Debugging: Cek apakah elemen ditemukan
 if (!hamburgerBtn) console.error("Hamburger Button not found!");
 if (!dropdownMenu) console.error("Dropdown Menu not found!");
 
@@ -13,7 +12,7 @@ if (hamburgerBtn && dropdownMenu) {
     hamburgerBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         dropdownMenu.classList.toggle('hidden');
-        console.log("Hamburger clicked!"); // Cek di console kalau diklik
+        console.log("Hamburger clicked!");
     });
 
     window.addEventListener('click', (e) => {
@@ -23,7 +22,6 @@ if (hamburgerBtn && dropdownMenu) {
     });
 }
 
-// Active State Menu
 const currentPath = window.location.pathname;
 document.querySelectorAll('.dropdown-item').forEach(link => {
     const href = link.getAttribute('href');
@@ -32,7 +30,7 @@ document.querySelectorAll('.dropdown-item').forEach(link => {
     }
 });
 
-// Logout Logic
+// Logout
 if (logoutBtn) {
     logoutBtn.addEventListener('click', async () => {
         await supabase.auth.signOut();
@@ -47,7 +45,7 @@ const AdhanLibrary = (function() {
 
 
 // ==========================================
-// 3. APP LOGIC (WIDGET JADWAL SALAT)
+// 3. WIDGET SHALAT & TIMER LIVE
 // ==========================================
 try {
     const MY_LAT = 5.5483; 
@@ -61,7 +59,6 @@ try {
     const elDate = document.getElementById('dateNow');
 
     function initApp() {
-        // Gunakan variable AdhanLibrary yang kita buat di atas
         const prayer = new AdhanLibrary(); 
         prayer.setMethod('MWL');
         
@@ -187,39 +184,58 @@ if (btnPrev && btnNext) {
     });
 }
 
-// LOGIC DOWNLOAD PDF (jsPDF + html2canvas)
+// DOWNLOAD PDF
 if (btnDownload) {
-    btnDownload.addEventListener('click', () => {
-        // Efek visual klik
+    btnDownload.addEventListener('click', async () => {
+        if (!window.html2canvas || !window.jspdf) {
+            alert("Tunggu sebentar, fitur PDF sedang disiapkan... Coba 5 detik lagi.");
+            return;
+        }
+
         const oriIcon = btnDownload.innerHTML;
-        btnDownload.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-        btnDownload.disabled = true;
-
-        const fullTable = document.getElementById('fullScheduleContainer');
         
-        html2canvas(fullTable, { scale: 2 }).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
+        try {
+            btnDownload.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            btnDownload.disabled = true;
+
+            const fullTable = document.getElementById('fullScheduleContainer');
             
-            // Inisialisasi jsPDF (Portrait, mm, A4)
+            fullTable.style.left = '0px';
+            fullTable.style.zIndex = '-9999';
+            fullTable.style.opacity = '1';
+
+            const canvas = await html2canvas(fullTable, {
+                scale: 2, 
+                useCORS: true, 
+                logging: false,
+                windowWidth: 1000
+            });
+
+            fullTable.style.left = '-9999px';
+
+            const imgData = canvas.toDataURL('image/jpeg', 1.0);
             const { jsPDF } = window.jspdf;
+            
+            // Setup A4 Portrait
             const doc = new jsPDF('p', 'mm', 'a4');
+            const pageWidht = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
 
-            // Hitung rasio biar pas di A4
             const imgProps = doc.getImageProperties(imgData);
-            const pdfWidth = doc.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            const imgHeight = (imgProps.height * pageWidht) / imgProps.width;
 
-            doc.addImage(imgData, 'PNG', 0, 10, pdfWidth, pdfHeight);
-            doc.save('Jadwal_Imsakiyah_1447H.pdf');
+            doc.addImage(imgData, 'JPEG', 0, 10, pageWidht, imgHeight);
+            
+            doc.save(`Jadwal_Imsakiyah_1447H_BandaAceh.pdf`);
 
-            // Balikin tombol
             btnDownload.innerHTML = oriIcon;
             btnDownload.disabled = false;
-        }).catch(err => {
-            console.error(err);
-            alert("Gagal download PDF.");
+
+        } catch (error) {
+            console.error("Error PDF:", error);
+            alert("Gagal membuat PDF: " + (error.message || error));
             btnDownload.innerHTML = oriIcon;
             btnDownload.disabled = false;
-        });
+        }
     });
 }

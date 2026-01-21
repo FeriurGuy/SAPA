@@ -342,4 +342,137 @@ footer {
     animation: slideUpFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
+/* --- TOMBOL BAGIKAN (Inline) --- */
+.btn-share-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #0f172a;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto 0; /* Jarak dari link terakhir */
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.btn-share-profile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    background: #fff;
+}
+
+/* --- MODAL SHARE --- */
+.share-modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.share-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.share-modal {
+    background: white;
+    width: 90%;
+    max-width: 350px;
+    padding: 25px;
+    border-radius: 24px;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.share-modal-overlay.active .share-modal {
+    transform: scale(1);
+}
+
+.share-header h3 {
+    margin: 0 0 5px;
+    font-size: 1.2rem;
+    color: #0f172a;
+}
+
+.share-header p {
+    margin: 0 0 20px;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+/* --- GRID ICON --- */
+.share-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.share-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #475569;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.share-icon-box {
+    width: 50px; height: 50px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    transition: transform 0.2s;
+    color: white;
+}
+
+.share-item:hover .share-icon-box { transform: scale(1.1); }
+
+/* Warna Icon */
+.bg-wa { background: #25D366; }
+.bg-x { background: #000000; }
+.bg-copy { background: #6366f1; }
+.bg-email { background: #ea4335; }
+
+/* Tombol Tutup */
+.btn-close-share {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-close-share:hover { background: #e2e8f0; color: #0f172a; }
+
 
