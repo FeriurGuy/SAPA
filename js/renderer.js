@@ -263,90 +263,80 @@ async function renderProfile() {
         // 5. FITUR SHARE (MODAL & LOGIC) - Addon
         // ==========================================
         function renderShareFeature(username, fullName) {
-            // 1. Buat Tombol Trigger (Inline)
-            const btnShare = document.createElement('button');
-            btnShare.className = 'btn-share-profile';
-            btnShare.innerHTML = '<i class="fa-solid fa-share-nodes"></i> Bagikan Profil';
+        const oldFab = document.querySelector('.fab-container');
+        if (oldFab) oldFab.remove();
+
+        // Data Share
+        const currentUrl = window.location.href;
+        const shareText = `Cek profil ${fullName} di SAPA!`;
+
+        // Template HTML FAB
+        const fabHTML = `
+            <div class="fab-options">
+                
+                <button class="fab-btn" id="fabCopy" data-label="Salin Link">
+                    <i class="fa-solid fa-link text-copy"></i>
+                </button>
+
+                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}" 
+                target="_blank" class="fab-btn" data-label="Twitter / X">
+                    <i class="fa-brands fa-x-twitter text-x"></i>
+                </a>
+
+                <a href="https://wa.me/?text=${encodeURIComponent(shareText + '\n' + currentUrl)}" 
+                target="_blank" class="fab-btn" data-label="WhatsApp">
+                    <i class="fa-brands fa-whatsapp text-wa"></i>
+                </a>
+
+            </div>
             
-            // Masukkan tombol SETELAH container link (pLinks)
-            // Pastikan pLinks punya parentNode
-            if (pLinks && pLinks.parentNode) {
-                pLinks.parentNode.insertBefore(btnShare, pLinks.nextSibling);
+            <button class="fab-main" id="fabTrigger">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+        `;
+
+        // Buat Container & Append ke Body
+        const fabContainer = document.createElement('div');
+        fabContainer.className = 'fab-container';
+        fabContainer.innerHTML = fabHTML;
+        document.body.appendChild(fabContainer);
+
+        // LOGIC INTERAKSI
+        const trigger = document.getElementById('fabTrigger');
+        const btnCopy = document.getElementById('fabCopy');
+
+        // Toggle Menu (Klik tombol utama)
+        trigger.addEventListener('click', () => {
+            fabContainer.classList.toggle('active');
+            
+            // Ganti ikon share <-> silang
+            const icon = trigger.querySelector('i');
+            if (fabContainer.classList.contains('active')) {
+                icon.classList.replace('fa-share-nodes', 'fa-plus'); // Efek silang dari rotate CSS
+            } else {
+                icon.classList.replace('fa-plus', 'fa-share-nodes');
             }
+        });
 
-            // 2. Buat Elemen Modal (Hidden by default)
-            const currentUrl = window.location.href;
-            const shareText = `Cek profil ${fullName} di SAPA! 👇`;
-            
-            // Template Modal HTML
-            const modalHtml = `
-                <div class="share-modal-overlay" id="shareModalOverlay">
-                    <div class="share-modal">
-                        <div class="share-header">
-                            <h3>Bagikan ke Teman</h3>
-                            <p>Sebarkan link profil ini ke sosmedmu</p>
-                        </div>
-                        
-                        <div class="share-grid">
-                            <a href="https://wa.me/?text=${encodeURIComponent(shareText + '\n' + currentUrl)}" target="_blank" class="share-item">
-                                <div class="share-icon-box bg-wa"><i class="fa-brands fa-whatsapp"></i></div>
-                                <span>WhatsApp</span>
-                            </a>
+        // Tutup menu kalau klik di luar
+        document.addEventListener('click', (e) => {
+            if (!fabContainer.contains(e.target)) {
+                fabContainer.classList.remove('active');
+                trigger.querySelector('i').classList.replace('fa-plus', 'fa-share-nodes');
+            }
+        });
 
-                            <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}" target="_blank" class="share-item">
-                                <div class="share-icon-box bg-x"><i class="fa-brands fa-x-twitter"></i></div>
-                                <span>X</span>
-                            </a>
-
-                            <a href="mailto:?subject=Cek Profil ${fullName}&body=${encodeURIComponent(shareText + '\n' + currentUrl)}" class="share-item">
-                                <div class="share-icon-box bg-email"><i class="fa-solid fa-envelope"></i></div>
-                                <span>Email</span>
-                            </a>
-
-                            <button class="share-item" id="btnCopyLinkShare">
-                                <div class="share-icon-box bg-copy"><i class="fa-solid fa-link"></i></div>
-                                <span>Salin</span>
-                            </button>
-                        </div>
-
-                        <button class="btn-close-share" id="btnCloseShare">Tutup</button>
-                    </div>
-                </div>
-            `;
-
-            // Inject Modal ke Body
-            const modalContainer = document.createElement('div');
-            modalContainer.innerHTML = modalHtml;
-            document.body.appendChild(modalContainer);
-
-            // 3. Logic Event Listener (Buka/Tutup/Copy)
-            const overlay = document.getElementById('shareModalOverlay');
-            const btnClose = document.getElementById('btnCloseShare');
-            const btnCopy = document.getElementById('btnCopyLinkShare');
-
-            // Buka Modal
-            btnShare.addEventListener('click', () => {
-                overlay.classList.add('active');
+        // Copy Logic
+        btnCopy.addEventListener('click', () => {
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                const icon = btnCopy.querySelector('i');
+                icon.className = 'fa-solid fa-check text-copy'; // Ubah jadi centang
+                setTimeout(() => {
+                    icon.className = 'fa-solid fa-link text-copy'; // Balikin lagi
+                }, 2000);
             });
-
-            // Tutup Modal
-            const closeModal = () => overlay.classList.remove('active');
-            btnClose.addEventListener('click', closeModal);
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) closeModal();
-            });
-
-            // Copy Link Logic
-            btnCopy.addEventListener('click', () => {
-                navigator.clipboard.writeText(currentUrl).then(() => {
-                    const originalIcon = btnCopy.innerHTML;
-                    btnCopy.innerHTML = `<div class="share-icon-box bg-copy" style="background:#10b981"><i class="fa-solid fa-check"></i></div><span>Disalin!</span>`;
-                    setTimeout(() => {
-                        btnCopy.innerHTML = originalIcon;
-                    }, 2000);
-                });
-            });
-        }
+        });
+    }
         renderShareFeature(profile.username, profile.full_name);
 
     } catch (error) {
