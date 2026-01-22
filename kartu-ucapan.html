@@ -1,11 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Generator Kartu - SAPA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&family=Fira+Code:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="assets/Icons/favicon.png" type="image/png">
+    
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/card-generator.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/imsakiyah.css">
+    <link rel="stylesheet" href="css/share FAB.css">
 </head>
 <body>
-    
+
+    <nav class="dash-nav">
+        <div class="container nav-flex">
+            <div class="brand">
+                <a href="dashboard.html" class="logo">SAPA<span class="logo-dot">.</span></a>
+                <span class="username">Ramadhan Edition</span>
+            </div>
+
+            <div class="actions" style="position: relative;">
+                <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only" style="border: 1px solid #cbd5e1;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div id="dropdownMenu" class="nav-dropdown hidden">
+                    <div class="dropdown-header"><small>Menu Aplikasi</small></div>
+                    <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-link"></i> Link Manager</a>
+                    <a href="imsakiyah.html" class="dropdown-item"><i class="fa-solid fa-mosque" style="color: #10b981;"></i> Imsakiyah</a>
+                    <a href="kartu-ucapan.html" class="dropdown-item active"><i class="fa-solid fa-envelope-open-text" style="color: #f59e0b;"></i> Kartu Ucapan</a>
+                    <div class="dropdown-divider"></div>
+                    <button id="logoutBtn" class="dropdown-item text-red" style="width: 100%; text-align: left; background: none; border: none;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <div class="generator-grid">
+            
+            <div class="control-panel card p-30">
+                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Kreasikan Kartumu</h3>
+                
+                <form id="cardForm">
+                    <div class="form-group">
+                        <label>1. Pilih Gaya</label>
+                        <div class="theme-selector">
+                            <div class="theme-opt active" data-theme="theme-ramadhan">
+                                <i class="fa-solid fa-moon"></i> Ramadhan
+                            </div>
+                            <div class="theme-opt" data-theme="theme-lebaran">
+                                <i class="fa-solid fa-mosque"></i> Lebaran
+                            </div>
+                            <div class="theme-opt" data-theme="theme-cyber">
+                                <i class="fa-solid fa-terminal"></i> Cyber
+                            </div>
+                            <div class="theme-opt" data-theme="theme-mudik">
+                                <i class="fa-solid fa-ticket"></i> Tiket Mudik
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>2. Foto Background (Opsional)</label>
+                        <div class="upload-box-wrapper">
+                            <input type="file" id="bgUploader" accept="image/*" hidden>
+                            <label for="bgUploader" class="btn-upload-custom">
+                                <i class="fa-solid fa-image"></i> Pilih Foto
+                            </label>
+                            <button type="button" id="resetBgBtn" class="btn-reset-bg hidden" title="Hapus Foto">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                        <small style="color:#94a3b8; font-size: 0.75rem;">Foto akan menimpa warna tema.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>3. Detail Ucapan</label>
+                        <input type="text" id="inputReceiver" placeholder="Kepada..." maxlength="25" class="mb-10">
+                        <textarea id="inputMessage" rows="3" placeholder="Tulis ucapanmu..." maxlength="120" class="mb-10">Marhaban ya Ramadhan. Mohon maaf lahir dan batin.</textarea>
+                        <input type="text" id="inputSender" placeholder="Dari...">
+                    </div>
+
+                    <hr class="divider-line">
+
+                    <div class="action-buttons">
+                        <button type="button" id="btnDownload" class="btn btn-primary btn-block">
+                            <i class="fa-solid fa-download"></i> Simpan (HD)
+                        </button>
+                        <button type="button" id="btnShareWA" class="btn btn-outline btn-block mt-10">
+                            <i class="fa-brands fa-whatsapp"></i> Share WA
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="preview-panel">
+                <div class="card p-30 sticky-preview">
+                    <div class="preview-header">
+                        <h4>Live Preview</h4>
+                        <div class="badge-new">Realtime</div>
+                    </div>
+
+                    <div class="canvas-wrapper">
+                        <div id="cardCanvas" class="card-canvas theme-ramadhan">
+                            <div class="bg-overlay"></div>
+                            
+                            <div class="decor-layer">
+                                <div class="decor-top"></div>
+                                <div class="decor-bottom"></div>
+                            </div>
+
+                            <div class="card-content">
+                                <div class="card-header-text">Ramadhan Kareem</div>
+                                
+                                <div class="receiver-wrapper">
+                                    <span class="label-to">To:</span>
+                                    <h2 id="prevReceiver">Nama Penerima</h2>
+                                </div>
+                                
+                                <p id="prevMessage" class="main-message">
+                                    Marhaban ya Ramadhan. Mohon maaf lahir dan batin.
+                                </p>
+                                
+                                <div class="sender-wrapper">
+                                    <span class="label-from">From:</span>
+                                    <h3 id="prevSender">Nama Kamu</h3>
+                                </div>
+                            </div>
+
+                            <div class="card-watermark">
+                                <i class="fa-solid fa-bolt"></i> sapa.my.id
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="preview-hint"><i class="fa-solid fa-circle-info"></i> Hasil download akan lebih tajam dari preview.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script type="module" src="js/card-generator.js"></script>
 </body>
 </html>

@@ -1,0 +1,447 @@
+/* Layout & Utilities */
+.generator-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.mb-10 { margin-bottom: 10px; }
+.mt-10 { margin-top: 10px; }
+.hidden { display: none !important; }
+
+/* Upload Button Custom */
+.upload-box-wrapper {
+    display: flex;
+    gap: 10px;
+}
+.btn-upload-custom {
+    flex: 1;
+    background: #f1f5f9;
+    border: 1px dashed #94a3b8;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #475569;
+    transition: all 0.2s;
+}
+.btn-upload-custom:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    border-style: none;
+}
+.btn-reset-bg {
+    background: #fee2e2;
+    color: #ef4444;
+    border: none;
+    padding: 0 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Theme Selector */
+.theme-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.theme-opt {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    background: white;
+    color: #64748b;
+}
+.theme-opt:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.theme-opt.active {
+    background: #e0e7ff;
+    border-color: #4f46e5;
+    color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* --- CANVAS PREVIEW --- */
+.sticky-preview { position: sticky; top: 90px; }
+.preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.badge-new { background: #dcfce7; color: #166534; font-size: 0.7rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; }
+.preview-hint { text-align: center; font-size: 0.75rem; color: #94a3b8; margin-top: 15px; }
+
+.canvas-wrapper {
+    width: 100%;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.card-canvas {
+    width: 100%;
+    aspect-ratio: 4/5; /* Portrait Instagram */
+    background-size: cover !important;
+    background-position: center !important;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+    transition: all 0.3s ease;
+}
+
+/* Overlay biar text kebaca kalo pake BG Image */
+.bg-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1;
+    opacity: 0; /* Default hidden */
+    transition: opacity 0.3s;
+}
+.card-canvas.has-bg .bg-overlay { opacity: 1; }
+
+.card-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Typography Elements */
+.card-header-text { font-size: 1.8rem; font-weight: 700; margin-top: 20px; }
+.receiver-wrapper .label-to { font-size: 0.8rem; opacity: 0.8; display: block; margin-bottom: 2px; }
+.receiver-wrapper h2 { font-size: 1.4rem; margin: 0; }
+.main-message { font-size: 1.1rem; line-height: 1.5; white-space: pre-wrap; margin: 20px 0; }
+.sender-wrapper .label-from { font-size: 0.7rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+.sender-wrapper h3 { font-size: 1.2rem; margin: 0; }
+
+.card-watermark {
+    position: absolute;
+    bottom: 15px; right: 15px;
+    font-size: 0.7rem; font-weight: 600;
+    z-index: 20; opacity: 0.6;
+}
+
+/* === TEMA 1: RAMADHAN === */
+.theme-ramadhan {
+    background: radial-gradient(circle at top right, #312e81, #0f172a);
+    color: #fbbf24;
+    font-family: 'Outfit', sans-serif;
+}
+.theme-ramadhan .decor-top {
+    position: absolute; top: -50px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 120px;
+    background: #fbbf24; border-radius: 50%;
+    box-shadow: 0 0 60px #fbbf24; opacity: 0.2; z-index: 2;
+}
+.theme-ramadhan .decor-bottom {
+    position: absolute; bottom: 0; width: 100%; height: 50px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23fbbf24" fill-opacity="0.2" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,261.3C960,256,1056,224,1152,197.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+    background-size: cover; z-index: 2;
+}
+.theme-ramadhan .card-header-text { font-family: 'Great Vibes', cursive; font-size: 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+
+/* === TEMA 2: LEBARAN === */
+.theme-lebaran {
+    background: linear-gradient(135deg, #d1fae5 0%, #059669 100%);
+    color: #064e3b;
+    font-family: 'Inter', sans-serif;
+    border: 5px solid #fff;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+}
+.theme-lebaran .decor-top {
+    position: absolute; top: 20px; right: 20px;
+    font-size: 4rem; color: rgba(255,255,255,0.2);
+}
+.theme-lebaran .decor-top::after { content: '🕌'; }
+.theme-lebaran .main-message {
+    background: rgba(255,255,255,0.8);
+    padding: 15px; border-radius: 12px;
+    font-style: italic; color: #065f46;
+}
+
+/* === TEMA 3: CYBER === */
+.theme-cyber {
+    background: #000;
+    color: #00ff41;
+    font-family: 'Fira Code', monospace;
+    text-align: left;
+    align-items: flex-start;
+}
+.theme-cyber .card-header-text::before { content: '> ./init_ramadhan.sh'; font-size: 0.8rem; display: block; opacity: 0.6; margin-bottom: 5px; }
+.theme-cyber .card-header-text { font-size: 1.4rem; color: #fff; border-bottom: 2px solid #00ff41; padding-bottom: 10px; width: 100%; }
+.theme-cyber .main-message { border-left: 2px solid #333; padding-left: 15px; color: #cbd5e1; }
+.theme-cyber .sender-wrapper h3::before { content: 'root@'; color: #ef4444; }
+
+/* === TEMA 4: MUDIK === */
+.theme-mudik {
+    background: #fff;
+    color: #1e293b;
+    font-family: 'Inter', sans-serif;
+    border-radius: 20px;
+    border: 2px dashed #94a3b8;
+}
+.theme-mudik .card-header-text {
+    background: #3b82f6; color: white;
+    padding: 5px 20px; border-radius: 50px;
+    font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px;
+}
+.theme-mudik .decor-bottom {
+    border-top: 2px dashed #cbd5e1;
+    width: 100%; position: absolute; bottom: 80px;
+}
+.theme-mudik .main-message { font-weight: 600; font-size: 1.3rem; }
+
+/* Responsive HP */
+@media (max-width: 768px) {
+    .generator-grid { grid-template-columns: 1fr; }
+    .sticky-preview { position: relative; top: 0; order: -1; margin-bottom: 20px; }
+    .canvas-wrapper { padding: 5px; }
+}
+
+/* --- 1. PERBAIKAN UPLOAD AREA & TOMBOL SAMPAH --- */
+.upload-box-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: stretch; /* Biar tingginya sama */
+}
+
+/* Sembunyikan input asli browser yang jelek */
+input[type="file"] {
+    display: none !important;
+}
+
+.btn-upload-custom {
+    flex: 1;
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1; /* Dashed border biar kerasa 'drop zone' */
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.btn-upload-custom:hover {
+    background: #eff6ff;
+    border-color: #4f46e5;
+    color: #4f46e5;
+    transform: translateY(-2px);
+}
+
+/* Tombol Sampah (Trash) */
+.btn-reset-bg {
+    background: #fee2e2;
+    color: #ef4444;
+    border: 2px solid #fecaca;
+    width: 50px; /* Kotak */
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-reset-bg:hover {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+    transform: rotate(15deg) scale(1.1); /* Efek miring dikit pas di hover */
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* --- 2. PERBAIKAN TOMBOL ACTION (Simpan & WA) --- */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Tombol Simpan (Gradient Utama) */
+#btnDownload {
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#btnDownload:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(79, 70, 229, 0.3);
+    background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
+}
+
+/* Tombol Share WA (Hijau Brand WA) */
+#btnShareWA {
+    background: white;
+    color: #25D366;
+    border: 2px solid #25D366;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#btnShareWA:hover {
+    background: #25D366;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+}
+
+/* --- 3. UPGRADE TEMA BIAR LEBIH KEREN --- */
+
+/* Canvas Dasar */
+.card-canvas {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background-size: cover !important;
+    background-position: center !important;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Header atas, Sender bawah */
+    align-items: center;
+    text-align: center;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+/* === TEMA RAMADHAN (Midnight Gold) === */
+.theme-ramadhan {
+    background: radial-gradient(circle at top, #1e1b4b 0%, #020617 100%);
+    color: #fbbf24;
+    font-family: 'Outfit', sans-serif;
+    border: 1px solid #312e81;
+}
+/* Pola Bintang Samar */
+.theme-ramadhan::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(white 1px, transparent 1px);
+    background-size: 50px 50px; opacity: 0.1; pointer-events: none;
+}
+.theme-ramadhan .card-header-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+    margin-top: 10px;
+}
+.theme-ramadhan .decor-top {
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(251,191,36,0.15) 0%, transparent 70%);
+    position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+    border-radius: 50%; pointer-events: none;
+}
+
+/* === TEMA LEBARAN (Ketupat Fresh) === */
+.theme-lebaran {
+    background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%);
+    color: #065f46;
+    font-family: 'Inter', sans-serif;
+    border: 8px solid white;
+    outline: 1px solid #10b981;
+}
+/* Pola Ketupat */
+.theme-lebaran::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: repeating-linear-gradient(45deg, #10b981 0, #10b981 1px, transparent 0, transparent 50%);
+    background-size: 20px 20px; opacity: 0.05; pointer-events: none;
+}
+.theme-lebaran .main-message {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(6, 95, 70, 0.1);
+    color: #047857;
+    font-weight: 600;
+}
+
+/* === TEMA CYBER (Matrix Error) === */
+.theme-cyber {
+    background-color: #000;
+    background-image: linear-gradient(0deg, transparent 24%, rgba(0, 255, 65, .03) 25%, rgba(0, 255, 65, .03) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, .03) 75%, rgba(0, 255, 65, .03) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 255, 65, .03) 25%, rgba(0, 255, 65, .03) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, .03) 75%, rgba(0, 255, 65, .03) 76%, transparent 77%, transparent);
+    background-size: 30px 30px;
+    color: #00ff41;
+    font-family: 'Fira Code', monospace;
+    text-align: left !important;
+    align-items: flex-start !important;
+    border: 1px solid #003b00;
+}
+.theme-cyber .card-content { justify-content: start; gap: 20px; }
+.theme-cyber .card-header-text {
+    font-size: 1.2rem;
+    border-bottom: 2px solid #00ff41;
+    width: 100%; padding-bottom: 10px;
+}
+.theme-cyber .card-header-text::before { content: 'root@sapain:~$ ./eid_mubarak.sh'; opacity: 0.6; font-size: 0.8rem; display: block; margin-bottom: 5px; }
+.theme-cyber .main-message { border-left: 2px solid #333; padding-left: 15px; color: #a3a3a3; }
+.theme-cyber .sender-wrapper h3::before { content: 'sender: '; color: #ef4444; }
+
+/* === TEMA MUDIK (Tiket Pesawat) === */
+.theme-mudik {
+    background: #fff;
+    color: #1e293b;
+    font-family: 'Inter', sans-serif;
+    border: 2px dashed #94a3b8;
+    border-radius: 20px;
+}
+.theme-mudik .decor-top {
+    width: 100%; height: 10px; background: repeating-linear-gradient(90deg, #ef4444, #ef4444 10px, white 10px, white 20px);
+    position: absolute; top: 20px; left: 0;
+}
+.theme-mudik .card-header-text {
+    background: #1e293b; color: white;
+    padding: 8px 25px; border-radius: 50px;
+    font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px;
+    transform: rotate(-2deg);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+}
+.theme-mudik .card-watermark { opacity: 1; font-weight: bold; }
+
+/* Overlay Background Upload */
+.bg-overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Gelap biar teks kebaca */
+    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 1;
+}
+.card-canvas.has-bg .bg-overlay { opacity: 1; }
+.card-canvas.has-bg * { position: relative; z-index: 10; } /* Text naik ke atas */

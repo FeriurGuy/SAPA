@@ -92,7 +92,7 @@
 .fab-btn::after {
     content: attr(data-label);
     position: absolute;
-    right: 55px; /* Muncul di kiri tombol */
+    right: 55px;
     background: rgba(15, 23, 42, 0.9);
     color: white;
     padding: 4px 10px;

@@ -466,6 +466,13 @@ if (hamburgerBtn && dropdownMenu) {
     hamburgerBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('hidden'); });
     window.addEventListener('click', (e) => { if (!hamburgerBtn.contains(e.target) && !dropdownMenu.contains(e.target)) { dropdownMenu.classList.add('hidden'); }});
 }
+const currentPath = window.location.pathname;
+document.querySelectorAll('.dropdown-item').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && currentPath.includes(href.replace('.html', ''))) {
+        link.classList.add('active');
+    }
+});
 
 window.addEventListener('load', () => {
     setTimeout(() => {
