@@ -261,7 +261,7 @@ ul { list-style: none; }
 }
 
 .card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-4px);
     border-color: #4f46e5;
     box-shadow: 0 0 40px #4f46e5;
 }

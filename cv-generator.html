@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Generator Profesional | SAPA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/cv-generator.css"> </head>
+<body>
+
+    <nav class="dash-nav">
+        <div class="container nav-flex">
+            <div class="brand">
+                <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
+                <span class="divider">/</span>
+                <span class="username-display">CV Maker</span>
+            </div>
+            <div class="actions">
+                <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only"><i class="fa-solid fa-bars"></i></button>
+                <div id="dropdownMenu" class="nav-dropdown hidden">
+                    <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-arrow-left"></i> Dashboard</a>
+                    <div class="dropdown-divider"></div>
+                    <button id="logoutBtn" class="dropdown-item text-red">Keluar</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <div class="cv-builder-grid">
+            
+            <aside class="input-panel card">
+                <div class="panel-header">
+                    <h3><i class="fa-solid fa-sliders"></i> Editor CV</h3>
+                </div>
+                
+                <div class="panel-body">
+                    <div class="form-section">
+                        <h4><i class="fa-solid fa-user-circle"></i> Informasi Dasar</h4>
+                        <div class="form-group photo-upload-group">
+                            <label for="inputPhoto" class="photo-label">
+                                <i class="fa-solid fa-camera"></i> Upload Foto
+                            </label>
+                            <input type="file" id="inputPhoto" accept="image/*" hidden>
+                            <span id="photoFileName" class="file-name">Belum ada foto dipilih</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="inputName" placeholder="Nama Lengkap (ex: Budi Gunawan)">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="inputJob" placeholder="Target Posisi (ex: Senior Marketing)">
+                        </div>
+                        <div class="form-row">
+                            <input type="text" id="inputPhone" placeholder="No. Telepon/WA">
+                            <input type="email" id="inputEmail" placeholder="Email Profesional">
+                        </div>
+                        <div class="form-row">
+                            <input type="text" id="inputLoc" placeholder="Kota, Negara">
+                            <input type="text" id="inputLink" placeholder="Link LinkedIn/Portofolio">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4><i class="fa-solid fa-align-left"></i> Ringkasan Profesional</h4>
+                        <textarea id="inputSummary" rows="5" placeholder="Tulis 3-4 kalimat singkat yang menggambarkan pengalaman dan keahlian utama Anda..."></textarea>
+                    </div>
+
+                    <div class="form-section">
+                        <h4><i class="fa-solid fa-briefcase"></i> Pengalaman Kerja</h4>
+                        <div id="experienceInputList" class="dynamic-list"></div>
+                        <button class="btn btn-outline btn-sm w-100 mt-2" id="addExpBtn"><i class="fa-solid fa-plus"></i> Tambah Pengalaman</button>
+                    </div>
+
+                    <div class="form-section">
+                        <h4><i class="fa-solid fa-graduation-cap"></i> Riwayat Pendidikan</h4>
+                        <div id="educationInputList" class="dynamic-list"></div>
+                        <button class="btn btn-outline btn-sm w-100 mt-2" id="addEduBtn"><i class="fa-solid fa-plus"></i> Tambah Pendidikan</button>
+                    </div>
+
+                    <div class="form-section">
+                        <h4><i class="fa-solid fa-tools"></i> Keahlian (Skills)</h4>
+                        <textarea id="inputSkills" rows="3" placeholder="Pisahkan dengan koma. Contoh: HTML, CSS, JavaScript, Project Management, Public Speaking"></textarea>
+                    </div>
+
+                    <div class="form-section no-border">
+                        <h4><i class="fa-solid fa-plus-circle"></i> Info Tambahan (Opsional)</h4>
+                        <textarea id="inputExtras" rows="3" placeholder="Sertifikat, Bahasa Asing, Penghargaan, dll..."></textarea>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="preview-panel">
+                
+                <div class="preview-toolbar card">
+                    <div class="theme-selector">
+                        <span class="label">Pilih Tema:</span>
+                        <button class="theme-btn active" data-theme="theme-classic" title="Classic Clean"></button>
+                        <button class="theme-btn" data-theme="theme-modern" title="Modern Blue" style="background:#EFF6FF; border-color:#DBEAFE;"></button>
+                        <button class="theme-btn" data-theme="theme-elegant" title="Elegant Dark" style="background:#1e293b; border-color:#334155;"></button>
+                    </div>
+                    <button id="btnDownload" class="btn btn-primary"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
+                </div>
+
+                <div class="a4-centered-wrapper">
+                    <div id="cvCanvas" class="cv-canvas theme-classic">
+                        
+                        <header class="cv-header-grid">
+                            <div class="header-photo-col">
+                                <div class="photo-wrapper hidden" id="viewPhotoBox">
+                                    <img id="viewPhoto" src="" alt="Foto Profil">
+                                </div>
+                            </div>
+                            <div class="header-text-col">
+                                <h1 id="viewName">Nama Lengkap Anda</h1>
+                                <p class="cv-job-title" id="viewJob">Target Posisi / Jabatan</p>
+                                <div class="cv-contacts-grid">
+                                    <span id="viewPhone" class="contact-item"><i class="fa-solid fa-phone"></i> 08xx-xxxx-xxxx</span>
+                                    <span id="viewEmail" class="contact-item"><i class="fa-solid fa-envelope"></i> email@anda.com</span>
+                                    <span id="viewLoc" class="contact-item"><i class="fa-solid fa-location-dot"></i> Kota, Negara</span>
+                                    <span id="viewLink" class="contact-item"><i class="fa-brands fa-linkedin"></i> linkedin.com/in/anda</span>
+                                </div>
+                            </div>
+                        </header>
+
+                        <hr class="cv-main-divider">
+
+                        <div class="cv-body">
+                            
+                            <section class="cv-section">
+                                <h3 class="section-title">Ringkasan Profesional</h3>
+                                <p id="viewSummary" class="section-content">Ringkasan singkat mengenai pengalaman, kualifikasi, dan tujuan karier Anda akan muncul di sini.</p>
+                            </section>
+
+                            <section class="cv-section">
+                                <h3 class="section-title">Pengalaman Kerja</h3>
+                                <div id="viewExpList" class="section-content list-container">
+                                    <p class="text-muted empty-state">- Belum ada pengalaman kerja ditambahkan -</p>
+                                </div>
+                            </section>
+
+                            <section class="cv-section">
+                                <h3 class="section-title">Pendidikan</h3>
+                                <div id="viewEduList" class="section-content list-container">
+                                    <p class="text-muted empty-state">- Belum ada pendidikan ditambahkan -</p>
+                                </div>
+                            </section>
+
+                            <section class="cv-section">
+                                <h3 class="section-title">Keahlian Utama</h3>
+                                <p id="viewSkills" class="section-content">-</p>
+                            </section>
+
+                             <section class="cv-section" id="secExtras">
+                                <h3 class="section-title">Informasi Tambahan</h3>
+                                <p id="viewExtras" class="section-content">-</p>
+                            </section>
+                        </div>
+
+                        <div id="watermark" class="cv-watermark hidden">
+                            Dibuat dengan SAPA CV Maker (sapain.my.id)
+                        </div>
+
+                    </div> </div> </main>
+        </div>
+    </div>
+
+    <div id="alert-box" class="alert hidden"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="module" src="js/cv-generator.js"></script>
+
+</body>
+</html>

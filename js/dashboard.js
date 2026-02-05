@@ -487,11 +487,27 @@ window.addEventListener('load', () => {
 });
 
 window.downloadQR = function() {
-    const img = document.querySelector("#qrcode img");
-    if(img) {
+    const qrContainer = document.getElementById("qrcode");
+    const canvas = qrContainer.querySelector("canvas");
+    const img = qrContainer.querySelector("img");
+    
+    let url = null;
+
+    if (canvas) {
+        url = canvas.toDataURL("image/png");
+    } else if (img && img.src) {
+        url = img.src;
+    }
+
+    if (url) {
         const link = document.createElement('a');
         link.download = `QR-SAPA-${Date.now()}.png`;
-        link.href = img.src;
+        link.href = url;
+
+        document.body.appendChild(link);
         link.click();
-    } else { alert("Tunggu sebentar, QR Code lagi dibuat..."); }
+        document.body.removeChild(link);
+    } else {
+        alert("Sabar bos, QR Code lagi digambar...");
+    }
 }
