@@ -19,13 +19,37 @@
                 <span class="divider">/</span>
                 <span class="username-display">CV Maker</span>
             </div>
-            <div class="actions">
-                <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only"><i class="fa-solid fa-bars"></i></button>
+
+            <div class="actions" style="position: relative;">
+                
+                <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only" style="border: 1px solid #cbd5e1;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
                 <div id="dropdownMenu" class="nav-dropdown hidden">
-                    <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-arrow-left"></i> Dashboard</a>
+                    <div class="dropdown-header">
+                        <small>Menu Aplikasi</small>
+                    </div>
+                    
+                    <a href="dashboard.html" class="dropdown-item">
+                        <i class="fa-solid fa-link"></i> Link Manager
+                    </a>
+                    
+                    <a href="imsakiyah.html" class="dropdown-item">
+                        <i class="fa-solid fa-mosque" style="color: #10b981;"></i> Imsakiyah
+                    </a>
+
+                    <a href="cv-generator.html" class="dropdown-item active">
+                        <i class="fa-solid fa-envelope-open-text" style="color: #f59e0b;"></i> CV Generator
+                    </a>
+
                     <div class="dropdown-divider"></div>
-                    <button id="logoutBtn" class="dropdown-item text-red">Keluar</button>
+                    
+                    <button id="logoutBtn" class="dropdown-item text-red" style="width: 100%; text-align: left; background: none; border: none;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                    </button>
                 </div>
+
             </div>
         </div>
     </nav>
@@ -168,8 +192,11 @@
                             </section>
                         </div>
 
-                        <div id="watermark" class="cv-watermark hidden">
-                            CV Maker by SAPA (sapain.my.id)
+                        <div id="watermark" style="position: absolute; bottom: 15px; right: 20px; display: none; align-items: center; gap: 8px; opacity: 0.7; pointer-events: none; z-index: 99;">
+                            <img src="assets/Icons/favicon.png" alt="SAPA" style="width: 18px; height: 18px; filter: grayscale(100%); opacity: 0.8;">
+                            <span style="font-family: sans-serif; font-size: 9px; color: #64748b; font-weight: 500; letter-spacing: 0.3px;">
+                                Created with <span style="color: #4f46e5; font-weight: 700;">SAPA</span> (sapain.my.id)
+                            </span>
                         </div>
 
                     </div>
@@ -177,6 +204,14 @@
             </main>
         </div>
     </div>
+
+    <footer class="dash-footer">
+        <div class="container text-center">
+            <p>&copy; 2026 SAPA Project. Created by
+            <br>    
+            <strong>Feri Ramadhan Azhari</strong></p>
+        </div>
+    </footer>
 
     <div id="alert-box" class="alert hidden"></div>
 

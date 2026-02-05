@@ -70,12 +70,18 @@ async function init() {
             if (profile.full_name && dom.inputs.name) dom.inputs.name.value = profile.full_name;
             if (profile.email && dom.inputs.email) dom.inputs.email.value = profile.email;
         }
-
-        if (dom.watermark) dom.watermark.classList.toggle('hidden', isProUser);
-        updateRealtimePreview();
-
     } catch (err) {
         console.error("Init Error:", err);
+    }
+}
+
+function setupProStatus() {
+    if (dom.watermark) {
+        if (isProUser) {
+            dom.watermark.style.setProperty('display', 'none', 'important');
+        } else {
+            dom.watermark.style.display = 'flex';
+        }
     }
 }
 

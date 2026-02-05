@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Ajar Otomatis | SAPA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/modul-cerdas.css">
+</head>
+<body>
+
+    <nav class="dash-nav">
+        <div class="container nav-flex">
+            <div class="brand">
+                <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
+                <span class="divider">/</span>
+                <span class="username-display">AI Teaching Tools</span>
+            </div>
+            <div class="actions">
+                <a href="dashboard.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-arrow-left"></i> Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content-single">
+        
+        <div class="header-section text-center">
+            <h1>Generator Modul Ajar</h1>
+            <p>Masukkan topik materi, biarkan AI menyusun RPP/Modul lengkap untuk Anda.</p>
+        </div>
+
+        <div class="card input-container">
+            <div class="panel-body">
+                <form id="modulForm">
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Nama Pengajar</label>
+                            <input type="text" id="guruName" placeholder="Nama Guru / Dosen">
+                        </div>
+                        <div class="form-group">
+                            <label>Instansi / Sekolah</label>
+                            <input type="text" id="schoolName" placeholder="Nama Sekolah / Kampus">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Mata Pelajaran</label>
+                            <input type="text" id="mapel" placeholder="Contoh: Bahasa Inggris">
+                        </div>
+                        <div class="form-group">
+                            <label>Jenjang / Fase</label>
+                            <select id="faseKelas">
+                                <option value="" disabled selected>Pilih Jenjang...</option>
+                                <option value="Fase A (Kelas 1-2 SD)">Fase A (Kelas 1-2 SD)</option>
+                                <option value="Fase B (Kelas 3-4 SD)">Fase B (Kelas 3-4 SD)</option>
+                                <option value="Fase C (Kelas 5-6 SD)">Fase C (Kelas 5-6 SD)</option>
+                                <option value="Fase D (Kelas 7-9 SMP)">Fase D (Kelas 7-9 SMP)</option>
+                                <option value="Fase E (Kelas 10 SMA)">Fase E (Kelas 10 SMA)</option>
+                                <option value="Fase F (Kelas 11-12 SMA)">Fase F (Kelas 11-12 SMA)</option>
+                                <option value="Mahasiswa (Universitas)">Mahasiswa (Universitas)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Topik / Materi Utama</label>
+                        <textarea id="topikMateri" rows="3" placeholder="Tuliskan topik secara spesifik. Contoh: 'Pemanasan Global dan Dampaknya bagi Ekosistem'"></textarea>
+                        <small class="text-muted"><i class="fa-solid fa-circle-info"></i> Masukkan topik saja, Tujuan Pembelajaran & Asesmen akan dibuatkan otomatis.</small>
+                    </div>
+
+                    <div class="form-action text-center mt-3">
+                        <button type="button" id="btnGenerate" class="btn btn-primary btn-lg w-100">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Modul Ajar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="loadingSection" class="loading-container hidden">
+            <div class="loader-content">
+                <i class="fa-solid fa-spinner fa-spin fa-3x text-primary"></i>
+                <h3>Sedang Meracik Modul...</h3>
+                <p>AI sedang menyusun tujuan pembelajaran, kegiatan inti, dan asesmen.</p>
+            </div>
+        </div>
+
+        <div id="resultSection" class="result-container hidden">
+            <div class="result-header">
+                <h3><i class="fa-solid fa-file-lines"></i> Hasil Modul Ajar</h3>
+                <div class="result-actions">
+                    <button id="btnCopy" class="btn btn-outline btn-sm"><i class="fa-regular fa-copy"></i> Salin Teks</button>
+                    <button id="btnDownload" class="btn btn-primary btn-sm"><i class="fa-solid fa-file-word"></i> Download Word</button>
+                </div>
+            </div>
+
+            <div class="paper-preview-wrapper">
+                <div id="paperContent" class="a4-paper-vertical">
+                    <div id="aiContentArea"></div>
+                    
+                    <div class="modul-footer">
+                        Dibuat otomatis oleh SAPA AI (sapain.my.id)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="alert-box" class="alert hidden"></div>
+
+    <script type="module" src="js/modul-cerdas.js"></script>
+
+</body>
+</html>
