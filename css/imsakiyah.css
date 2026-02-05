@@ -489,10 +489,10 @@ h3 {
     transition: all 0.3s;
 }
 
-.dot.active {
+.dot.active { 
     background: #4f46e5;
     width: 20px;
-    border-radius: 10px;
+    border-radius: 50%;
 }
 
 /* Animasi Fade */
