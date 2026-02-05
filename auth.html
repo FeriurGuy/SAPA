@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk & Daftar | SAPA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+    <div class="container" id="container">
+        
+        <div class="form-container sign-up">
+            <form id="registerForm">
+                <h1>Buat Akun</h1>
+                <div class="social-icons">
+                    <button type="button" class="icon-btn" id="googleRegister"><i class="fa-brands fa-google"></i></button>
+                    <button type="button" class="icon-btn" id="githubRegister"><i class="fa-brands fa-github"></i></button>
+                </div>
+                <span>atau gunakan email manual</span>
+                
+                <input type="text" id="username" placeholder="Username (tanpa spasi)" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <input type="password" id="confirmPassword" placeholder="Ulangi Password" required>
+                
+                <button type="submit" class="btn-primary">Daftar Sekarang</button>
+            </form>
+        </div>
+
+        <div class="form-container sign-in">
+            <form id="loginForm">
+                <h1>Selamat Datang</h1>
+                <div class="social-icons">
+                    <button type="button" class="icon-btn" id="googleLogin"><i class="fa-brands fa-google"></i></button>
+                    <button type="button" class="icon-btn" id="githubRegister"><i class="fa-brands fa-github"></i></button>
+                </div>
+                <span>atau gunakan akun email</span>
+                
+                <input type="email" id="emailLogin" placeholder="Email" required>
+                <input type="password" id="passwordLogin" placeholder="Password" required>
+                
+                <a href="#" class="forgot-pass">Lupa Password?</a>
+                <button type="submit" class="btn-primary">Masuk</button>
+            </form>
+        </div>
+
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Sudah Punya Akun?</h1>
+                    <p>Login di sini untuk kembali mengelola link bio kamu.</p>
+                    <button class="btn-ghost" id="loginBtnTrigger">Masuk</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Halo, Teman!</h1>
+                    <p>Belum punya akun? Daftar sekarang dan bikin bio link keren.</p>
+                    <button class="btn-ghost" id="registerBtnTrigger">Daftar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-box" class="alert hidden"></div>
+
+    <script type="module" src="js/auth.js"></script>
+
+</body>
+</html>

@@ -8,6 +8,9 @@
     --white: #ffffff;   
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
+    --accent-purple: #9945ff;
+    --accent-blue: #00a8ff;
+	--accent-green: #00ff88;
 }
 
 * {
@@ -59,6 +62,7 @@ ul { list-style: none; }
 .btn-primary:hover {
     background-color: var(--primary-hover);
     transform: translateY(-2px);
+    box-shadow: 0 0 20px #4f46e5;
 }
 
 .btn-outline {
@@ -78,7 +82,10 @@ ul { list-style: none; }
     margin-right: 20px;
 }
 
-.btn-text:hover { color: var(--primary); }
+.btn-text:hover { 
+    color: var(--primary);
+    text-decoration: underline;
+}
 
 .btn-lg {
     padding: 14px 32px;
@@ -224,7 +231,8 @@ ul { list-style: none; }
 /* --- FEATURES --- */
 .features {
     padding: 80px 0;
-    background-color: var(--white);
+	transition: transform 0.4s ease;
+    position: relative;
 }
 
 .section-title {
@@ -253,8 +261,9 @@ ul { list-style: none; }
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transform: translateY(-10px);
+    border-color: #4f46e5;
+    box-shadow: 0 0 40px #4f46e5;
 }
 
 .icon-box {
@@ -320,7 +329,6 @@ footer {
     100% { background-position: -200% 0; }
 }
 
-/* --- CUSTOM SCROLLBAR --- */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #f1f5f9; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }

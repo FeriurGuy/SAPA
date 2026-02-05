@@ -1,11 +1,39 @@
 import { supabase } from './supabase.js';
 
-// --- ELEMENT SELECTORS ---
-const registerForm = document.getElementById('registerForm');
-const loginForm = document.getElementById('loginForm');
+// ==========================================
+// 1. DOM ELEMENTS
+// ==========================================
+const container = document.getElementById('container');
+const registerBtnTrigger = document.getElementById('registerBtnTrigger');
+const loginBtnTrigger = document.getElementById('loginBtnTrigger');
 const alertBox = document.getElementById('alert-box');
 
-// --- UTILITY: Show Alert ---
+// Form Elements
+const registerForm = document.getElementById('registerForm');
+const loginForm = document.getElementById('loginForm');
+
+// Social Buttons
+const googleReg = document.getElementById('googleRegister');
+const googleLog = document.getElementById('googleLogin');
+const githubReg = document.getElementById('githubRegister');
+const githubLog = document.getElementById('githubLogin');
+
+// ==========================================
+// 2. SLIDING ANIMATION LOGIC
+// ==========================================
+if (registerBtnTrigger && loginBtnTrigger) {
+    registerBtnTrigger.addEventListener('click', () => {
+        container.classList.add("active");
+    });
+
+    loginBtnTrigger.addEventListener('click', () => {
+        container.classList.remove("active");
+    });
+}
+
+// ==========================================
+// 3. UTILITY FUNCTIONS
+// ==========================================
 function showAlert(message, type = 'error') {
     if (!alertBox) return;
     alertBox.textContent = message;
@@ -14,10 +42,43 @@ function showAlert(message, type = 'error') {
 
     setTimeout(() => {
         alertBox.classList.add('hidden');
-    }, 5000);
+    }, 4000);
 }
 
-// --- REGISTER ---
+// --- CEK SESSION (Auto Redirect) ---
+async function checkSession() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+        window.location.href = 'dashboard.html';
+    }
+}
+checkSession();
+
+// --- SOCIAL LOGIN HANDLER ---
+async function handleSocialLogin(provider) {
+    try {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: provider,
+            options: {
+                redirectTo: window.location.origin + '/dashboard.html'
+            }
+        });
+        if (error) throw error;
+    } catch (error) {
+        showAlert("Gagal login sosmed: " + error.message);
+    }
+}
+
+// Attach Event ke Tombol Google
+if(googleReg) googleReg.addEventListener('click', () => handleSocialLogin('google'));
+if(googleLog) googleLog.addEventListener('click', () => handleSocialLogin('google'));
+if(githubReg) githubReg.addEventListener('click', () => handleSocialLogin('github'));
+if(githubLog) githubLog.addEventListener('click', () => handleSocialLogin('github'));
+
+
+// ==========================================
+// 4. REGISTER LOGIC
+// ==========================================
 if (registerForm) {
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -25,17 +86,24 @@ if (registerForm) {
         const username = document.getElementById('username').value.toLowerCase().trim();
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
-        const btn = registerForm.querySelector('button');
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const btn = registerForm.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
 
+        // Validasi
         const usernameRegex = /^[a-zA-Z0-9_]{3,}$/;
         if (!usernameRegex.test(username)) {
             return showAlert("Username hanya boleh huruf, angka, dan underscore (min 3 char).");
+        }
+        if (password !== confirmPassword) {
+            return showAlert("Password tidak cocok!");
         }
 
         try {
             btn.textContent = "Loading...";
             btn.disabled = true;
 
+            // 1. Cek Username Unik
             const { data: existingUser, error: checkError } = await supabase
                 .from('profiles')
                 .select('username')
@@ -43,57 +111,53 @@ if (registerForm) {
                 .maybeSingle();
 
             if (checkError) throw checkError;
-            if (existingUser) {
-                throw new Error("Username sudah dipakai. Ganti yang lain ya!");
-            }
+            if (existingUser) throw new Error("Username sudah dipakai. Cari yang lain ya!");
 
-        const password = document.getElementById('password').value;
-        // confirm password
-        const confirmPassword = document.getElementById('confirmPassword').value; 
-
-            if (password !== confirmPassword) {
-                return showAlert("Password tidak cocok lae! Coba cek lagi.");
-            }    
-
-            const { data, error } = await supabase.auth.signUp({
+            // 2. Sign Up Supabase
+            const { error } = await supabase.auth.signUp({
                 email: email,
                 password: password,
                 options: {
-                    data: {
-                        username: username
-                    }
+                    data: { username: username }
                 }
             });
 
             if (error) throw error;
 
-            showAlert("Sukses! Silakan cek email kamu untuk verifikasi.", "success");
-
+            showAlert("Sukses! Cek email kamu untuk verifikasi.", "success");
             registerForm.reset();
             
+            // Opsional: Geser otomatis ke login setelah sukses
+            setTimeout(() => container.classList.remove("active"), 2000);
+
         } catch (error) {
-            console.error(error);
-            showAlert(error.message || "Terjadi kesalahan.");
-            btn.textContent = "Daftar Sekarang";
+            showAlert(error.message || "Terjadi kesalahan saat daftar.");
+        } finally {
+            btn.textContent = originalText;
             btn.disabled = false;
         }
     });
 }
 
-// --- LOGIN ---
+
+// ==========================================
+// 5. LOGIN LOGIC
+// ==========================================
 if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
-        const btn = loginForm.querySelector('button');
+        // Menggunakan ID baru (emailLogin & passwordLogin)
+        const email = document.getElementById('emailLogin').value.trim();
+        const password = document.getElementById('passwordLogin').value;
+        const btn = loginForm.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
 
         try {
             btn.textContent = "Masuk...";
             btn.disabled = true;
 
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { error } = await supabase.auth.signInWithPassword({
                 email,
                 password
             });
@@ -104,51 +168,9 @@ if (loginForm) {
 
         } catch (error) {
             showAlert("Login gagal: " + error.message);
-            btn.textContent = "Masuk";
+        } finally {
+            btn.textContent = originalText;
             btn.disabled = false;
         }
     });
 }
-
-// --- CEK SESSION (Auto Redirect) ---
-async function checkSession() {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session) {
-
-        const path = window.location.pathname;
-        if (path.includes('login.html') || path.includes('register.html')) {
-            window.location.href = 'dashboard.html';
-        }
-    }
-}
-
-// --- SOCIAL LOGIN ---
-window.handleSocialLogin = async (provider) => {
-    try {
-
-        let options = {
-            redirectTo: window.location.origin + '/dashboard.html'
-        };
-
-        if (provider === 'linkedin') {
-            options.scopes = 'openid profile email';
-        }
-
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: provider,
-            options: options
-        });
-
-        if (error) throw error;
-        
-    } catch (error) {
-        console.error("Social login error:", error);
-        if (typeof showAlert === 'function') {
-            showAlert("Gagal login sosmed: " + error.message);
-        } else {
-            alert("Gagal login sosmed: " + error.message);
-        }
-    }
-};
-
-checkSession();
