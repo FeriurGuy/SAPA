@@ -18,10 +18,43 @@
             <div class="brand">
                 <a href="dashboard.html" class="logo">SAPA<span class="dot">.</span></a>
                 <span class="divider">/</span>
-                <span class="username-display">AI Teaching Tools</span>
+                <span class="username-display" id="navUsername">@username</span>
             </div>
-            <div class="actions">
-                <a href="dashboard.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-arrow-left"></i> Dashboard</a>
+
+            <div class="actions" style="position: relative;">
+                
+                <button id="hamburgerBtn" class="btn btn-outline btn-sm btn-icon-only" style="border: 1px solid #cbd5e1;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div id="dropdownMenu" class="nav-dropdown hidden">
+                    <div class="dropdown-header">
+                        <small>Menu Aplikasi</small>
+                    </div>
+                    
+                    <a href="dashboard.html" class="dropdown-item">
+                        <i class="fa-solid fa-link"></i> Link Manager
+                    </a>
+                    
+                    <a href="imsakiyah.html" class="dropdown-item">
+                        <i class="fa-solid fa-mosque" style="color: #10b981;"></i> Imsakiyah
+                    </a>
+
+                    <a href="cv-generator.html" class="dropdown-item">
+                        <i class="fa-solid fa-envelope-open-text" style="color: #f59e0b;"></i> Kartu Ucapan
+                    </a>
+
+                    <a href="modul-cerdas.html" class="dropdown-item">
+                        <i class="fa-solid fa-book" style="color: #f59e0b;"></i> Modul Cerdas
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+                    
+                    <button id="logoutBtn" class="dropdown-item text-red" style="width: 100%; text-align: left; background: none; border: none;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                    </button>
+                </div>
+
             </div>
         </div>
     </nav>
@@ -114,6 +147,7 @@
     <div id="alert-box" class="alert hidden"></div>
 
     <script type="module" src="js/modul-cerdas.js"></script>
+    <script src="js/cv-generator.js"></script>
 
 </body>
 </html>
