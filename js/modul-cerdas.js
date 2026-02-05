@@ -17,7 +17,10 @@ const dom = {
     },
     btns: {
         generate: document.getElementById('btnGenerate'),
-        download: document.getElementById('btnDownload')
+        download: document.getElementById('btnDownload'),
+        menu: document.getElementById('menuBtn'),
+        dropdown: document.getElementById('menuDropdown'),
+        logout: document.getElementById('btnLogout')
     },
     sections: {
         loading: document.getElementById('loadingSection'),
@@ -309,10 +312,3 @@ function showAlert(message, type = 'success') {
     }
 }
 
-if(dom.btns.menu) dom.btns.menu.addEventListener('click', (e) => { e.stopPropagation(); dom.btns.dropdown.classList.toggle('hidden'); });
-window.addEventListener('click', () => dom.btns.dropdown?.classList.add('hidden'));
-if(dom.btns.logout) dom.btns.logout.addEventListener('click', async () => {
-    await supabase.auth.signOut(); window.location.href = 'index.html';
-});
-
-init();
