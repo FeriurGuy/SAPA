@@ -1,12 +1,12 @@
 import { supabase } from './supabase.js';
 
-// --- STATE & CONFIG ---
-let isProUser = false;
-const MAX_FREE_DOWNLOADS = 2;
+// --- CEK LOCALHOST/LIVE SERVER (Opsional tapi disarankan) ---
+if (window.location.protocol === 'file:') {
+    console.warn("Sebaiknya gunakan Live Server agar fitur download berjalan lancar.");
+}
 
 // --- DOM ELEMENTS ---
 const dom = {
-    // Inputs
     photoInput: document.getElementById('inputPhoto'),
     photoLabelSpan: document.getElementById('photoFileName'),
     inputs: {
@@ -20,10 +20,8 @@ const dom = {
         skills: document.getElementById('inputSkills'),
         extras: document.getElementById('inputExtras')
     },
-    // Dynamic Containers
     expInputList: document.getElementById('experienceInputList'),
     eduInputList: document.getElementById('educationInputList'),
-    // Buttons
     btns: {
         addExp: document.getElementById('addExpBtn'),
         addEdu: document.getElementById('addEduBtn'),
@@ -32,10 +30,9 @@ const dom = {
         menu: document.getElementById('hamburgerBtn'),
         dropdown: document.getElementById('dropdownMenu')
     },
-    // Preview Elements
     views: {
         photoBox: document.getElementById('viewPhotoBox'),
-        photoImg: document.getElementById('viewPhoto'),
+        photoImg: document.getElementById('viewPhoto'), // Kita pakai IMG lagi
         name: document.getElementById('viewName'),
         job: document.getElementById('viewJob'),
         phone: document.getElementById('viewPhone'),
@@ -53,291 +50,250 @@ const dom = {
     alertBox: document.getElementById('alert-box')
 };
 
+let isProUser = false;
+const MAX_FREE_DOWNLOADS = 2;
+
 // --- INITIALIZATION ---
 async function init() {
-    // 1. Cek Session
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return window.location.href = 'index.html';
-
-    // 2. Ambil Data User Profile
     try {
-        const { data: profile, error } = await supabase
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return window.location.href = 'index.html';
+
+        const { data: profile } = await supabase
             .from('profiles')
             .select('is_pro, full_name, email')
             .eq('id', session.user.id)
             .single();
-        
-        if (error && error.code !== 'PGRST116') throw error;
 
         if (profile) {
             isProUser = profile.is_pro || false;
-            // Auto-fill basic info jika ada
-            if (profile.full_name) dom.inputs.name.value = profile.full_name;
-            if (profile.email) dom.inputs.email.value = profile.email;
+            if (profile.full_name && dom.inputs.name) dom.inputs.name.value = profile.full_name;
+            if (profile.email && dom.inputs.email) dom.inputs.email.value = profile.email;
         }
 
-        // 3. Atur Status Pro/Free
-        setupProStatus();
-        // 4. Update Preview Awal
+        if (dom.watermark) dom.watermark.classList.toggle('hidden', isProUser);
         updateRealtimePreview();
 
     } catch (err) {
         console.error("Init Error:", err);
-        showAlert("Gagal memuat data profil.", "error");
     }
 }
 
-function setupProStatus() {
-    if (isProUser) {
-        dom.watermark.classList.add('hidden');
-    } else {
-        dom.watermark.classList.remove('hidden');
-    }
+// --- FUNGSI CROP FOTO JADI KOTAK (ANTI GEPENG) ---
+function cropImageSquare(imageSrc, callback) {
+    const img = new Image();
+    img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const size = Math.min(img.width, img.height);
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        
+        // Hitung posisi tengah (Center Crop)
+        const offsetX = (img.width - size) / 2;
+        const offsetY = (img.height - size) / 2;
+
+        // Gambar ke canvas (Crop)
+        ctx.drawImage(img, offsetX, offsetY, size, size, 0, 0, size, size);
+        
+        // Kembalikan Data URL
+        callback(canvas.toDataURL('image/png'));
+    };
+    img.src = imageSrc;
 }
 
 // --- EVENT LISTENERS ---
-
-// 1. Realtime Text Input Update
 Object.values(dom.inputs).forEach(input => {
-    input.addEventListener('input', updateRealtimePreview);
+    if(input) input.addEventListener('input', updateRealtimePreview);
 });
 
-// 2. Photo Upload Handler
-dom.photoInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        if (file.size > 2 * 1024 * 1024) { // Max 2MB
-            showAlert("Ukuran foto maksimal 2MB.", "error");
-            dom.photoInput.value = '';
-            dom.photoLabelSpan.textContent = "Belum ada foto dipilih";
-            dom.views.photoBox.classList.add('hidden');
-            return;
+// LOGIK FOTO BARU (Pake Crop Helper)
+if(dom.photoInput) {
+    dom.photoInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 2 * 1024 * 1024) return showAlert("Maksimal 2MB!", "error");
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                // Panggil fungsi crop dulu, baru tampilkan
+                cropImageSquare(event.target.result, (croppedSrc) => {
+                    dom.views.photoImg.src = croppedSrc;
+                    dom.views.photoBox.classList.remove('hidden');
+                });
+            };
+            reader.readAsDataURL(file);
+            if(dom.photoLabelSpan) dom.photoLabelSpan.textContent = file.name;
         }
+    });
+}
 
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            dom.views.photoImg.src = event.target.result;
-            dom.views.photoBox.classList.remove('hidden'); // Tampilkan box foto
-        };
-        reader.readAsDataURL(file);
-        dom.photoLabelSpan.textContent = file.name; // Update nama file di label
-    } else {
-        dom.views.photoBox.classList.add('hidden');
-        dom.photoLabelSpan.textContent = "Belum ada foto dipilih";
-    }
-});
+if(dom.btns.addExp) dom.btns.addExp.addEventListener('click', () => addDynamicItem('exp'));
+if(dom.btns.addEdu) dom.btns.addEdu.addEventListener('click', () => addDynamicItem('edu'));
 
-// 3. Dynamic Items Buttons
-dom.btns.addExp.addEventListener('click', () => addDynamicItem('exp'));
-dom.btns.addEdu.addEventListener('click', () => addDynamicItem('edu'));
-
-// 4. Theme Switcher
 document.querySelectorAll('.theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        // Reset class dan tambah tema yang dipilih
         dom.canvas.className = `cv-canvas ${btn.dataset.theme}`;
     });
 });
 
-// 5. Download PDF Handler
-dom.btns.download.addEventListener('click', handleDownloadPDF);
+if(dom.btns.download) dom.btns.download.addEventListener('click', handleDownloadPDF);
 
 
-// --- CORE FUNCTIONS ---
-
+// --- CORE LOGIC ---
 function updateRealtimePreview() {
     const i = dom.inputs;
     const v = dom.views;
 
-    v.name.textContent = i.name.value || 'Nama Lengkap Anda';
-    v.job.textContent = i.job.value || 'Target Posisi / Jabatan';
+    if(v.name) v.name.textContent = i.name.value || 'Nama Lengkap';
+    if(v.job) v.job.textContent = i.job.value || 'Posisi / Jabatan';
     
-    // Update Kontak dengan Icon
     updateContactItem(v.phone, i.phone.value, '<i class="fa-solid fa-phone"></i>');
     updateContactItem(v.email, i.email.value, '<i class="fa-solid fa-envelope"></i>');
     updateContactItem(v.loc, i.loc.value, '<i class="fa-solid fa-location-dot"></i>');
     updateContactItem(v.link, i.link.value, '<i class="fa-brands fa-linkedin"></i>');
 
-    v.summary.textContent = i.summary.value || 'Ringkasan singkat mengenai pengalaman, kualifikasi, dan tujuan karier Anda akan muncul di sini.';
-    v.skills.textContent = i.skills.value || '-';
-    v.extras.textContent = i.extras.value || '-';
+    if(v.summary) v.summary.textContent = i.summary.value || 'Ringkasan singkat...';
+    if(v.skills) v.skills.textContent = i.skills.value || '-';
+    if(v.extras) v.extras.textContent = i.extras.value || '-';
 
-    // Hide section if empty
-    document.getElementById('secExtras').style.display = i.extras.value.trim() ? 'block' : 'none';
+    const secExtras = document.getElementById('secExtras');
+    if(secExtras) secExtras.style.display = i.extras.value.trim() ? 'block' : 'none';
 }
 
-function updateContactItem(element, value, iconHtml) {
-    if (value) {
-        element.innerHTML = `${iconHtml} ${value}`;
-        element.style.display = 'inline-flex';
-    } else {
-        element.style.display = 'none';
-    }
+function updateContactItem(el, val, icon) {
+    if(!el) return;
+    if(val) { el.innerHTML = `${icon} ${val}`; el.style.display = 'inline-flex'; }
+    else { el.style.display = 'none'; }
 }
 
-// Fungsi untuk menambah input dinamis (Pengalaman & Pendidikan)
 function addDynamicItem(type) {
     const container = type === 'exp' ? dom.expInputList : dom.eduInputList;
     const div = document.createElement('div');
     div.className = 'dynamic-item';
-
-    let htmlContent = '';
+    
     if (type === 'exp') {
-        htmlContent = `
-            <input type="text" class="d-role" placeholder="Jabatan (ex: Frontend Dev)" style="font-weight:600;">
+        div.innerHTML = `
+            <input type="text" class="d-role" placeholder="Jabatan" style="font-weight:600;">
             <input type="text" class="d-comp mt-2" placeholder="Perusahaan">
-            <input type="text" class="d-date mt-2" placeholder="Periode (ex: Jan 2020 - Des 2022)">
-            <textarea class="d-desc mt-2" rows="3" placeholder="Deskripsi pekerjaan/pencapaian..."></textarea>
-        `;
+            <input type="text" class="d-date mt-2" placeholder="Tahun">
+            <textarea class="d-desc mt-2" rows="2" placeholder="Deskripsi..."></textarea>
+            <button class="btn-remove-item"><i class="fa-solid fa-xmark"></i></button>`;
     } else {
-        htmlContent = `
-            <input type="text" class="d-school" placeholder="Nama Sekolah/Universitas" style="font-weight:600;">
-            <input type="text" class="d-degree mt-2" placeholder="Gelar/Jurusan">
-            <input type="text" class="d-year mt-2" placeholder="Tahun Lulus/Periode">
-        `;
+        div.innerHTML = `
+            <input type="text" class="d-school" placeholder="Sekolah/Univ" style="font-weight:600;">
+            <input type="text" class="d-degree mt-2" placeholder="Jurusan">
+            <input type="text" class="d-year mt-2" placeholder="Tahun">
+            <button class="btn-remove-item"><i class="fa-solid fa-xmark"></i></button>`;
     }
 
-    // Tombol Hapus yang Baru
-    div.innerHTML = `${htmlContent}<button class="btn-remove-item"><i class="fa-solid fa-xmark"></i></button>`;
-    
-    // Event Listener untuk Hapus dan Update
-    div.querySelector('.btn-remove-item').addEventListener('click', () => {
-        div.remove();
-        renderDynamicPreview(type);
-    });
-    div.querySelectorAll('input, textarea').forEach(inp => {
-        inp.addEventListener('input', () => renderDynamicPreview(type));
-    });
-
+    div.querySelector('.btn-remove-item').addEventListener('click', () => { div.remove(); renderDynamic(type); });
+    div.querySelectorAll('input, textarea').forEach(inp => inp.addEventListener('input', () => renderDynamic(type)));
     container.appendChild(div);
 }
 
-// Fungsi untuk merender list di preview berdasarkan input
-function renderDynamicPreview(type) {
-    const inputContainer = type === 'exp' ? dom.expInputList : dom.eduInputList;
-    const viewContainer = type === 'exp' ? dom.views.expList : dom.views.eduList;
-    let htmlOutput = '';
-    let hasItem = false;
-
-    inputContainer.querySelectorAll('.dynamic-item').forEach(item => {
-        if (type === 'exp') {
+function renderDynamic(type) {
+    const inputs = type === 'exp' ? dom.expInputList : dom.eduInputList;
+    const view = type === 'exp' ? dom.views.expList : dom.views.eduList;
+    let html = '';
+    
+    inputs.querySelectorAll('.dynamic-item').forEach(item => {
+        if(type === 'exp') {
             const role = item.querySelector('.d-role').value;
             const comp = item.querySelector('.d-comp').value;
             const date = item.querySelector('.d-date').value;
             const desc = item.querySelector('.d-desc').value;
             if(role || comp) {
-                hasItem = true;
-                htmlOutput += `
-                    <div class="cv-list-item">
-                        <div class="item-head"><span>${role}</span><span>${date}</span></div>
-                        <div class="item-sub-head">${comp}</div>
-                        <p class="item-desc section-content">${desc}</p>
-                    </div>`;
+                html += `<div class="cv-list-item">
+                    <div class="item-head"><span>${role}</span><span>${date}</span></div>
+                    <div class="item-sub-head">${comp}</div>
+                    <p class="section-content" style="margin-top:5px;">${desc.replace(/\n/g, '<br>')}</p>
+                </div>`;
             }
         } else {
             const school = item.querySelector('.d-school').value;
             const degree = item.querySelector('.d-degree').value;
             const year = item.querySelector('.d-year').value;
-             if(school || degree) {
-                hasItem = true;
-                htmlOutput += `
-                    <div class="cv-list-item">
-                        <div class="item-head"><span>${school}</span><span>${year}</span></div>
-                        <div class="item-sub-head">${degree}</div>
-                    </div>`;
-             }
+            if(school || degree) {
+                html += `<div class="cv-list-item">
+                    <div class="item-head"><span>${school}</span><span>${year}</span></div>
+                    <div class="item-sub-head">${degree}</div>
+                </div>`;
+            }
         }
     });
-
-    viewContainer.innerHTML = hasItem ? htmlOutput : `<p class="text-muted empty-state">- Belum ada ${type === 'exp' ? 'pengalaman kerja' : 'pendidikan'} ditambahkan -</p>`;
+    view.innerHTML = html || `<p class="text-muted empty-state">- Belum ada data -</p>`;
 }
 
-
+// --- PDF DOWNLOAD ---
 async function handleDownloadPDF() {
-    // 1. Cek Limit untuk Free User
+    if (!window.jspdf || !window.html2canvas) {
+        return showAlert("Library PDF belum siap. Cek koneksi internet!", "error");
+    }
+
     if (!isProUser) {
         const dlCount = parseInt(localStorage.getItem('sapa_cv_count') || '0');
-        if (dlCount >= MAX_FREE_DOWNLOADS) {
-            return showAlert(`Kuota download gratis habis (${MAX_FREE_DOWNLOADS}/${MAX_FREE_DOWNLOADS}). Upgrade ke PRO untuk unlimited!`, "error");
-        }
+        if (dlCount >= MAX_FREE_DOWNLOADS) return showAlert("Kuota Habis! Upgrade ke Pro.", "error");
         localStorage.setItem('sapa_cv_count', dlCount + 1);
     }
 
-    // 2. Proses Rendering PDF
     const btn = dom.btns.download;
-    const originalHtml = btn.innerHTML;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+    const originalContent = btn.innerHTML;
+    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Proses...`;
     btn.disabled = true;
 
     try {
-        window.scrollTo(0, 0); // Scroll ke atas agar capture tidak terpotong
+        window.scrollTo(0, 0);
         
-        // Opsi html2canvas yang dioptimalkan untuk kualitas
         const canvas = await html2canvas(dom.canvas, {
-            scale: 2, // Kualitas retina (2x)
-            useCORS: true, // Izinkan gambar eksternal jika ada
-            logging: false,
-            windowWidth: dom.canvas.scrollWidth,
-            windowHeight: dom.canvas.scrollHeight
+            scale: 2,
+            useCORS: true, 
+            logging: false
         });
 
-        const imgData = canvas.toDataURL('image/jpeg', 1.0); // Gunakan JPEG kualitas max
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
         const { jsPDF } = window.jspdf;
-        // Setup PDF A4 Portrait
         const pdf = new jsPDF('p', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
-        const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
+        const w = pdf.internal.pageSize.getWidth();
+        const h = pdf.internal.pageSize.getHeight();
 
-        // Hitung rasio agar gambar pas di kertas A4 tanpa distorsi
         const imgProps = pdf.getImageProperties(imgData);
         const ratio = imgProps.width / imgProps.height;
-        let renderWidth = pdfWidth;
-        let renderHeight = pdfWidth / ratio;
+        let finalH = w / ratio;
 
-        // Jika hasil capture lebih tinggi dari A4 (jarang terjadi jika CSS benar), sesuaikan
-        if (renderHeight > pdfHeight) {
-             renderHeight = pdfHeight;
-             renderWidth = pdfHeight * ratio;
-        }
+        if (finalH > h) finalH = h; 
 
-        pdf.addImage(imgData, 'JPEG', 0, 0, renderWidth, renderHeight);
+        pdf.addImage(imgData, 'JPEG', 0, 0, w, finalH);
         
-        // Nama file format: CV_NamaLengkap.pdf
-        const fileName = `CV_${(dom.inputs.name.value || 'SAPA').replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
-        pdf.save(fileName);
+        const cleanName = (dom.inputs.name.value || 'CV_SAPA').replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s+/g, '_');
+        pdf.save(`CV_${cleanName}.pdf`);
+        
+        showAlert("Berhasil Download!", "success");
 
-        if(!isProUser) {
-            showAlert("Berhasil download! Sisa kuota gratis: " + (MAX_FREE_DOWNLOADS - (parseInt(localStorage.getItem('sapa_cv_count')))), "success");
-        } else {
-            showAlert("CV berhasil diunduh!", "success");
-        }
-
-    } catch (error) {
-        console.error("PDF Error:", error);
-        showAlert("Gagal membuat PDF. Silakan coba lagi atau refresh halaman.", "error");
+    } catch (err) {
+        console.error(err);
+        showAlert("Gagal Download: " + err.message, "error");
     } finally {
-        btn.innerHTML = originalHtml;
+        btn.innerHTML = originalContent;
         btn.disabled = false;
     }
 }
 
-
-// --- UTILITY: ALERT ---
-function showAlert(message, type = 'success') {
-    dom.alertBox.textContent = message;
+function showAlert(msg, type) {
+    if(!dom.alertBox) return;
+    dom.alertBox.textContent = msg;
     dom.alertBox.className = `alert ${type}`;
     dom.alertBox.classList.remove('hidden');
     setTimeout(() => dom.alertBox.classList.add('hidden'), 4000);
 }
 
-// --- NAV HANDLER (Mobile Menu & Logout) ---
-dom.btns.menu?.addEventListener('click', (e) => { e.stopPropagation(); dom.btns.dropdown.classList.toggle('hidden'); });
+// Nav
+if(dom.btns.menu) dom.btns.menu.addEventListener('click', (e) => { e.stopPropagation(); dom.btns.dropdown.classList.toggle('hidden'); });
 window.addEventListener('click', () => dom.btns.dropdown?.classList.add('hidden'));
-dom.btns.logout?.addEventListener('click', async () => {
+if(dom.btns.logout) dom.btns.logout.addEventListener('click', async () => {
     await supabase.auth.signOut(); window.location.href = 'index.html';
 });
 
-// --- START ---
 init();

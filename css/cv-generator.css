@@ -1,197 +1,193 @@
-/* --- BASE & LAYOUT --- */
-body { background-color: #f8fafc; }
+/* --- GLOBAL --- */
+body { background-color: #f1f5f9; }
 
 .cv-builder-grid {
     display: grid;
-    grid-template-columns: 340px 1fr; /* Sidebar kiri tetap, kanan sisa ruang */
+    grid-template-columns: 340px 1fr;
     gap: 30px;
     align-items: start;
     padding-bottom: 50px;
 }
 
-/* --- PANEL INPUT (KIRI) --- */
+/* --- SIDEBAR INPUT --- */
 .input-panel {
     position: sticky;
     top: 20px;
-    max-height: calc(100vh - 40px); /* Supaya bisa discroll independen */
+    max-height: calc(100vh - 40px);
     display: flex;
     flex-direction: column;
-    padding: 0; /* Reset padding card */
-    overflow: hidden;
+    padding: 0;
 }
 .panel-header { padding: 15px 20px; border-bottom: 1px solid #eee; background: #fff; }
-.panel-header h3 { font-size: 1.1rem; margin: 0; color: #333; }
+.panel-header h3 { font-size: 1rem; margin: 0; color: #333; }
 .panel-body { padding: 20px; overflow-y: auto; }
 
 .form-section { margin-bottom: 25px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 20px; }
 .form-section.no-border { border-bottom: none; }
-.form-section h4 { font-size: 0.9rem; color: #64748b; margin-bottom: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.form-section h4 { font-size: 0.85rem; color: #64748b; margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 
-.form-group { margin-bottom: 12px; }
-.form-row { display: flex; gap: 10px; margin-bottom: 12px; }
-.form-row input { width: 100%; }
-
-input[type="text"], input[type="email"], textarea, select {
-    width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; transition: 0.2s; font-family: 'Inter', sans-serif;
+/* Upload Foto Compact */
+.photo-upload-compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f8fafc;
+    padding: 10px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
 }
-input:focus, textarea:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
-textarea { resize: vertical; }
-
-/* Custom Photo Upload */
-.photo-upload-group { display: flex; align-items: center; gap: 10px; }
-.photo-label {
-    background: #eef2ff; color: #4f46e5; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: 0.2s; border: 1px solid #c7d2fe;
+.btn-upload-compact {
+    background: #4f46e5;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
 }
-.photo-label:hover { background: #e0e7ff; }
-.file-name { font-size: 0.8rem; color: #94a3b8; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+.btn-upload-compact:hover { background: #4338ca; }
+.file-info {
+    font-size: 0.75rem;
+    color: #64748b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
-/* Dynamic Input Items (Exp & Edu) */
+/* Inputs */
+.form-group { margin-bottom: 10px; }
+.form-group label { display: block; font-size: 0.8rem; margin-bottom: 4px; color: #475569; font-weight: 500; }
+.form-row { display: flex; gap: 10px; margin-bottom: 10px; }
+
+input, textarea, select {
+    width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; font-family: 'Inter', sans-serif;
+}
+input:focus, textarea:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1); }
+.mt-2 { margin-top: 8px; } .mt-3 { margin-top: 12px; }
+
+/* Dynamic List Items */
 .dynamic-item {
-    background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 10px; position: relative; border: 1px solid #e2e8f0;
+    background: #f8fafc; padding: 12px; border-radius: 6px; margin-bottom: 8px; border: 1px solid #e2e8f0; position: relative;
 }
-/* TOMBOL HAPUS YG RAPI */
 .btn-remove-item {
-    position: absolute; top: -8px; right: -8px;
-    width: 24px; height: 24px;
+    position: absolute; top: -6px; right: -6px;
+    width: 20px; height: 20px;
     background: #ef4444; color: white; border: none; border-radius: 50%;
+    cursor: pointer; font-size: 10px;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 10px; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
-    transition: 0.2s; z-index: 2;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.btn-remove-item:hover { background: #dc2626; transform: scale(1.1); }
 
-/* --- PANEL PREVIEW (KANAN) --- */
+/* --- PREVIEW PANEL --- */
 .preview-panel {
-    display: flex; flex-direction: column; gap: 20px;
-    /* KUNCI AGAR TIDAK MUNTAH: */
-    align-items: center; /* Center secara horizontal */
-    min-width: 0; /* Mencegah grid item overflow */
+    display: flex; flex-direction: column; align-items: center; gap: 20px; min-width: 0;
 }
 
 .preview-toolbar {
-    width: 100%; max-width: 850px; /* Samakan max-width dengan wrapper A4 */
+    width: 100%; max-width: 210mm; /* Sesuai lebar A4 */
     display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 20px; position: sticky; top: 20px; z-index: 10;
+    padding: 10px 20px; position: sticky; top: 20px; z-index: 20;
 }
-.theme-selector { display: flex; align-items: center; gap: 10px; }
-.theme-selector .label { font-size: 0.9rem; font-weight: 500; color: #555; }
+
+/* TOMBOL RESPONSIVE */
+.btn-download-responsive { display: flex; align-items: center; gap: 8px; }
+.btn-text-mobile { display: none; }
+@media (max-width: 600px) {
+    .btn-text-full { display: none; }
+    .btn-text-mobile { display: inline; font-weight: 600; }
+    .btn-download-responsive { padding: 8px 12px; }
+}
+
+/* --- THEME SELECTOR --- */
+.theme-selector { display: flex; align-items: center; gap: 12px; }
+.theme-selector .label { font-size: 0.9rem; font-weight: 600; color: #475569; }
 .theme-btn {
-    width: 28px; height: 28px; border-radius: 50%; border: 2px solid #ddd; cursor: pointer; transition: 0.2s; background: #fff; box-shadow: inset 0 0 0 2px #fff;
+    width: 32px; height: 32px; border-radius: 50%; border: 2px solid #e2e8f0; cursor: pointer; transition: 0.2s; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: relative;
 }
-.theme-btn:hover { transform: scale(1.1); }
-.theme-btn.active { border-color: #4f46e5; transform: scale(1.1); }
+.theme-btn:hover { transform: scale(1.15); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.theme-btn.active { border-color: #4f46e5; transform: scale(1.15); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); }
 
-/* Wrapper A4 di Tengah */
-.a4-centered-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Center kanvas A4 */
-    padding: 20px 0;
-    overflow-x: auto; /* Scroll horizontal jika layar terlalu kecil */
-}
+/* KANVAS A4 */
+.a4-centered-wrapper { width: 100%; display: flex; justify-content: center; overflow-x: auto; padding-bottom: 20px; }
 
-/* --- KANVAS A4 FISIK --- */
 .cv-canvas {
-    width: 210mm; height: 297mm; /* Ukuran A4 Fixed */
-    flex-shrink: 0; /* JANGAN MENGECIL di desktop */
-    background: white; padding: 15mm 18mm; color: #1f2937;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-radius: 2px;
-    position: relative; font-family: 'Inter', sans-serif;
+    width: 210mm; height: 297mm; /* A4 FIXED */
+    flex-shrink: 0;
+    background: white; padding: 15mm 18mm; color: #1e293b;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     display: flex; flex-direction: column;
 }
 
-/* --- STRUKTUR HEADER CV (Side-by-Side) --- */
+/* --- LAYOUT CV (HEADER) --- */
 .cv-header-grid {
     display: grid;
-    grid-template-columns: auto 1fr; /* Kiri: Auto (Foto), Kanan: Sisa (Teks) */
+    grid-template-columns: auto 1fr;
     gap: 25px;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
-/* FOTO PROFIL BULAT */
+/* FOTO ANTI-PENYET (IMG TAG) */
 .photo-wrapper {
-    width: 110px; height: 110px; border-radius: 50%; overflow: hidden;
-    border: 3px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    display: flex; justify-content: center; align-items: center; background: #f1f5f9;
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    overflow: hidden; /* Wajib biar bulat */
+    border: 3px solid #e2e8f0;
+    display: flex; justify-content: center; align-items: center;
+    background: #f1f5f9;
 }
 .photo-wrapper.hidden { display: none; }
-.photo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-
-/* HEADER TEKS */
-.header-text-col h1 { font-size: 22pt; font-weight: 700; margin: 0 0 5px 0; letter-spacing: -0.5px; line-height: 1.2; }
-.cv-job-title { font-size: 12pt; color: #6b7280; margin: 0 0 12px 0; font-weight: 500; }
-
-.cv-contacts-grid {
-    display: flex; flex-wrap: wrap; gap: 8px 15px; font-size: 9pt; color: #4b5563;
+.photo-wrapper img {
+    width: 100%;
+    height: 100%;
+    /* Kita HAPUS object-fit di sini karena JS yang akan handle cropping */
+    display: block;
 }
+
+.header-text-col h1 { font-size: 20pt; font-weight: 700; margin: 0 0 6px 0; line-height: 1.2; text-transform: uppercase; color: #0f172a; }
+.cv-job-title { font-size: 11pt; color: #64748b; margin: 0 0 10px 0; font-weight: 500; }
+
+.cv-contacts-grid { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 9pt; color: #475569; }
 .contact-item { display: flex; align-items: center; gap: 6px; }
-.contact-item i { font-size: 0.9em; color: #9ca3af; }
 
-.cv-main-divider { border: 0; border-top: 2px solid #e5e7eb; margin: 0 0 20px 0; }
+.cv-main-divider { border: 0; border-top: 2px solid #e2e8f0; margin: 0 0 25px 0; }
 
-/* --- ISI CV BODY --- */
-.cv-body { flex-grow: 1; display: flex; flex-direction: column; gap: 20px; }
+/* --- SECTIONS --- */
+.cv-body { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+
 .section-title {
-    font-size: 11pt; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: #374151;
-    border-bottom: 1px solid #e5e7eb; padding-bottom: 5px; margin-bottom: 10px;
-}
-.section-content { font-size: 10pt; line-height: 1.5; color: #4b5563; }
-.text-muted.empty-state { color: #cbd5e1; font-style: italic; }
-
-/* List Items (Exp & Edu) */
-.cv-list-item { margin-bottom: 12px; }
-.cv-list-item:last-child { margin-bottom: 0; }
-.item-head { display: flex; justify-content: space-between; font-weight: 600; color: #1f2937; }
-.item-sub-head { font-weight: 500; color: #4b5563; margin-bottom: 4px; font-size: 9.5pt; }
-.item-desc { margin: 5px 0 0 0; white-space: pre-line; }
-
-/* Watermark */
-.cv-watermark {
-    position: absolute; bottom: 10mm; right: 10mm; font-size: 8pt; color: #9ca3af; opacity: 0.5; pointer-events: none;
+    font-size: 11pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #334155;
+    border-bottom: 1px solid #cbd5e1; padding-bottom: 6px; margin-bottom: 12px;
+    text-align: left;
 }
 
-/* --- TEMA: MODERN BLUE --- */
-.theme-modern .cv-header-grid { margin-bottom: 0; padding-bottom: 20px; border-bottom: 3px solid #3b82f6; }
+.section-content { font-size: 10pt; line-height: 1.6; color: #334155; text-align: left; }
+
+/* List Items */
+.cv-list-item { margin-bottom: 14px; }
+.item-head { display: flex; justify-content: space-between; font-weight: 600; color: #0f172a; }
+.item-sub-head { font-style: italic; color: #64748b; margin-bottom: 4px; font-size: 9.5pt; }
+
+/* Themes */
+.theme-modern .cv-header-grid { border-bottom: 3px solid #3b82f6; padding-bottom: 20px; margin-bottom: 25px; }
 .theme-modern .cv-main-divider { display: none; }
-.theme-modern h1 { color: #1e40af; }
-.theme-modern .cv-job-title { color: #3b82f6; }
-.theme-modern .photo-wrapper { border-color: #bfdbfe; }
+.theme-modern h1 { color: #1d4ed8; }
 .theme-modern .section-title { color: #1d4ed8; border-color: #bfdbfe; }
-.theme-modern .contact-item i { color: #60a5fa; }
+.theme-modern .photo-wrapper { border-color: #bfdbfe; }
 
-/* --- TEMA: ELEGANT DARK --- */
-.theme-elegant { background: #1e293b; color: #f1f5f9; }
-.theme-elegant .header-text-col h1 { color: #ffffff; }
-.theme-elegant .cv-job-title { color: #94a3b8; }
-.theme-elegant .photo-wrapper { border-color: #475569; background: #334155; }
-.theme-elegant .contact-item { color: #cbd5e1; }
-.theme-elegant .cv-main-divider { border-color: #475569; }
+.theme-elegant { background: #1e293b; color: #f8fafc; }
+.theme-elegant h1, .theme-elegant .item-head { color: #fff; }
 .theme-elegant .section-title { color: #e2e8f0; border-color: #475569; }
 .theme-elegant .section-content { color: #cbd5e1; }
-.theme-elegant .item-head { color: #fff; }
-.theme-elegant .item-sub-head { color: #94a3b8; }
-.theme-elegant .text-muted.empty-state { color: #64748b; }
+.theme-elegant .photo-wrapper { border-color: #475569; }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 1024px) {
-    .cv-builder-grid {
-        grid-template-columns: 1fr; /* Stack ke bawah di tablet/mobile */
-        gap: 40px;
-    }
-    .input-panel { position: static; max-height: none; border-radius: 0; box-shadow: none; }
-    .preview-panel { order: -1; /* Preview di atas input di mobile */ }
-    .preview-toolbar { position: static; max-width: 100%; }
-    
-    /* Kanvas Responsif di Mobile */
-    .cv-canvas {
-        width: 100%; /* Lebar penuh */
-        height: auto; min-height: 297mm; /* Tinggi otomatis minimal A4 */
-        aspect-ratio: 210/297; /* Jaga rasio A4 */
-        padding: 20px;
-        flex-shrink: 1; /* Boleh mengecil di mobile */
-    }
-    .cv-header-grid { gap: 15px; }
-    .photo-wrapper { width: 80px; height: 80px; }
-    .header-text-col h1 { font-size: 18pt; }
+/* Mobile Responsive */
+@media (max-width: 900px) {
+    .cv-builder-grid { grid-template-columns: 1fr; gap: 20px; }
+    .input-panel { position: static; max-height: none; }
+    .preview-toolbar { padding: 10px; }
+    .cv-canvas { width: 100%; height: auto; aspect-ratio: 210/297; padding: 20px; }
+    .header-text-col h1 { font-size: 16pt; }
+    .cv-contacts-grid { gap: 5px; }
 }
