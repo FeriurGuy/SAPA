@@ -6,7 +6,7 @@ if (window.location.protocol === 'file:') {
 }
 
 // --- DOM ELEMENTS ---
-const dom = {
+export const dom = {
     photoInput: document.getElementById('inputPhoto'),
     photoLabelSpan: document.getElementById('photoFileName'),
     inputs: {
@@ -54,7 +54,7 @@ let isProUser = false;
 const MAX_FREE_DOWNLOADS = 2;
 
 // --- INITIALIZATION ---
-async function init() {
+export async function init() {
     try {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) return window.location.href = 'index.html';
