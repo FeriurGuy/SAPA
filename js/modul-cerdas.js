@@ -1,5 +1,7 @@
 import { supabase } from './supabase.js';
-import { GEMINI_KEY } from './config.js';
+import { GEMINI_KEY } from './config.js'; 
+
+const GEMINI_API_KEY = GEMINI_KEY;
 
 const dom = {
     inputs: {
