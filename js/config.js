@@ -1,3 +1,0 @@
-export const GEMINI_KEY = "AIzaSyDWuBqCwC-K-yt3kJ1fT6PGsUavMH5i2Tg";
-export const SUPABASE_URL = 'https://urrpvfcqnkosawceesui.supabase.co';
-export const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVycnB2ZmNxbmtvc2F3Y2Vlc3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxOTQyMjgsImV4cCI6MjA4Mjc3MDIyOH0.QVUJqeaoJJY3VU7dtm515kerVF6zBm0k9jJeW2zClqo';
