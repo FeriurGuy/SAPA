@@ -3,122 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAPA - Satu Page Aja</title>
+    <title>SAPA - Satu Page Aja | Apps Serba Bisa</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="icon" href="assets/Icons/favicon.png" type="image/png" sizes="96x96">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/Icons/favicon.png" type="image/png">
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container">
+    <nav class="navbar navbar-glass">
+        <div class="container nav-container">
             <a href="index.html" class="logo">SAPA<span class="dot">.</span></a>
             <div class="nav-links">
-                <a href="auth.html" class="btn-text">Masuk</a>
-                <a href="auth.html" class="btn btn-primary">Buat Sekarang</a>
+                <a href="auth.html" class="btn btn-text">Login</a>
+                <a href="auth.html" class="btn btn-primary">Daftar Free</a>
             </div>
         </div>
     </nav>
 
-    <header class="hero">
+    <header class="hero-split">
         <div class="container">
-            <span class="badge">🚀 Project SaaS Mini</span>
-            <h1>Satu Link untuk <br>Semua Sosmedmu</h1>
-
-            <p>Gabungkan Instagram, TikTok, LinkedIn, dan portfoliomu dalam satu halaman cantik. Simpel, cepat, dan elegan.</p>
-            
-            <div class="cta-group">
-                <a href="auth.html" class="btn btn-primary btn-lg">Mulai Gratis<i class="fa-solid fa-arrow-right"></i></a>
-                <a href="#features" class="btn btn-outline btn-lg">Pelajari Dulu</a>
-            </div>
-
-            <div class="hero-image">
-                <div class="mockup-card">
-                    <div class="mockup-header">
-                        <div class="circle red"></div>
-                        <div class="circle yellow"></div>
-                        <div class="circle green"></div>
+            <div class="hero-grid">
+                <div class="hero-text" data-aos="fade-right" data-aos-duration="1000">
+                    <span class="badge-new">✨ Anti Ribet Club</span>
+                    <h1 class="hero-heading">
+                        Satu Link,<br>
+                        <span class="text-gradient">Sejuta Aksi.</span>
+                    </h1>
+                    <p class="hero-subtext">
+                        Udah gak jaman pake banyak tools. Di <strong>SAPA</strong>, lo bisa bikin Bio Link kece, generate Modul Ajar (buat Pak Guru & Bu Guru), sampe bikin CV lamaran kerja. Semuanya sat-set!
+                    </p>
+                    <div class="hero-btns">
+                        <a href="auth.html" class="btn btn-primary btn-lg shadow-indigo">Gas Cobain Sekarang <i class="fa-solid fa-bolt"></i></a>
                     </div>
-                    <div class="mockup-body" style="padding: 30px 20px; display: flex; flex-direction: column; align-items: center; gap: 15px; background: linear-gradient(180deg, #f8fafc 0%, #e0f2fe 100%); height: 100%;">
-    
-                        <img src="https://urrpvfcqnkosawceesui.supabase.co/storage/v1/object/public/avatars/baa3ea17-3ac3-4288-9641-2f1b0d1262f6-0.7021878836661634.png" 
-                            alt="Avatar" 
-                            style="width: 80px; height: 80px; border-radius: 50%; border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                        
-                        <div style="text-align: center;">
-                            <h4 style="margin: 0; color: #0f172a; font-family: 'Outfit', sans-serif; font-size: 1.1rem;">Feri Ramadhan <i class="fa-solid fa-circle-check" style="color: #3b82f6; font-size: 0.8rem;"></i></h4>
-                            <p style="margin: 5px 0 0; font-size: 0.8rem; color: #64748b;">Fullstack Developer & Content Creator</p>
+                    <div class="trust-badge">
+                        <div class="avatar-group">
+                            <div class="avt" style="background:#fca5a5"></div>
+                            <div class="avt" style="background:#86efac"></div>
+                            <div class="avt" style="background:#93c5fd"></div>
                         </div>
-
-                        <div style="width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 5px;">
-                            
-                            <div style="background: white; padding: 10px 15px; border-radius: 50px; display: flex; align-items: center; gap: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; font-size: 0.85rem; color: #334155;">
-                                <i class="fa-brands fa-instagram" style="color: #E1306C;"></i> Instagram
-                            </div>
-
-                            <div style="background: white; padding: 10px 15px; border-radius: 50px; display: flex; align-items: center; gap: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; font-size: 0.85rem; color: #334155;">
-                                <i class="fa-brands fa-github" style="color: #333;"></i> GitHub Portofolio
-                            </div>
-
-                            <div style="background: white; padding: 10px 15px; border-radius: 50px; display: flex; align-items: center; gap: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; font-size: 0.85rem; color: #334155;">
-                                <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> WhatsApp Me
-                            </div>
-
-                        </div>
-
+                        <span>Dipake ratusan orang keren</span>
                     </div>
                 </div>
+                
+                <div class="hero-visual" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">
+    <div class="mockup-stack">
+        
+        <div class="mockup-card card-abstract-1 floating-slow">
+            <div class="circle-deco"></div>
+            <div class="line-deco"></div>
+        </div>
+
+        <div class="mockup-card card-abstract-2 floating-medium">
+             <i class="fa-solid fa-bolt" style="font-size: 1.5rem; color:white; margin-bottom:10px;"></i>
+             <div class="line-deco white"></div>
+             <div class="line-deco white short"></div>
+        </div>
+
+        <div class="phone-mockup floating-fast">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+                <div class="phone-header">
+                    <div class="avatar-circle"></div>
+                    <div class="username-pill"></div>
+                </div>
+                
+                <div class="skeleton-btn"></div>
+                <div class="skeleton-btn"></div>
+                <div class="skeleton-btn active"></div> <div class="skeleton-btn"></div>
+                
+                <div class="skeleton-footer"></div>
+            </div>
+        </div>
+        
+    </div>
+</div>
             </div>
         </div>
     </header>
 
-    <section id="features" class="features">
+    <section class="zigzag-features">
         <div class="container">
-            <div class="section-title">
-                <h2>Kenapa pakai SAPA?</h2>
-                <p>Fitur powerful untuk personal branding kamu.</p>
-            </div>
             
-            <div class="grid-3">
-                <div class="card">
-                    <div class="icon-box">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
-                    <h3>Setup Kilat</h3>
-                    <p>Cukup 2 menit buat daftar, atur link, dan publish halaman profil kamu.</p>
+            <div class="feature-row">
+                <div class="feature-text" data-aos="fade-right">
+                    <div class="feature-icon icon-indigo"><i class="fa-solid fa-link"></i></div>
+                    <h2>Link Bio Gak Boleh <br><span class="highlight-text">Membosankan.</span></h2>
+                    <p>Masa profil sosmed lo gitu-gitu aja? Pake SAPA, lo bisa gonta-ganti tema sesuka hati. Mau gaya Cyberpunk? Atau gaya Sultan? Bebas! Ada analitiknya juga biar lo tau siapa yang kepo.</p>
                 </div>
+                <div class="feature-visual" data-aos="fade-left">
+                    <div class="browser-mockup mockup-indigo tilt-right">
+                        <div class="browser-bar">
+                            <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                            <div class="address-bar">sapa.id/kece-abis</div>
+                        </div>
+                        <div class="browser-content content-biolink">
+                             <div class="mini-avatar bounce"></div>
+                             <div class="mini-btn"></div>
+                             <div class="mini-btn primary pulse"></div>
+                             <div class="mini-btn"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                <div class="card">
-                    <div class="icon-box">
-                        <i class="fa-solid fa-palette"></i>
+            <div class="feature-row reverse">
+                <div class="feature-visual" data-aos="fade-right">
+                     <div class="browser-mockup mockup-purple tilt-left">
+                        <div class="browser-bar">
+                            <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                            <div class="address-bar">Modul Ajar Express</div>
+                        </div>
+                        <div class="browser-content content-ai">
+                            <div class="chat-bubble user">Bikin modul Bahasa Inggris dong!</div>
+                            <div class="chat-bubble ai">
+                                <i class="fa-solid fa-robot"></i> Siap! Ini hasilnya...
+                                <div class="mini-table"></div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Tema Keren</h3>
-                    <p>Bosan tampilan standar? Pilih berbagai tema desain yang siap pamer skill CSS.</p>
                 </div>
+                <div class="feature-text" data-aos="fade-left">
+                     <div class="feature-icon icon-purple"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h2>Guru Jaman Now <br><span class="highlight-text">Wajib Punya Ini.</span></h2>
+                    <p>Lagi pusing bikin perangkat ajar? Santai... Kasih tau aja topik-nya ke AI kita, bim salabim! Jadi deh tabel RPP/Modul yang rapi. Tinggal download PDF, kelar urusan admin.</p>
+                </div>
+            </div>
 
-                <div class="card">
-                    <div class="icon-box">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <h3>Aman & Cepat</h3>
-                    <p>Didukung oleh Supabase untuk database yang aman dan performa ngebut.</p>
+             <div class="feature-row">
+                 <div class="feature-text" data-aos="fade-right">
+                    <div class="feature-icon icon-orange"><i class="fa-solid fa-briefcase"></i></div>
+                    <h2>Karir & Ibadah <br><span class="highlight-text">Tetap Jalan.</span></h2>
+                    <p>Mau ngelamar kerja? Ada <strong>CV Generator</strong> yang hasilnya disukai HRD (ATS Friendly). <br><br>Pas bulan puasa? Tenang, ada <strong>Jadwal Imsakiyah</strong> otomatis sesuai lokasimu. Paket lengkap kan?</p>
                 </div>
+                <div class="feature-visual centered-mobile" data-aos="fade-up">
+                     <div class="stacked-docs tilt-right">
+                        <div class="doc-mockup doc-cv">
+                            <div class="doc-header">CV Keren</div>
+                            <div class="doc-profile-row">
+                                <div class="circle"></div>
+                                <div class="lines"></div>
+                            </div>
+                            <div class="doc-body-lines"></div>
+                        </div>
+                        <div class="doc-mockup doc-imsak">
+                            <div class="doc-header"><i class="fa-solid fa-moon"></i> Ramadhan</div>
+                             <div class="imsak-grid-mockup"></div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="cta-final" data-aos="zoom-in-up">
+        <div class="container">
+            <div class="cta-card-glass">
+                <h2>Tunggu Apa Lagi?</h2>
+                <p style="padding-bottom: 20px;">Udah gratis, fiturnya banyak, buatan lokal lagi.</p>
+                <a href="auth.html" class="btn btn-white btn-lg shadow-white">Bikin Akun Sekarang 🚀</a>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 SAPA Project. Created by <strong>Feri Ramadhan Azhari</strong>.</p>
+    <footer class="footer-clean">
+        <div class="container footer-flex">
+            <div class="brand">
+                <h4>SAPA<span class="dot">.</span></h4>
+            </div>
+             <div class="copyright">
+                Dibuat sambil ☕ oleh Feri Ramadhan. &copy; 2026.
+            </div>
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50, duration: 800 });
+    </script>
 </body>
 </html>
