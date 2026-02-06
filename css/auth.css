@@ -20,7 +20,7 @@ body {
     overflow: hidden;
     width: 768px;
     max-width: 100%;
-    min-height: 520px; /* Sedikit lebih tinggi biar muat input banyak */
+    min-height: 520px;
 }
 
 .container p { font-size: 14px; line-height: 20px; letter-spacing: 0.3px; margin: 20px 0; }
@@ -75,7 +75,6 @@ input {
 
 .btn-primary:hover { background-color: #4338ca; }
 
-/* Ghost Button (Tombol Transparan di Overlay) */
 .btn-ghost {
     background-color: transparent;
     border-color: #fff;
@@ -92,7 +91,6 @@ input {
 }
 .btn-ghost:hover { background: rgba(255,255,255,0.2); }
 
-/* Social Icons */
 .social-icons { margin: 20px 0; }
 .icon-btn {
     border: 1px solid #ccc;
@@ -108,9 +106,18 @@ input {
     font-size: 16px;
 }
 
-/* --- SLIDING MECHANISM --- */
-.sign-in { left: 0; width: 50%; z-index: 2; }
-.sign-up { left: 0; width: 50%; opacity: 0; z-index: 1; }
+.sign-in {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.sign-up {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
 
 .container.active .sign-in { transform: translateX(100%); }
 .container.active .sign-up { transform: translateX(100%); opacity: 1; z-index: 5; animation: move 0.6s; }
@@ -199,19 +206,19 @@ input {
         box-shadow: none;
     }
     
-    .form-container { width: 100%; top: 0; height: 65%; /* Form di atas */ }
+    .form-container { width: 100%; top: 0; height: 65%; }
     
     .toggle-container {
         width: 100%;
-        height: 35%; /* Overlay di bawah */
+        height: 35%;
         top: 65%;
         left: 0;
         border-radius: 50px 50px 0 0;
     }
     
     .container.active .toggle-container {
-        transform: translateY(0); /* Matikan slide X */
-        top: 0; /* Pindah ke atas */
+        transform: translateY(0);
+        top: 0;
         border-radius: 0 0 50px 50px;
     }
 
@@ -224,7 +231,7 @@ input {
     .toggle-panel { width: 100%; height: 100%; padding: 0 20px; }
     .toggle-left, .toggle-right { transform: none !important; transition: opacity 0.4s; }
     
-    .container.active .toggle-right { opacity: 0; pointer-events: none; } /* Sembunyikan panel kanan */
-    .toggle-left { opacity: 0; pointer-events: none; } /* Default sembunyi */
+    .container.active .toggle-right { opacity: 0; pointer-events: none; }
+    .toggle-left { opacity: 0; pointer-events: none; }
     .container.active .toggle-left { opacity: 1; pointer-events: auto; }
 }

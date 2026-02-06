@@ -1,17 +1,15 @@
-/* --- FLOATING SHARE BUTTON (FAB) --- */
 .fab-container {
     position: fixed !important;
-    bottom: 30px !important;    /* KUNCI: Nempel di bawah */
-    right: 30px !important;     /* KUNCI: Nempel di kanan */
+    bottom: 30px !important;   
+    right: 30px !important;  
     z-index: 99999 !important;
     
     display: flex !important;
-    flex-direction: column !important; /* Susun dari Atas ke Bawah */
+    flex-direction: column !important; 
     align-items: center;
-    gap: 15px; /* Jarak antara grup opsi dan tombol utama */
+    gap: 15px;
 }
 
-/* Wrapper Opsi */
 .fab-options {
     display: flex;
     flex-direction: column; 
@@ -19,7 +17,6 @@
     margin-bottom: 5px;
 }
 
-/* --- STYLE TOMBOL (BULAT SEMPURNA) --- */
 .fab-main, .fab-btn {
     width: 55px;
     height: 55px;
@@ -36,13 +33,12 @@
     position: relative;
 }
 
-/* Tombol Utama (Trigger - Tanda +) */
 .fab-main {
     width: 45px;
     height: 45px;
-    background-color: var(--primary); /* Warna Gelap */
+    background-color: var(--primary);
     color: white;
-    z-index: 20; /* Paling depan */
+    z-index: 20;
 }
 
 .fab-main:hover {
@@ -50,16 +46,14 @@
     background: #1e293b;
 }
 
-/* Tombol Opsi (Kecil) */
 .fab-btn {
     width: 45px;
     height: 45px;
     background: white;
     color: #475569;
-    
-    opacity: 0; /* Sembunyi */
-    transform: translateY(20px) scale(0.5); /* Posisi awal agak turun */
-    pointer-events: none; /* Gak bisa diklik pas ngumpet */
+    opacity: 0;
+    transform: translateY(20px) scale(0.5);
+    pointer-events: none;
     visibility: hidden;
 }
 
@@ -72,21 +66,21 @@
 .text-wa { color: #25D366; }
 .text-x { color: #000000; }
 .text-copy { color: #6366f1; }
-.text-ig { color: #E1306C; } /* Pink Instagram */
-.text-tiktok { color: #000000; } /* Hitam TikTok */
+.text-ig { color: #E1306C; }
+.text-tiktok { color: #000000; }
 
 /* --- ANIMASI MEKAR --- */
 .fab-container.active .fab-btn {
     opacity: 1;
-    transform: translateY(0) scale(1); /* Naik ke posisi asli */
+    transform: translateY(0) scale(1);
     pointer-events: auto;
     visibility: visible;
 }
 
-/* Delay Animasi (Urutan muncul dari bawah ke atas) */
-.fab-container.active .fab-btn:nth-last-child(1) { transition-delay: 0.05s; } /* WA (Paling bawah) */
-.fab-container.active .fab-btn:nth-last-child(2) { transition-delay: 0.1s; }  /* X */
-.fab-container.active .fab-btn:nth-last-child(3) { transition-delay: 0.15s; } /* Copy (Paling atas) */
+.fab-container.active .fab-btn:nth-last-child(1) { transition-delay: 0.05s; } 
+.fab-container.active .fab-btn:nth-last-child(2) { transition-delay: 0.1s; } 
+.fab-container.active .fab-btn:nth-last-child(3) { transition-delay: 0.15s; } 
+.fab-container.active .fab-btn:nth-last-child(4) { transition-delay: 0.2s; }
 
 /* Tooltip Label (Kiri) */
 .fab-btn::after {

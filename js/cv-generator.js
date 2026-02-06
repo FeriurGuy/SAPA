@@ -303,3 +303,79 @@ if(dom.btns.logout) dom.btns.logout.addEventListener('click', async () => {
 });
 
 init();
+
+async function initFloatingShare() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
+
+    const { data: profile } = await supabase.from('profiles').select('username, full_name').eq('id', session.user.id).single();
+    if (!profile) return;
+
+    const publicUrl = `${window.location.origin}/${profile.username}`; 
+    const shareText = `Sstt... Cek profil lengkap aku di sini! 👇`;
+
+    const oldFab = document.querySelector('.fab-container');
+    if (oldFab) oldFab.remove();
+
+    const fabHTML = `
+        <div class="fab-options">
+            <button class="fab-btn" id="fabCopy" data-label="Salin Link">
+                <i class="fa-solid fa-link text-copy"></i>
+            </button>
+            <a href="https://www.tiktok.com/" target="_blank" class="fab-btn" data-label="TikTok" onclick="navigator.clipboard.writeText('${publicUrl}')">
+                <i class="fa-brands fa-tiktok text-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" class="fab-btn" data-label="Instagram" onclick="navigator.clipboard.writeText('${publicUrl}')">
+                <i class="fa-brands fa-instagram text-ig"></i>
+            </a>
+            <a href="https://wa.me/?text=${encodeURIComponent(shareText + '\n' + publicUrl)}" target="_blank" class="fab-btn" data-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp text-wa"></i>
+            </a>
+        </div>
+        <button class="fab-main" id="fabTrigger" title="Bagikan">
+            <i class="fa-solid fa-share"></i>
+        </button>
+    `;
+
+    const fabContainer = document.createElement('div');
+    fabContainer.className = 'fab-container';
+    fabContainer.innerHTML = fabHTML;
+    document.body.appendChild(fabContainer);
+
+    const trigger = document.getElementById('fabTrigger');
+    const btnCopy = document.getElementById('fabCopy');
+
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fabContainer.classList.toggle('active');
+        const icon = trigger.querySelector('i');
+        
+        // --- PERBAIKAN LOGIC ICON ---
+        if (fabContainer.classList.contains('active')) {
+            icon.className = 'fa-solid fa-xmark'; // Jadi tanda silang
+            icon.style.transform = 'rotate(90deg)';
+        } else {
+            icon.className = 'fa-solid fa-share'; // Balik jadi share
+            icon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!fabContainer.contains(e.target)) {
+            fabContainer.classList.remove('active');
+            const icon = trigger.querySelector('i');
+            icon.className = 'fa-solid fa-share';
+            icon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    btnCopy.addEventListener('click', () => {
+        navigator.clipboard.writeText(publicUrl).then(() => {
+            const icon = btnCopy.querySelector('i');
+            icon.className = 'fa-solid fa-check text-copy';
+            setTimeout(() => icon.className = 'fa-solid fa-link text-copy', 2000);
+        });
+    });
+}
+
+initFloatingShare();

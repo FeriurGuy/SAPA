@@ -1,9 +1,7 @@
-/* --- GLOBAL --- */
 body { background-color: #f8fafc; }
 
-/* Wrapper Utama (Single Column) */
 .main-content-single {
-    max-width: 900px; /* Batasi lebar biar gak terlalu melebar */
+    max-width: 900px;
     margin: 0 auto;
     padding-bottom: 80px;
     padding-top: 20px;
@@ -110,15 +108,40 @@ input:focus, select:focus, textarea:focus {
     line-height: 1.6;
     font-size: 12pt;
     position: relative;
-    /* Mencegah overflow */
     word-wrap: break-word;
 }
 
 /* Typography Hasil AI */
-.a4-paper-vertical h1 { font-size: 18pt; text-align: center; font-weight: bold; margin-bottom: 20px; font-family: Arial, sans-serif; }
-.a4-paper-vertical h2 { font-size: 14pt; border-bottom: 1px solid #000; padding-bottom: 5px; margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-family: Arial, sans-serif; }
-.a4-paper-vertical h3 { font-size: 12pt; font-weight: bold; margin-top: 15px; margin-bottom: 5px; }
-.a4-paper-vertical p { margin-bottom: 10px; text-align: justify; }
+.a4-paper-vertical h1 {
+    font-size: 18pt;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.a4-paper-vertical h2 {
+    font-size: 14pt;
+    border-bottom: 1px solid #000;
+    padding-bottom: 5px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+.a4-paper-vertical h3 {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.a4-paper-vertical p {
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
 .a4-paper-vertical ul, .a4-paper-vertical ol { padding-left: 20px; margin-bottom: 10px; }
 .a4-paper-vertical li { margin-bottom: 5px; }
 

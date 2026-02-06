@@ -1,4 +1,3 @@
-/* --- DASHBOARD RESET & VARIABLES --- */
 :root {
     --card-bg: #ffffff;
     --border-color: #e2e8f0;
@@ -7,7 +6,6 @@
     --gray: #64748b;
 }
 
-/* FIX UTAMA: Mencegah scroll ke samping di HP */
 html, body {
     overflow-x: hidden;
     width: 100%;
