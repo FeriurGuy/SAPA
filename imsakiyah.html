@@ -201,72 +201,304 @@
         </div>
     </div>
 
-    <div id="fullScheduleContainer" style="position: absolute; left: -9999px; top: 0; width: 800px; background: white; padding: 30px; font-family: 'Times New Roman', serif; color: #000;">
+    <div id="fullScheduleContainer" style="position: absolute; left: -9999px; top: 0; width: 210mm; min-height: 297mm; background: #ffffff; padding: 15mm 20mm; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #333; box-sizing: border-box; display: flex; flex-direction: column;">
         
-        <div style="text-align: center; margin-bottom: 15px; border-bottom: 3px double #000; padding-bottom: 10px;">
-            <h1 style="margin: 0; font-size: 18pt; font-weight: bold; text-transform: uppercase;">Jadwal Imsakiyah Ramadhan 1447 H (2026)</h1>
-            <h2 style="margin: 5px 0 0; font-size: 14pt; font-weight: bold;">Untuk Kota Banda Aceh & Sekitarnya</h2>
-            <p style="margin: 5px 0 0; font-size: 10pt;">
-                Provinsi Nanggroe Aceh Darussalam, Indonesia<br>
-                Koordinat: (5.56, 95.33). Zona Waktu: Asia/Jakarta. Arah Kiblat: 292° dari Utara.
-            </p>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 3px solid #16a085; padding-bottom: 12px;">
+            <div style="flex: 1;">
+                <h1 style="margin: 0; font-size: 18pt; font-weight: 800; color: #2c3e50; text-transform: uppercase; letter-spacing: 1px;">Jadwal Imsakiyah Februari 2026</h1>
+                <h2 style="margin: 5px 0 0; font-size: 12pt; font-weight: 600; color: #16a085;">Kota Banda Aceh & Sekitarnya</h2>
+                <p style="margin: 5px 0 0; font-size: 7pt; color: #34495e; line-height: 1.5;">
+                    Provinsi Nanggroe Aceh Darussalam, Indonesia<br>
+                    Koordinat: (5.56, 95.33). Zona Waktu: Asia/Jakarta. Arah Kiblat: 292° dari Utara.<br>
+                    Sumber: <b>bimasislam.kemenag.go.id</b> | <b>jadwal-imsakiyah.tirto.id</b><br>
+                    Dibuat secara otomatis oleh <b>Aplikasi SAPA</b> (sapain.my.id)
+                </p>
+            </div>     
+            <div style="text-align: right; margin-left: 20px; padding-bottom: 5px;">
+                <div style="font-family: var(--font-heading, 'Outfit', 'Segoe UI', sans-serif); font-size: 1.8rem; font-weight: 700; color: #0f172a;">
+                    SAPA<span style="color: #4f46e5;">.</span>
+                </div>
+            </div>
         </div>
 
-        <table style="width: 100%; border-collapse: collapse; font-size: 9pt; text-align: center; border: 1px solid #000;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 9pt; text-align: center; margin-bottom: 20px; flex-grow: 1;">
             <thead>
-                <tr style="background-color: #f0f0f0; font-weight: bold;">
-                    <th style="border: 1px solid #000; padding: 4px;">Ramadhan</th>
-                    <th style="border: 1px solid #000; padding: 4px;">Hari</th>
-                    <th style="border: 1px solid #000; padding: 4px;">Masehi</th>
-                    <th style="border: 1px solid #000; padding: 4px;">Imsak</th>
-                    <th style="border: 1px solid #000; padding: 4px;">Subuh</th>
-                    <th style="border: 1px solid #000; padding: 4px;">Terbit</th>
-                    <th style="border: 1px solid #000; padding: 4px;">Dhuha</th>
-                    <th style="border: 1px solid #000; padding: 4px;">Dzuhur</th>
-                    <th style="border: 1px solid #000; padding: 4px;">Ashar</th>
-                    <th style="border: 1px solid #000; padding: 4px;">Maghrib</th>
-                    <th style="border: 1px solid #000; padding: 4px;">Isya</th>
+                <tr>
+                    <th style="background-color: #16a085; color: white; border: 1px solid #1abc9c; padding: 6px 8px; font-weight: 600; text-transform: uppercase;">Tanggal</th>
+                    <th style="background-color: #16a085; color: white; border: 1px solid #1abc9c; padding: 6px 8px; font-weight: 600; text-transform: uppercase;">Imsak</th>
+                    <th style="background-color: #16a085; color: white; border: 1px solid #1abc9c; padding: 6px 8px; font-weight: 600; text-transform: uppercase;">Subuh</th>
+                    <th style="background-color: #16a085; color: white; border: 1px solid #1abc9c; padding: 6px 8px; font-weight: 600; text-transform: uppercase;">Dzuhur</th>
+                    <th style="background-color: #16a085; color: white; border: 1px solid #1abc9c; padding: 6px 8px; font-weight: 600; text-transform: uppercase;">Ashar</th>
+                    <th style="background-color: #16a085; color: white; border: 1px solid #1abc9c; padding: 6px 8px; font-weight: 600; text-transform: uppercase;">Maghrib</th>
+                    <th style="background-color: #16a085; color: white; border: 1px solid #1abc9c; padding: 6px 8px; font-weight: 600; text-transform: uppercase;">Isya</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td style="border:1px solid #000">1 Ram</td><td style="border:1px solid #000">Kamis</td><td style="border:1px solid #000">19 Feb</td><td style="border:1px solid #000; font-weight:bold">05:27</td><td style="border:1px solid #000">05:37</td><td style="border:1px solid #000">06:53</td><td style="border:1px solid #000">07:17</td><td style="border:1px solid #000">12:56</td><td style="border:1px solid #000">16:14</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:03</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">2 Ram</td><td style="border:1px solid #000">Jumat</td><td style="border:1px solid #000">20 Feb</td><td style="border:1px solid #000; font-weight:bold">05:27</td><td style="border:1px solid #000">05:37</td><td style="border:1px solid #000">06:52</td><td style="border:1px solid #000">07:17</td><td style="border:1px solid #000">12:56</td><td style="border:1px solid #000">16:14</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:03</td></tr>
-                <tr><td style="border:1px solid #000">3 Ram</td><td style="border:1px solid #000">Sabtu</td><td style="border:1px solid #000">21 Feb</td><td style="border:1px solid #000; font-weight:bold">05:26</td><td style="border:1px solid #000">05:36</td><td style="border:1px solid #000">06:52</td><td style="border:1px solid #000">07:16</td><td style="border:1px solid #000">12:56</td><td style="border:1px solid #000">16:13</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:03</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">4 Ram</td><td style="border:1px solid #000">Ahad</td><td style="border:1px solid #000">22 Feb</td><td style="border:1px solid #000; font-weight:bold">05:26</td><td style="border:1px solid #000">05:36</td><td style="border:1px solid #000">06:52</td><td style="border:1px solid #000">07:16</td><td style="border:1px solid #000">12:56</td><td style="border:1px solid #000">16:13</td><td style="border:1px solid #000; font-weight:bold">18:54</td><td style="border:1px solid #000">20:03</td></tr>
-                <tr><td style="border:1px solid #000">5 Ram</td><td style="border:1px solid #000">Senin</td><td style="border:1px solid #000">23 Feb</td><td style="border:1px solid #000; font-weight:bold">05:26</td><td style="border:1px solid #000">05:36</td><td style="border:1px solid #000">06:52</td><td style="border:1px solid #000">07:16</td><td style="border:1px solid #000">12:56</td><td style="border:1px solid #000">16:13</td><td style="border:1px solid #000; font-weight:bold">18:54</td><td style="border:1px solid #000">20:03</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">6 Ram</td><td style="border:1px solid #000">Selasa</td><td style="border:1px solid #000">24 Feb</td><td style="border:1px solid #000; font-weight:bold">05:26</td><td style="border:1px solid #000">05:36</td><td style="border:1px solid #000">06:51</td><td style="border:1px solid #000">07:16</td><td style="border:1px solid #000">12:55</td><td style="border:1px solid #000">16:12</td><td style="border:1px solid #000; font-weight:bold">18:54</td><td style="border:1px solid #000">20:03</td></tr>
-                <tr><td style="border:1px solid #000">7 Ram</td><td style="border:1px solid #000">Rabu</td><td style="border:1px solid #000">25 Feb</td><td style="border:1px solid #000; font-weight:bold">05:26</td><td style="border:1px solid #000">05:36</td><td style="border:1px solid #000">06:51</td><td style="border:1px solid #000">07:15</td><td style="border:1px solid #000">12:55</td><td style="border:1px solid #000">16:12</td><td style="border:1px solid #000; font-weight:bold">18:54</td><td style="border:1px solid #000">20:03</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">8 Ram</td><td style="border:1px solid #000">Kamis</td><td style="border:1px solid #000">26 Feb</td><td style="border:1px solid #000; font-weight:bold">05:25</td><td style="border:1px solid #000">05:35</td><td style="border:1px solid #000">06:51</td><td style="border:1px solid #000">07:15</td><td style="border:1px solid #000">12:55</td><td style="border:1px solid #000">16:11</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:03</td></tr>
-                <tr><td style="border:1px solid #000">9 Ram</td><td style="border:1px solid #000">Jumat</td><td style="border:1px solid #000">27 Feb</td><td style="border:1px solid #000; font-weight:bold">05:25</td><td style="border:1px solid #000">05:35</td><td style="border:1px solid #000">06:50</td><td style="border:1px solid #000">07:15</td><td style="border:1px solid #000">12:55</td><td style="border:1px solid #000">16:11</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:03</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">10 Ram</td><td style="border:1px solid #000">Sabtu</td><td style="border:1px solid #000">28 Feb</td><td style="border:1px solid #000; font-weight:bold">05:25</td><td style="border:1px solid #000">05:35</td><td style="border:1px solid #000">06:50</td><td style="border:1px solid #000">07:14</td><td style="border:1px solid #000">12:55</td><td style="border:1px solid #000">16:11</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:03</td></tr>
-                <tr><td style="border:1px solid #000">11 Ram</td><td style="border:1px solid #000">Ahad</td><td style="border:1px solid #000">01 Mar</td><td style="border:1px solid #000; font-weight:bold">05:25</td><td style="border:1px solid #000">05:35</td><td style="border:1px solid #000">06:50</td><td style="border:1px solid #000">07:14</td><td style="border:1px solid #000">12:55</td><td style="border:1px solid #000">16:10</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:02</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">12 Ram</td><td style="border:1px solid #000">Senin</td><td style="border:1px solid #000">02 Mar</td><td style="border:1px solid #000; font-weight:bold">05:24</td><td style="border:1px solid #000">05:34</td><td style="border:1px solid #000">06:49</td><td style="border:1px solid #000">07:14</td><td style="border:1px solid #000">12:54</td><td style="border:1px solid #000">16:10</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:02</td></tr>
-                <tr><td style="border:1px solid #000">13 Ram</td><td style="border:1px solid #000">Selasa</td><td style="border:1px solid #000">03 Mar</td><td style="border:1px solid #000; font-weight:bold">05:24</td><td style="border:1px solid #000">05:34</td><td style="border:1px solid #000">06:49</td><td style="border:1px solid #000">07:13</td><td style="border:1px solid #000">12:54</td><td style="border:1px solid #000">16:09</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:02</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">14 Ram</td><td style="border:1px solid #000">Rabu</td><td style="border:1px solid #000">04 Mar</td><td style="border:1px solid #000; font-weight:bold">05:24</td><td style="border:1px solid #000">05:34</td><td style="border:1px solid #000">06:49</td><td style="border:1px solid #000">07:13</td><td style="border:1px solid #000">12:54</td><td style="border:1px solid #000">16:09</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:02</td></tr>
-                <tr><td style="border:1px solid #000">15 Ram</td><td style="border:1px solid #000">Kamis</td><td style="border:1px solid #000">05 Mar</td><td style="border:1px solid #000; font-weight:bold">05:23</td><td style="border:1px solid #000">05:33</td><td style="border:1px solid #000">06:48</td><td style="border:1px solid #000">07:12</td><td style="border:1px solid #000">12:54</td><td style="border:1px solid #000">16:08</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:02</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">16 Ram</td><td style="border:1px solid #000">Jumat</td><td style="border:1px solid #000">06 Mar</td><td style="border:1px solid #000; font-weight:bold">05:23</td><td style="border:1px solid #000">05:33</td><td style="border:1px solid #000">06:48</td><td style="border:1px solid #000">07:12</td><td style="border:1px solid #000">12:54</td><td style="border:1px solid #000">16:07</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:02</td></tr>
-                <tr><td style="border:1px solid #000">17 Ram</td><td style="border:1px solid #000">Sabtu</td><td style="border:1px solid #000">07 Mar</td><td style="border:1px solid #000; font-weight:bold">05:23</td><td style="border:1px solid #000">05:33</td><td style="border:1px solid #000">06:48</td><td style="border:1px solid #000">07:12</td><td style="border:1px solid #000">12:53</td><td style="border:1px solid #000">16:07</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:02</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">18 Ram</td><td style="border:1px solid #000">Ahad</td><td style="border:1px solid #000">08 Mar</td><td style="border:1px solid #000; font-weight:bold">05:22</td><td style="border:1px solid #000">05:32</td><td style="border:1px solid #000">06:47</td><td style="border:1px solid #000">07:11</td><td style="border:1px solid #000">12:53</td><td style="border:1px solid #000">16:06</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:02</td></tr>
-                <tr><td style="border:1px solid #000">19 Ram</td><td style="border:1px solid #000">Senin</td><td style="border:1px solid #000">09 Mar</td><td style="border:1px solid #000; font-weight:bold">05:22</td><td style="border:1px solid #000">05:32</td><td style="border:1px solid #000">06:47</td><td style="border:1px solid #000">07:11</td><td style="border:1px solid #000">12:53</td><td style="border:1px solid #000">16:06</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:02</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">20 Ram</td><td style="border:1px solid #000">Selasa</td><td style="border:1px solid #000">10 Mar</td><td style="border:1px solid #000; font-weight:bold">05:22</td><td style="border:1px solid #000">05:32</td><td style="border:1px solid #000">06:46</td><td style="border:1px solid #000">07:10</td><td style="border:1px solid #000">12:53</td><td style="border:1px solid #000">16:05</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:01</td></tr>
-                <tr><td style="border:1px solid #000">21 Ram</td><td style="border:1px solid #000">Rabu</td><td style="border:1px solid #000">11 Mar</td><td style="border:1px solid #000; font-weight:bold">05:21</td><td style="border:1px solid #000">05:31</td><td style="border:1px solid #000">06:46</td><td style="border:1px solid #000">07:10</td><td style="border:1px solid #000">12:52</td><td style="border:1px solid #000">16:04</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:01</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">22 Ram</td><td style="border:1px solid #000">Kamis</td><td style="border:1px solid #000">12 Mar</td><td style="border:1px solid #000; font-weight:bold">05:21</td><td style="border:1px solid #000">05:31</td><td style="border:1px solid #000">06:46</td><td style="border:1px solid #000">07:10</td><td style="border:1px solid #000">12:52</td><td style="border:1px solid #000">16:04</td><td style="border:1px solid #000; font-weight:bold">18:53</td><td style="border:1px solid #000">20:01</td></tr>
-                <tr><td style="border:1px solid #000">23 Ram</td><td style="border:1px solid #000">Jumat</td><td style="border:1px solid #000">13 Mar</td><td style="border:1px solid #000; font-weight:bold">05:21</td><td style="border:1px solid #000">05:31</td><td style="border:1px solid #000">06:45</td><td style="border:1px solid #000">07:09</td><td style="border:1px solid #000">12:52</td><td style="border:1px solid #000">16:03</td><td style="border:1px solid #000; font-weight:bold">18:52</td><td style="border:1px solid #000">20:01</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">24 Ram</td><td style="border:1px solid #000">Sabtu</td><td style="border:1px solid #000">14 Mar</td><td style="border:1px solid #000; font-weight:bold">05:20</td><td style="border:1px solid #000">05:30</td><td style="border:1px solid #000">06:45</td><td style="border:1px solid #000">07:09</td><td style="border:1px solid #000">12:52</td><td style="border:1px solid #000">16:02</td><td style="border:1px solid #000; font-weight:bold">18:52</td><td style="border:1px solid #000">20:01</td></tr>
-                <tr><td style="border:1px solid #000">25 Ram</td><td style="border:1px solid #000">Ahad</td><td style="border:1px solid #000">15 Mar</td><td style="border:1px solid #000; font-weight:bold">05:20</td><td style="border:1px solid #000">05:30</td><td style="border:1px solid #000">06:44</td><td style="border:1px solid #000">07:08</td><td style="border:1px solid #000">12:51</td><td style="border:1px solid #000">16:02</td><td style="border:1px solid #000; font-weight:bold">18:52</td><td style="border:1px solid #000">20:01</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">26 Ram</td><td style="border:1px solid #000">Senin</td><td style="border:1px solid #000">16 Mar</td><td style="border:1px solid #000; font-weight:bold">05:19</td><td style="border:1px solid #000">05:29</td><td style="border:1px solid #000">06:44</td><td style="border:1px solid #000">07:08</td><td style="border:1px solid #000">12:51</td><td style="border:1px solid #000">16:01</td><td style="border:1px solid #000; font-weight:bold">18:52</td><td style="border:1px solid #000">20:01</td></tr>
-                <tr><td style="border:1px solid #000">27 Ram</td><td style="border:1px solid #000">Selasa</td><td style="border:1px solid #000">17 Mar</td><td style="border:1px solid #000; font-weight:bold">05:19</td><td style="border:1px solid #000">05:29</td><td style="border:1px solid #000">06:43</td><td style="border:1px solid #000">07:07</td><td style="border:1px solid #000">12:51</td><td style="border:1px solid #000">16:00</td><td style="border:1px solid #000; font-weight:bold">18:52</td><td style="border:1px solid #000">20:00</td></tr>
-                <tr style="background:#f9f9f9"><td style="border:1px solid #000">28 Ram</td><td style="border:1px solid #000">Rabu</td><td style="border:1px solid #000">18 Mar</td><td style="border:1px solid #000; font-weight:bold">05:18</td><td style="border:1px solid #000">05:28</td><td style="border:1px solid #000">06:43</td><td style="border:1px solid #000">07:07</td><td style="border:1px solid #000">12:50</td><td style="border:1px solid #000">15:59</td><td style="border:1px solid #000; font-weight:bold">18:52</td><td style="border:1px solid #000">20:00</td></tr>
-                <tr><td style="border:1px solid #000">29 Ram</td><td style="border:1px solid #000">Kamis</td><td style="border:1px solid #000">19 Mar</td><td style="border:1px solid #000; font-weight:bold">05:18</td><td style="border:1px solid #000">05:28</td><td style="border:1px solid #000">06:43</td><td style="border:1px solid #000">07:06</td><td style="border:1px solid #000">12:50</td><td style="border:1px solid #000">15:59</td><td style="border:1px solid #000; font-weight:bold">18:52</td><td style="border:1px solid #000">20:00</td></tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Minggu, 01 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:52</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:03</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Senin, 02 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:52</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Selasa, 03 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:53</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Rabu, 04 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:53</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Kamis, 05 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:53</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Jumat, 06 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:53</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Sabtu, 07 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:53</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Minggu, 08 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:54</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Senin, 09 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:54</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Selasa, 10 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:54</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Rabu, 11 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:54</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Kamis, 12 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:17</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:54</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Jumat, 13 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:16</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:54</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Sabtu, 14 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:16</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:54</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Minggu, 15 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:16</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:54</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Senin, 16 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:16</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Selasa, 17 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:16</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Rabu, 18 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:15</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Kamis, 19 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:15</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Jumat, 20 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:28</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:38</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:15</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Sabtu, 21 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:27</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:37</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:14</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Minggu, 22 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:27</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:37</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:14</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Senin, 23 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:27</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:37</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:56</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:14</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Selasa, 24 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:27</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:37</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:13</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Rabu, 25 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:27</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:37</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:13</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Kamis, 26 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:26</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:36</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:13</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Jumat, 27 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:26</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:36</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:12</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
+                <tr style="background-color: #f9fbfc;">
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; text-align: left; font-weight: 500;">Sabtu, 28 Februari 2026</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #e74c3c;">05:26</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">05:36</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">12:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">16:12</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px; font-weight: bold; color: #27ae60;">18:55</td>
+                    <td style="border: 1px solid #ecf0f1; padding: 5px 8px;">20:04</td>
+                </tr>
             </tbody>
         </table>
 
-        <div style="margin-top: 15px; font-size: 8pt; color: #333; border-top: 1px solid #000; padding-top: 5px;">
-            <p style="margin: 0;">
-                Waktu shalat pada jadwal imsakiyah ini dihitung berdasarkan kriteria MABIMS[cite: 182].<br>
-                Dibuat secara otomatis oleh <b>Aplikasi SAPA</b> (sapa.my.id).
+        <div style="margin-top: auto; font-size: 8.5pt; color: #7f8c8d; border-top: 1px solid #ecf0f1; padding-top: 15px;">
+            <p style="margin: 0 0 6px 0;">
+                Waktu shalat pada jadwal imsakiyah ini dihitung berdasarkan kriteria MABIMS.
             </p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <p style="margin: 0;">Sumber: <b>bimasislam.kemenag.go.id</b> | <b>jadwal-imsakiyah.tirto.id</b></p>
+                <p style="margin: 0;">Dibuat secara otomatis oleh <b>Aplikasi SAPA</b> (sapain.my.id)</p>
+            </div>
         </div>
+
     </div>
 
     <div class="container text-center" style="margin-top: 40px; margin-bottom: 20px;">

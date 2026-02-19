@@ -218,13 +218,14 @@ if (btnDownload) {
             
             // Setup A4 Portrait
             const doc = new jsPDF('p', 'mm', 'a4');
-            const pageWidht = doc.internal.pageSize.getWidth();
+            const pageWidth = doc.internal.pageSize.getWidth();
             const pageHeight = doc.internal.pageSize.getHeight();
-
             const imgProps = doc.getImageProperties(imgData);
-            const imgHeight = (imgProps.height * pageWidht) / imgProps.width;
+            const imgHeight = (imgProps.height * pageWidth) / imgProps.width;
+            const yPos = (pageHeight - imgHeight) / 2;
+            const finalY = yPos > 0 ? yPos : 0;
 
-            doc.addImage(imgData, 'JPEG', 0, 10, pageWidht, imgHeight);
+            doc.addImage(imgData, 'JPEG', 0, finalY, pageWidth, imgHeight);
             
             doc.save(`Jadwal_Imsakiyah_1447H_BandaAceh.pdf`);
 
